@@ -13,13 +13,15 @@
   <span class="el-dropdown-link">
     下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
   </span>
-  <el-dropdown-menu slot="dropdown">
-    <el-dropdown-item>黄金糕</el-dropdown-item>
-    <el-dropdown-item>狮子头</el-dropdown-item>
-    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-    <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-    <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
-  </el-dropdown-menu>
+  <template #dropdown>
+    <el-dropdown-menu>
+      <el-dropdown-item>黄金糕</el-dropdown-item>
+      <el-dropdown-item>狮子头</el-dropdown-item>
+      <el-dropdown-item>螺蛳粉</el-dropdown-item>
+      <el-dropdown-item disabled>双皮奶</el-dropdown-item>
+      <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+    </el-dropdown-menu>
+  </template>
 </el-dropdown>
 
 <style>
@@ -45,23 +47,27 @@
   <el-button type="primary">
     更多菜单<i class="el-icon-arrow-down el-icon--right"></i>
   </el-button>
-  <el-dropdown-menu slot="dropdown">
-    <el-dropdown-item>黄金糕</el-dropdown-item>
-    <el-dropdown-item>狮子头</el-dropdown-item>
-    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-    <el-dropdown-item>双皮奶</el-dropdown-item>
-    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-  </el-dropdown-menu>
+  <template #dropdown>
+    <el-dropdown-menu>
+      <el-dropdown-item>黄金糕</el-dropdown-item>
+      <el-dropdown-item>狮子头</el-dropdown-item>
+      <el-dropdown-item>螺蛳粉</el-dropdown-item>
+      <el-dropdown-item>双皮奶</el-dropdown-item>
+      <el-dropdown-item>蚵仔煎</el-dropdown-item>
+    </el-dropdown-menu>
+  </template>
 </el-dropdown>
 <el-dropdown split-button type="primary" @click="handleClick">
   更多菜单
-  <el-dropdown-menu slot="dropdown">
-    <el-dropdown-item>黄金糕</el-dropdown-item>
-    <el-dropdown-item>狮子头</el-dropdown-item>
-    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-    <el-dropdown-item>双皮奶</el-dropdown-item>
-    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-  </el-dropdown-menu>
+  <template #dropdown>
+    <el-dropdown-menu>
+      <el-dropdown-item>黄金糕</el-dropdown-item>
+      <el-dropdown-item>狮子头</el-dropdown-item>
+      <el-dropdown-item>螺蛳粉</el-dropdown-item>
+      <el-dropdown-item>双皮奶</el-dropdown-item>
+      <el-dropdown-item>蚵仔煎</el-dropdown-item>
+    </el-dropdown-menu>
+  </template>
 </el-dropdown>
 
 <style>
@@ -85,7 +91,24 @@
     }
   }
 </script>
+<!--
+<setup>
 
+  import { defineComponent } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const handleClick = () => {
+        alert('button click');
+      };
+      return {
+        handleClick,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -96,34 +119,55 @@
 :::demo 在`trigger`属性设置为`click`即可。
 ```html
 <el-row class="block-col-2">
-  <el-col :span="12">
+  <el-col :span="8">
     <span class="demonstration">hover 激活</span>
     <el-dropdown>
       <span class="el-dropdown-link">
         下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-check">蚵仔煎</el-dropdown-item>
-      </el-dropdown-menu>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-circle-check">蚵仔煎</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
     </el-dropdown>
   </el-col>
-  <el-col :span="12">
+  <el-col :span="8">
     <span class="demonstration">click 激活</span>
     <el-dropdown trigger="click">
       <span class="el-dropdown-link">
         下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-check">蚵仔煎</el-dropdown-item>
-      </el-dropdown-menu>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-circle-check">蚵仔煎</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+  </el-col>
+  <el-col :span="8">
+    <span class="demonstration">右键(contextmenu) 激活</span>
+    <el-dropdown trigger="contextmenu">
+      <span class="el-dropdown-link">
+        下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+      </span>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-circle-check">蚵仔煎</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
     </el-dropdown>
   </el-col>
 </el-row>
@@ -138,7 +182,7 @@
   }
   .demonstration {
     display: block;
-    color: #8492a6;
+    color: var(--el-text-color-secondary);
     font-size: 14px;
     margin-bottom: 20px;
   }
@@ -156,13 +200,15 @@
   <span class="el-dropdown-link">
     下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
   </span>
-  <el-dropdown-menu slot="dropdown">
-    <el-dropdown-item>黄金糕</el-dropdown-item>
-    <el-dropdown-item>狮子头</el-dropdown-item>
-    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-    <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-    <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
-  </el-dropdown-menu>
+  <template #dropdown>
+    <el-dropdown-menu>
+      <el-dropdown-item>黄金糕</el-dropdown-item>
+      <el-dropdown-item>狮子头</el-dropdown-item>
+      <el-dropdown-item>螺蛳粉</el-dropdown-item>
+      <el-dropdown-item disabled>双皮奶</el-dropdown-item>
+      <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+    </el-dropdown-menu>
+  </template>
 </el-dropdown>
 
 <style>
@@ -187,13 +233,15 @@
   <span class="el-dropdown-link">
     下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
   </span>
-  <el-dropdown-menu slot="dropdown">
-    <el-dropdown-item command="a">黄金糕</el-dropdown-item>
-    <el-dropdown-item command="b">狮子头</el-dropdown-item>
-    <el-dropdown-item command="c">螺蛳粉</el-dropdown-item>
-    <el-dropdown-item command="d" disabled>双皮奶</el-dropdown-item>
-    <el-dropdown-item command="e" divided>蚵仔煎</el-dropdown-item>
-  </el-dropdown-menu>
+  <template #dropdown>
+    <el-dropdown-menu>
+      <el-dropdown-item command="a">黄金糕</el-dropdown-item>
+      <el-dropdown-item command="b">狮子头</el-dropdown-item>
+      <el-dropdown-item command="c">螺蛳粉</el-dropdown-item>
+      <el-dropdown-item command="d" disabled>双皮奶</el-dropdown-item>
+      <el-dropdown-item command="e" divided>蚵仔煎</el-dropdown-item>
+    </el-dropdown-menu>
+  </template>
 </el-dropdown>
 
 <style>
@@ -215,6 +263,26 @@
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+
+      const handleCommand = (command) => {
+        ElMessage(`click on item ${command}`);
+      };
+      return {
+        handleCommand,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -227,46 +295,54 @@ Dropdown 组件提供除了默认值以外的三种尺寸，可以在不同场�
 ```html
 <el-dropdown split-button type="primary">
   默认尺寸
-  <el-dropdown-menu slot="dropdown">
-    <el-dropdown-item>黄金糕</el-dropdown-item>
-    <el-dropdown-item>狮子头</el-dropdown-item>
-    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-    <el-dropdown-item>双皮奶</el-dropdown-item>
-    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-  </el-dropdown-menu>
+  <template #dropdown>
+    <el-dropdown-menu>
+      <el-dropdown-item>黄金糕</el-dropdown-item>
+      <el-dropdown-item>狮子头</el-dropdown-item>
+      <el-dropdown-item>螺蛳粉</el-dropdown-item>
+      <el-dropdown-item>双皮奶</el-dropdown-item>
+      <el-dropdown-item>蚵仔煎</el-dropdown-item>
+    </el-dropdown-menu>
+  </template>
 </el-dropdown>
 
 <el-dropdown size="medium" split-button type="primary">
   中等尺寸
-  <el-dropdown-menu slot="dropdown">
-    <el-dropdown-item>黄金糕</el-dropdown-item>
-    <el-dropdown-item>狮子头</el-dropdown-item>
-    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-    <el-dropdown-item>双皮奶</el-dropdown-item>
-    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-  </el-dropdown-menu>
+  <template #dropdown>
+    <el-dropdown-menu>
+      <el-dropdown-item>黄金糕</el-dropdown-item>
+      <el-dropdown-item>狮子头</el-dropdown-item>
+      <el-dropdown-item>螺蛳粉</el-dropdown-item>
+      <el-dropdown-item>双皮奶</el-dropdown-item>
+      <el-dropdown-item>蚵仔煎</el-dropdown-item>
+    </el-dropdown-menu>
+  </template>
 </el-dropdown>
 
 <el-dropdown size="small" split-button type="primary">
   小型尺寸
-  <el-dropdown-menu slot="dropdown">
-    <el-dropdown-item>黄金糕</el-dropdown-item>
-    <el-dropdown-item>狮子头</el-dropdown-item>
-    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-    <el-dropdown-item>双皮奶</el-dropdown-item>
-    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-  </el-dropdown-menu>
+  <template #dropdown>
+    <el-dropdown-menu>
+      <el-dropdown-item>黄金糕</el-dropdown-item>
+      <el-dropdown-item>狮子头</el-dropdown-item>
+      <el-dropdown-item>螺蛳粉</el-dropdown-item>
+      <el-dropdown-item>双皮奶</el-dropdown-item>
+      <el-dropdown-item>蚵仔煎</el-dropdown-item>
+    </el-dropdown-menu>
+  </template>
 </el-dropdown>
 
 <el-dropdown size="mini" split-button type="primary">
   超小尺寸
-  <el-dropdown-menu slot="dropdown">
-    <el-dropdown-item>黄金糕</el-dropdown-item>
-    <el-dropdown-item>狮子头</el-dropdown-item>
-    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-    <el-dropdown-item>双皮奶</el-dropdown-item>
-    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-  </el-dropdown-menu>
+  <template #dropdown>
+    <el-dropdown-menu>
+      <el-dropdown-item>黄金糕</el-dropdown-item>
+      <el-dropdown-item>狮子头</el-dropdown-item>
+      <el-dropdown-item>螺蛳粉</el-dropdown-item>
+      <el-dropdown-item>双皮奶</el-dropdown-item>
+      <el-dropdown-item>蚵仔煎</el-dropdown-item>
+    </el-dropdown-menu>
+  </template>
 </el-dropdown>
 ```
 :::
@@ -276,9 +352,11 @@ Dropdown 组件提供除了默认值以外的三种尺寸，可以在不同场�
 |-------------  |---------------- |---------------- |---------------------- |-------- |
 | type          | 菜单按钮类型，同 Button 组件(只在`split-button`为 true 的情况下有效)   | string  |          —             |    —     |
 | size          | 菜单尺寸，在`split-button`为 true 的情况下也对触发按钮生效  | string | medium / small / mini | — |
+| max-height    | 菜单最大高度  | string / number |           —      | — |
 | split-button  | 下拉触发元素呈现为按钮组    | boolean  |    —  |  false |
-| placement    | 菜单弹出位置     | string | top/top-start/top-end/bottom/bottom-start/bottom-end  | bottom-end |
-| trigger       | 触发下拉的行为     | string          | hover, click  | hover |
+| disabled      | 是否禁用 | boolean | — | false |
+| placement    | 菜单弹出位置     | string | top/top-start/top-end/bottom/bottom-start/bottom-end  | bottom |
+| trigger       | 触发下拉的行为     | string          | hover, click, contextmenu  | hover |
 | hide-on-click | 是否在点击菜单项后隐藏菜单     | boolean          | — | true |
 | show-timeout  | 展开下拉菜单的延时（仅在 trigger 为 hover 时有效）| number          | — | 250 |
 | hide-timeout  | 收起下拉菜单的延时（仅在 trigger 为 hover 时有效）| number          | — | 150 |

@@ -33,6 +33,35 @@ Alert interrumpe las operaciones realizadas hasta que el usuario confirme la ale
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessageBox } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open = () => {
+        ElMessageBox.alert('This is a message', 'Title', {
+          confirmButtonText: 'OK',
+          callback: (action) => {
+            this.$message({
+              type: 'info',
+              message: `action: ${action}`,
+            });
+          },
+        });
+      };
+
+      return {
+        open,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -41,7 +70,7 @@ Alert interrumpe las operaciones realizadas hasta que el usuario confirme la ale
 Confirm es utilizado para preguntar al usuario y recibir una confirmación.
 
 
-:::demo Llamando al método `$confirm` para abrir el componente confirm, y simula el sistema `confirm`. También podemos personalizar a gran medida el componente Message Box al mandar un tercer atributo llamado `options` que es literalmente un objeto. El atributo `type` indica el tipo de mensaje, y su valor puede ser `success`, `error`, `info` y `warning`. Se debe tener en cuenta que el segundo atributo `title` debe ser de tipo `string`, y si es de tipo `object`, sera manejado como el atributo `options`. Aquí utilizamos `Promise` para manejar posteriormente el proceso. 
+:::demo Llamando al método `$confirm` para abrir el componente confirm, y simula el sistema `confirm`. También podemos personalizar a gran medida el componente Message Box al mandar un tercer atributo llamado `options` que es literalmente un objeto. El atributo `type` indica el tipo de mensaje, y su valor puede ser `success`, `error`, `info` y `warning`. Se debe tener en cuenta que el segundo atributo `title` debe ser de tipo `string`, y si es de tipo `object`, sera manejado como el atributo `options`. Aquí utilizamos `Promise` para manejar posteriormente el proceso.
 
 ```html
 <template>
@@ -65,12 +94,49 @@ Confirm es utilizado para preguntar al usuario y recibir una confirmación.
           this.$message({
             type: 'info',
             message: 'Delete canceled'
-          });          
+          });
         });
       }
     }
   }
 </script>
+<!--
+<setup>
+
+import { defineComponent } from 'vue';
+import { ElMessageBox } from 'element-plus';
+import { ElMessage } from 'element-plus';
+
+export default defineComponent({
+  setup() {
+    
+
+    const open = () => {
+      ElMessageBox.confirm('proxy will permanently delete the file. Continue?', 'Warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      }).then(() => {
+        ElMessage({
+          type: 'success',
+          message: 'Delete completed',
+        });
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: 'Delete canceled',
+        });
+      });
+    };
+
+    return {
+      open,
+    };
+  },
+});
+
+</setup>
+-->
 ```
 
 :::
@@ -104,12 +170,51 @@ Prompt es utilizado cuando se requiere entrada de información del usuario.
           this.$message({
             type: 'info',
             message: 'Input canceled'
-          });       
+          });
         });
       }
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessageBox } from 'element-plus';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open = () => {
+        ElMessageBox.prompt('Please input your e-mail', 'Tip', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+          inputErrorMessage: 'Invalid Email',
+        })
+          .then(({ value }) => {
+            ElMessage({
+              type: 'success',
+              message: `Your email is:${value}`,
+            });
+          })
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: 'Input canceled',
+            });
+          });
+      };
+
+      return {
+        open,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -125,10 +230,11 @@ Puede ser personalizado para mostrar diversos contenidos.
 </template>
 
 <script>
+  import { h } from 'vue';
+
   export default {
     methods: {
       open() {
-        const h = this.$createElement;
         this.$msgbox({
           title: 'Message',
           message: h('p', null, [
@@ -162,6 +268,56 @@ Puede ser personalizado para mostrar diversos contenidos.
     }
   }
 </script>
+<!--
+<setup>
+
+import { defineComponent, h } from 'vue';
+import { ElMessage } from 'element-plus';
+
+export default defineComponent({
+  setup() {
+    
+
+    const open = () => {
+      ElMessageBox({
+        title: 'Message',
+        message: h('p', null, [
+          h('span', null, 'Message can be '),
+          h('i', { style: 'color: teal' }, 'VNode'),
+        ]),
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        beforeClose: (action, instance, done) => {
+          if (action === 'confirm') {
+            instance.confirmButtonLoading = true;
+            instance.confirmButtonText = 'Loading...';
+            setTimeout(() => {
+              done();
+              setTimeout(() => {
+                instance.confirmButtonLoading = false;
+              }, 300);
+            }, 3000);
+          } else {
+            done();
+          }
+        },
+      }).then((action) => {
+        ElMessage({
+          type: 'info',
+          message: `action: ${action}`,
+        });
+      });
+    };
+
+    return {
+      open,
+    };
+  },
+});
+
+</setup>
+-->
 ```
 :::
 
@@ -193,6 +349,29 @@ El contenido de MessageBox puede ser `VNode`, permitiéndonos pasar componentes 
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessageBox } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open = () => {
+        ElMessageBox.alert('<strong>proxy is <i>HTML</i> string</strong>', 'HTML String', {
+          dangerouslyUseHTMLString: true,
+        });
+      };
+
+      return {
+        open,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -239,6 +418,46 @@ En algunos casos, hacer clic en el botón Cancelar y en el botón Cerrar puede t
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessageBox } from 'element-plus';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open = () => {
+        ElMessageBox.confirm('You have unsaved changes, save and proceed?', 'Confirm', {
+          distinguishCancelAndClose: true,
+          confirmButtonText: 'Save',
+          cancelButtonText: 'Discard Changes',
+        })
+          .then(() => {
+            ElMessage({
+              type: 'info',
+              message: 'Changes saved. Proceeding to a new route.',
+            });
+          })
+          .catch((action) => {
+            ElMessage({
+              type: 'info',
+              message: action === 'cancel'
+                ? 'Changes discarded. Proceeding to a new route.'
+                : 'Stay in the current route',
+            });
+          });
+      };
+
+      return {
+        open,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -276,12 +495,49 @@ El contenido del componente MessageBox puede ser centrado.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessageBox } from 'element-plus';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open = () => {
+        ElMessageBox.confirm('proxy will permanently delete the file. Continue?', 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning',
+          center: true,
+        }).then(() => {
+          ElMessage({
+            type: 'success',
+            message: 'Delete completed',
+          });
+        }).catch(() => {
+          ElMessage({
+            type: 'info',
+            message: 'Delete canceled',
+          });
+        });
+      };
+
+      return {
+        open,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
 ### Métodos Globales
 
-Si Element fue importado completamente, agregara los siguientes métodos globales para Vue.prototype: `$msgbox`, `$alert`, `$confirm` y `$prompt`. Así que en una instancia de Vue puedes llamar el método `MessageBox` como lo que hicimos en esta pagina. Los parámetros son:
+Si Element Plus fue importado completamente, agregara los siguientes métodos globales para `app.config.globalProperties`: `$msgbox`, `$alert`, `$confirm` y `$prompt`. Así que en una instancia de Vue puedes llamar el método `MessageBox` como lo que hicimos en esta pagina. Los parámetros son:
 - `$msgbox(options)`
 - `$alert(message, title, options)` or `$alert(message, options)`
 - `$confirm(message, title, options)` or `$confirm(message, options)`
@@ -292,10 +548,10 @@ Si Element fue importado completamente, agregara los siguientes métodos globale
 Si prefieres importar `MessageBox` cuando lo necesites (on demand):
 
 ```javascript
-import { MessageBox } from 'element-ui';
+import { ElMessageBox } from 'element-plus';
 ```
 
-Los métodos correspondientes: `MessageBox`, `MessageBox.alert`, `MessageBox.confirm` y `MessageBox.prompt`. Los parámetros son los mismos que los anteriores.
+Los métodos correspondientes: `ElMessageBox`, `ElMessageBox.alert`, `ElMessageBox.confirm` y `ElMessageBox.prompt`. Los parámetros son los mismos que los anteriores.
 
 ### Opciones
 
@@ -329,3 +585,4 @@ Los métodos correspondientes: `MessageBox`, `MessageBox.alert`, `MessageBox.con
 | inputErrorMessage        | mensaje de error cuando la validación falla | string                                   | —                                | Illegal input                            |
 | center                   | utilizado para alinear el contenido al centro | boolean                                  | —                                | false                                    |
 | roundButton              | utilizado para redondear el botón   | boolean                                  | —                                | false                                    |
+| buttonSize               | custom size of confirm and cancel buttons  | string | mini / small / medium / large | small |

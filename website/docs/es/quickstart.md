@@ -1,291 +1,227 @@
-## Inicio rápido
+# Inicio rápido
 
-Esta sección te guía en el proceso de usar Element con webpack en un proyecto.
+Esta sección describe cómo utilizar ElementPlus en su proyecto.
 
-### Use vue-cli@3
+## Uso de componentes
 
-Proporcionamos un [plugin de Element](https://github.com/ElementUI/vue-cli-plugin-element) para vue-cli@3, que puede utilizar para construir rápidamente un proyecto basado en Element.
+### Introducción completa de todos los componentes
 
-### Usa la plantilla de Kit de inicio
+> main.ts
 
-Proveemos una plantilla general [project template](https://github.com/ElementUI/element-starter). Para los usuarios de Laravel, también tenemos [template](https://github.com/ElementUI/element-in-laravel-starter). Puedes descargarlas y agregarlas directamente también.
+```typescript
+import { createApp } from 'vue'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import App from './App.vue'
 
-Si prefiere no utilizarlas, lee las siguientes secciones de este documento.
+const app = createApp(App)
 
-### Importando Element
-
-Puede importar Element completamente o solamente importar lo que necesite. Comencemos importando todo.
-
-#### Importando todo
-
-En main.js:
-
-```javascript
-import Vue from 'vue';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-import App from './App.vue';
-
-Vue.use(ElementUI);
-
-new Vue({
-  el: '#app',
-  render: h => h(App)
-});
+app.use(ElementPlus)
+app.mount('#app')
 ```
 
-El código anterior importa Element completamente. Nótese que el archivo CSS necesita ser incluido por separado.
+### Introducción de componentes a la carta
 
-#### En demanda
+El código JS en `ElementPlus` soporta
+[tree shaking](https://webpack.js.org/guides/tree-shaking/) basado en módulos ES
+por defecto.
 
-Con la ayuda de [babel-plugin-component](https://github.com/QingWei-Li/babel-plugin-component), podemos importar los componentes que necesitamos, haciendo nuestro proyecto más pequeño que de la otra manera.
+> App.vue
 
-Primero, instale babel-plugin-component:
+```html
+<template>
+  <el-button>
+    Soy ElButton
+  </el-button>
+</template>
+<script>
+import { defineComponent } from 'vue'
+import { ElButton } from 'element-plus'
 
-```bash
-npm install babel-plugin-component -D
+export default defineComponent({
+  name: 'app'
+  components: {
+    ElButton,
+  },
+})
+</script>
 ```
 
-Luego edite .babelrc:
+### Introducción de estilos
 
-```json
-{
-  "presets": [["es2015", { "modules": false }]],
-  "plugins": [
-    [
-      "component",
-      {
-        "libraryName": "element-ui",
-        "styleLibraryName": "theme-chalk"
-      }
-    ]
-  ]
-}
+**Recomendamos encarecidamente traer los archivos de estilo completos directamente**,
+aunque pueda parecer que esto aumenta el tamaño de toda la aplicación, al hacerlo
+se evita la introducción de plugins de herramientas de empaquetado adicionales
+(una carga menor) y también se puede utilizar el
+[CDN](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
+para cargar los archivos de estilo, haciendo así que su aplicación cargue más rápido.
+
+Introducido por medio de JS
+
+```typescript
+import 'element-plus/dist/index.css'
 ```
 
-Luego, si necesita Button y Select, edite main.js:
+Introducido a través de las cabeceras HTML
 
-```javascript
-import Vue from 'vue';
-import { Button, Select } from 'element-ui';
-import App from './App.vue';
-
-Vue.component(Button.name, Button);
-Vue.component(Select.name, Select);
-/* or
- * Vue.use(Button)
- * Vue.use(Select)
- */
-
-new Vue({
-  el: '#app',
-  render: h => h(App)
-});
+```html
+<!-- index.html -->
+<head>
+  <link rel="stylesheet" href="//unpkg.com/element-plus/dist/index.css">
+</head>
 ```
 
-Ejemplo completo (Referencia completa de componentes [components.json](https://github.com/ElemeFE/element/blob/master/components.json))
+Si quiere que los estilos se introduzcan también a la carta, puede utilizar el
+complemento que proporciona la herramienta correspondiente para referenciarlos.
+Ver [FAQ](/#/es/component/quickstart#faqs)
 
-```javascript
-import Vue from 'vue';
-import {
-  Pagination,
-  Dialog,
-  Autocomplete,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  Menu,
-  Submenu,
-  MenuItem,
-  MenuItemGroup,
-  Input,
-  InputNumber,
-  Radio,
-  RadioGroup,
-  RadioButton,
-  Checkbox,
-  CheckboxButton,
-  CheckboxGroup,
-  Switch,
-  Select,
-  Option,
-  OptionGroup,
-  Button,
-  ButtonGroup,
-  Table,
-  TableColumn,
-  DatePicker,
-  TimeSelect,
-  TimePicker,
-  Popover,
-  Tooltip,
-  Breadcrumb,
-  BreadcrumbItem,
-  Form,
-  FormItem,
-  Tabs,
-  TabPane,
-  Tag,
-  Tree,
-  Alert,
-  Slider,
-  Icon,
-  Row,
-  Col,
-  Upload,
-  Progress,
-  Spinner,
-  Badge,
-  Card,
-  Rate,
-  Steps,
-  Step,
-  Carousel,
-  CarouselItem,
-  Collapse,
-  CollapseItem,
-  Cascader,
-  ColorPicker,
-  Transfer,
-  Container,
-  Header,
-  Aside,
-  Main,
-  Footer,
-  Timeline,
-  TimelineItem,
-  Link,
-  Divider,
-  Image,
-  Calendar,
-  Backtop,
-  PageHeader,
-  CascaderPanel,
-  Loading,
-  MessageBox,
-  Message,
-  Notification
-} from 'element-ui';
+## Plantilla de proyecto de construcción rápida
 
-Vue.use(Pagination);
-Vue.use(Dialog);
-Vue.use(Autocomplete);
-Vue.use(Dropdown);
-Vue.use(DropdownMenu);
-Vue.use(DropdownItem);
-Vue.use(Menu);
-Vue.use(Submenu);
-Vue.use(MenuItem);
-Vue.use(MenuItemGroup);
-Vue.use(Input);
-Vue.use(InputNumber);
-Vue.use(Radio);
-Vue.use(RadioGroup);
-Vue.use(RadioButton);
-Vue.use(Checkbox);
-Vue.use(CheckboxButton);
-Vue.use(CheckboxGroup);
-Vue.use(Switch);
-Vue.use(Select);
-Vue.use(Option);
-Vue.use(OptionGroup);
-Vue.use(Button);
-Vue.use(ButtonGroup);
-Vue.use(Table);
-Vue.use(TableColumn);
-Vue.use(DatePicker);
-Vue.use(TimeSelect);
-Vue.use(TimePicker);
-Vue.use(Popover);
-Vue.use(Tooltip);
-Vue.use(Breadcrumb);
-Vue.use(BreadcrumbItem);
-Vue.use(Form);
-Vue.use(FormItem);
-Vue.use(Tabs);
-Vue.use(TabPane);
-Vue.use(Tag);
-Vue.use(Tree);
-Vue.use(Alert);
-Vue.use(Slider);
-Vue.use(Icon);
-Vue.use(Row);
-Vue.use(Col);
-Vue.use(Upload);
-Vue.use(Progress);
-Vue.use(Spinner);
-Vue.use(Badge);
-Vue.use(Card);
-Vue.use(Rate);
-Vue.use(Steps);
-Vue.use(Step);
-Vue.use(Carousel);
-Vue.use(CarouselItem);
-Vue.use(Collapse);
-Vue.use(CollapseItem);
-Vue.use(Cascader);
-Vue.use(ColorPicker);
-Vue.use(Transfer);
-Vue.use(Container);
-Vue.use(Header);
-Vue.use(Aside);
-Vue.use(Main);
-Vue.use(Footer);
-Vue.use(Timeline);
-Vue.use(TimelineItem);
-Vue.use(Link);
-Vue.use(Divider);
-Vue.use(Image);
-Vue.use(Calendar);
-Vue.use(Backtop);
-Vue.use(PageHeader);
-Vue.use(CascaderPanel);
+### Use vue-cli@4.5
 
-Vue.use(Loading.directive);
+Hemos preparado los correspondientes plugins vue-cli para la nueva versión de
+[Element Plus plugins](https://github.com/element-plus/vue-cli-plugin-element-plus)
+que puede utilizar para construir rápidamente un proyecto basado en
+Proyecto Element Plus.
 
-Vue.prototype.$loading = Loading.service;
-Vue.prototype.$msgbox = MessageBox;
-Vue.prototype.$alert = MessageBox.alert;
-Vue.prototype.$confirm = MessageBox.confirm;
-Vue.prototype.$prompt = MessageBox.prompt;
-Vue.prototype.$notify = Notification;
-Vue.prototype.$message = Message;
-```
+### Use Starter Kit
 
-### Configuración global
+Proporcionamos [plantillas de proyecto](https://github.com/element-plus/element-plus-starter)
+genéricas que puede utilizar directamente, además de proporcionar
+Vite [plantilla](https://github.com/element-plus/element-plus-vite-starter). Para
+Los usuarios de Laravel, también tenemos una
+[plantilla correspondiente](https://github.com/element-plus/element-plus-in-laravel-starter)
+que también puede descargar y utilizar directamente.
 
-Cuando importa Element, puede definir un objeto global de configuración. Por ahora este elemento solo contiene dos propiedades: `size`, `zIndex`. `size` define el tamaño por defecto de todos los componentes.
+## Configuración global
 
-La propiedad `zIndex` indica el z-index inicial (por defecto: 2000) para los modal:
+Al introducir Element Plus, se puede pasar un objeto de configuración global.
+Este objeto soporta actualmente los campos `size` y `zIndex`. "tamaño
+se utiliza para cambiar el tamaño por defecto del componente y `zIndex` establece
+el índice z inicial de la caja emergente (valor por defecto: 2000). El Elemento Plus
+se presenta a la demanda de la siguiente manera.
 
-Importando Element completamente：
+Presentación completa de ElementPlus.
 
 ```js
-import Vue from 'vue';
-import Element from 'element-ui';
-Vue.use(Element, { size: 'small', zIndex: 3000 });
+import { createApp } from 'vue'
+import ElementPlus from 'element-plus';
+import App from './App.vue';
+
+const app = createApp(App)
+app.use(ElementPlus, { size: 'small', zIndex: 3000 });
 ```
 
-Importando Element parcialmente：
+Presentación de Element on demand.
 
 ```js
-import Vue from 'vue';
-import { Button } from 'element-ui';
+import { createApp } from 'vue'
+import { ElButton } from 'element-plus';
+import App from './App.vue';
+// import 'element-plus/packages/theme-chalk/src/base.scss'
 
-Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
-Vue.use(Button);
+const app = createApp(App)
+app.config.globalProperties.$ELEMENT = option
+app.use(ElButton);
 ```
 
-Con la anterior configuración, el tamaño por defecto de todos los componentes que tienen el atributo `size` será `small`. El valor inicial de z-index para los modals se ha establecido a 3000.
+Con la configuración anterior, todos los componentes del proyecto con la propiedad
+`size` tendrán un tamaño por defecto de `pequeño` y el índice z inicial de la
+caja emergente será de 3000.
 
-### Empiece ya!
+## Cómo empezar
 
-Ahora ha incorporado Vue y Element a su proyecto y es el momento para comenzar a programar. Por favor, refiérase a la documentación de cada componente para aprender cómo usarlos.
+Ahora que se ha configurado un entorno de desarrollo basado en Vue y Element Plus,
+es el momento de escribir el código. Consulte la documentación de cada componente
+para saber cómo utilizarlos。
 
 ### Use Nuxt.js
 
-También podemos comenzar un proyecto usando [Nuxt.js](nuxtjs.org):
+También podemos utilizar [Nuxt.js](https://nuxtjs.org)：
 
 <div class="glitch-embed-wrap" style="height: 420px; width: 100%;">
   <iframe src="https://glitch.com/embed/#!/embed/nuxt-with-element?path=nuxt.config.js&previewSize=0&attributionHidden=true" alt="nuxt-with-element on glitch" style="height: 100%; width: 100%; border: 0;"></iframe>
 </div>
+
+## FAQs
+
+### Quiero introducir tanto componentes como estilos a la carta, ¿qué debo hacer?
+
+Puede conseguirlo en función del bundler que esté utilizando actualmente, con
+Plugins compatibles con ElementPlus.
+
+#### Carga de estilos a la carta con vite
+
+Si utiliza [vite](https://vitejs.dev) como herramienta de compilación, deberá instalar
+primero `vite-plugin-element-plus` para cargar los estilos bajo demanda.
+
+```shell
+yarn add vite-plugin-element-plus -D
+# o
+npm install vite-plugin-element-plus -D
+```
+
+A continuación, añada el siguiente código al archivo `vite.config.js`:
+
+```typescript
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import VitePluginElementPlus from 'vite-plugin-element-plus'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+    VitePluginElementPlus({
+      // Si necesita utilizar el archivo fuente [nombre del componente].scss,
+      // deberá descomentar el mismo a continuación.
+      // Para todas las APIs puede consultar la documentación en https://github.com/element-plus/vite-plugin-element-plus
+      // para los comentarios de la documentación
+      // useSource: true
+    }),
+  ],
+})
+
+```
+
+#### Carga de estilos bajo demanda con webpack
+
+Si estás usando webpack como herramienta de empaquetado, entonces necesitas instalar
+primero `babel-plugin-import` para cargar los estilos bajo demanda
+
+```shell
+yarn add babel-plugin-import -D
+# o
+npm install babel-plugin-import -D
+```
+
+A continuación, debe añadir el siguiente código a su archivo `babel.config.js`.
+
+> babel.config.js
+
+```javascript
+module.exports = {
+  plugins: [
+    [
+      "import",
+      {
+        libraryName: 'element-plus',
+        // import component
+        customName: (name) => {
+          name = name.slice(3)
+          return `element-plus/lib/components/${name}`
+        },
+        // import style
+        customStyleName: (name) => {
+          name = name.slice(3)
+          // Si necesitas el archivo [nombre].scss, entonces necesitas comentar
+          // la línea de código anterior y descomentar la siguiente línea de código
+          // return `element-plus/lib/components/${name}/style`
+          // Si necesita el archivo [nombre].css, debe devolver la siguiente línea
+          return `element-plus/lib/components/${name}/style/css`
+        },
+      },
+    ],
+  ]
+}
+```

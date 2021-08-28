@@ -23,9 +23,15 @@ module.exports = {
           ],
           '@babel/preset-typescript',
         ],
-        plugins: ['@vue/babel-plugin-jsx'],
+        plugins: [
+          '@vue/babel-plugin-jsx',
+          '@babel/plugin-proposal-class-properties',
+        ],
       },
     ],
   },
-  moduleFileExtensions: ['vue', 'json', 'ts', 'tsx', 'js', 'json'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
+  // u can change this option to a more specific folder for test single component or util when dev
+  // for example, ['<rootDir>/packages/input']
+  roots: ['<rootDir>'],
 }

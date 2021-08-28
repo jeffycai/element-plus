@@ -44,6 +44,7 @@
 
 <script>
 import algoliasearch from 'algoliasearch'
+import { Language } from '../enums/language'
 
 export default {
   data() {
@@ -52,25 +53,30 @@ export default {
       query: '',
       isEmpty: false,
       langs: {
-        'zh-CN': {
+        [Language.CN]: {
           search: '搜索文档',
           empty: '无匹配结果',
           index: 'zh',
         },
-        'en-US': {
+        [Language.EN]: {
           search: 'Search',
           empty: 'No results',
           index: 'en',
         },
-        'es': {
+        [Language.ES]: {
           search: 'Buscar',
           empty: 'No hay datos que coincidan',
           index: 'es',
         },
-        'fr-FR': {
+        [Language.FR]: {
           search: 'Rechercher',
           empty: 'Aucun résultat',
           index: 'fr',
+        },
+        [Language.JP]: {
+          search: '検索',
+          empty: '検索結果なし',
+          index: 'jp',
         },
       },
     }
@@ -102,17 +108,13 @@ export default {
 
   methods: {
     initIndex() {
-      const client = algoliasearch('4C63BTGP6S', '0729c3c7f4dc8db7395ad0b19c0748d2')
+      const client = algoliasearch('7DCTSU0WBW', '463385cf36ad2e81aff21afea1c0409c')
       this.index = client.initIndex(`element-${ this.lang ? this.langs[this.lang].index : 'zh' }`)
     },
 
     querySearch(query, cb) {
       if (!query) return
-      this.index.search({ query, hitsPerPage: 6 }, (err, res) => {
-        if (err) {
-          console.error(err)
-          return
-        }
+      this.index.search(query, { hitsPerPage: 6 }).then(res => {
         if (res.hits.length > 0) {
           this.isEmpty = false
           cb(res.hits.map(hit => {
@@ -137,6 +139,9 @@ export default {
           this.isEmpty = true
           cb([{ isEmpty: true }])
         }
+      }).catch(err => {
+        console.error(err)
+        return
       })
     },
 
@@ -149,9 +154,13 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   .algolia-search {
     width: 450px !important;
+
+    .el-autocomplete-suggestion {
+      width: 450px !important;
+    }
 
     &.is-empty {
       .el-autocomplete-suggestion__list {
@@ -165,7 +174,7 @@ export default {
     }
 
     li {
-      border-bottom: solid 1px #ebebeb;
+      border-bottom: solid 1px var(--el-border-color-base);
 
       &:last-child {
          border-bottom: none;
@@ -222,7 +231,7 @@ export default {
     .algolia-search-empty {
       margin: 5px 0;
       text-align: center;
-      color: #999;
+      color: var(--el-text-color-secondary);
     }
   }
 </style>

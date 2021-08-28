@@ -255,7 +255,7 @@
       :label="item.label"
       :value="item.value">
       <span style="float: left">{{ item.label }}</span>
-      <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+      <span style="float: right; color: var(--el-text-color-secondary); font-size: 13px">{{ item.value }}</span>
     </el-option>
   </el-select>
 </template>
@@ -522,7 +522,7 @@
 ### Select Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| value / v-model | 绑定值 | boolean / string / number | — | — |
+| model-value / v-model | 绑定值 | string / number / boolean / object | — | — |
 | multiple | 是否多选 | boolean | — | false |
 | disabled | 是否禁用 | boolean | — | false |
 | value-key | 作为 value 唯一标识的键名，绑定值为对象类型时必填 | string | — | value |
@@ -532,7 +532,6 @@
 | multiple-limit | 多选时用户最多可以选择的项目数，为 0 则不限制 | number | — | 0 |
 | name | select input 的 name 属性 | string | — | — |
 | autocomplete | select input 的 autocomplete 属性 | string | — | off |
-| auto-complete | 下个主版本弃用 | string | — | off |
 | placeholder | 占位符 | string | — | 请选择 |
 | filterable | 是否可搜索 | boolean | — | false |
 | allow-create | 是否允许用户创建新条目，需配合 `filterable` 使用 | boolean | — | false |
@@ -541,8 +540,8 @@
 | remote-method | 远程搜索方法 | function | — | — |
 | loading | 是否正在从远程获取数据 | boolean | — | false |
 | loading-text | 远程加载时显示的文字 | string | — | 加载中 |
-| no-match-text | 搜索条件无匹配时显示的文字，也可以使用`slot="empty"`设置 | string | — | 无匹配数据 |
-| no-data-text | 选项为空时显示的文字，也可以使用`slot="empty"`设置 | string | — | 无数据 |
+| no-match-text | 搜索条件无匹配时显示的文字，也可以使用`#empty`设置 | string | — | 无匹配数据 |
+| no-data-text | 选项为空时显示的文字，也可以使用`#empty`设置 | string | — | 无数据 |
 | popper-class | Select 下拉框的类名 | string | — | — |
 | reserve-keyword | 多选且可搜索时，是否在选中一个选项后保留当前的搜索关键词 | boolean | — | false |
 | default-first-option | 在输入框按下回车，选择第一个匹配项。需配合 `filterable` 或 `remote` 使用 | boolean | - | false |
@@ -576,7 +575,7 @@
 ### Option Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| value | 选项的值 | string/number/object | — | — |
+| value | 选项的值 | string / number / boolean / object | — | — |
 | label | 选项的标签，若不设置则默认与 `value` 相同 | string/number | — | — |
 | disabled | 是否禁用该选项 | boolean | — | false |
 

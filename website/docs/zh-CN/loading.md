@@ -6,7 +6,7 @@
 
 在表格等容器中加载数据时显示。
 
-:::demo Element 提供了两种调用 Loading 的方法：指令和服务。对于自定义指令`v-loading`，只需要绑定`Boolean`即可。默认状况下，Loading 遮罩会插入到绑定元素的子节点，通过添加`body`修饰符，可以使遮罩插入至 DOM 中的 body 上。
+:::demo Element Plus 提供了两种调用 Loading 的方法：指令和服务。对于自定义指令`v-loading`，只需要绑定`Boolean`即可。默认状况下，Loading 遮罩会插入到绑定元素的子节点，通过添加`body`修饰符，可以使遮罩插入至 DOM 中的 body 上。
 ```html
 <template>
   <el-table
@@ -58,6 +58,41 @@
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, reactive, toRefs } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const state = reactive({
+        tableData: [
+          {
+            date: '2016-05-03',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄',
+          },
+          {
+            date: '2016-05-02',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄',
+          },
+          {
+            date: '2016-05-04',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄',
+          },
+        ],
+        loading: true,
+      });
+      return {
+        ...toRefs(state),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -65,7 +100,7 @@
 
 可自定义加载文案、图标和背景色。
 
-:::demo 在绑定了`v-loading`指令的元素上添加`element-loading-text`属性，其值会被渲染为加载文案，并显示在加载图标的下方。类似地，`element-loading-spinner`和`element-loading-background`属性分别用来设定图标类名和背景色值。
+:::demo 在绑定了`v-loading`指令的元素上添加`element-loading-text`属性，其值会被渲染为加载文案，并显示在加载图标的下方。类似地，`element-loading-spinner`、`element-loading-background`和`element-loading-svg`属性分别用来设定图标类名、背景色值、加载图标。
 ```html
 <template>
   <el-table
@@ -73,6 +108,28 @@
     element-loading-text="拼命加载中"
     element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(0, 0, 0, 0.8)"
+    :data="tableData"
+    style="width: 100%;margin-bottom: 10px">
+    <el-table-column
+      prop="date"
+      label="日期"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="姓名"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="地址">
+    </el-table-column>
+  </el-table>
+  <el-table
+    v-loading="loading"
+    :element-loading-svg="svg"
+    class="custom-loading-svg"
+    element-loading-svg-view-box="-10, -10, 50, 50"
     :data="tableData"
     style="width: 100%">
     <el-table-column
@@ -92,6 +149,12 @@
   </el-table>
 </template>
 
+<style>
+  .custom-loading-svg .el-loading-mask > .el-loading-spinner > .circular {
+    animation: none;
+  }
+</style>
+
 <script>
   export default {
     data() {
@@ -109,12 +172,71 @@
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄'
         }],
-        loading: true
+        loading: true,
+        svg: `
+          <path class="path" d="
+            M 30 15
+            L 28 17
+            M 25.61 25.61
+            A 15 15, 0, 0, 1, 15 30
+            A 15 15, 0, 1, 1, 27.99 7.5
+            L 15 15
+          " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+        `,
       };
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, reactive, toRefs } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const state = reactive({
+        tableData: [
+          {
+            date: '2016-05-03',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄',
+          },
+          {
+            date: '2016-05-02',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄',
+          },
+          {
+            date: '2016-05-04',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄',
+          },
+        ],
+        loading: true,
+        svg: `
+          <path class="path" d="
+            M 30 15
+            L 28 17
+            M 25.61 25.61
+            A 15 15, 0, 0, 1, 15 30
+            A 15 15, 0, 1, 1, 27.99 7.5
+            L 15 15
+          " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+        `,
+      });
+      return {
+        ...toRefs(state),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
+:::
+
+:::warning
+`element-loading-svg` 属性虽然支持传入 HTML 片段，但是在网站上动态渲染任意 HTML 是非常危险的，因为容易导致 [XSS 攻击](https://en.wikipedia.org/wiki/Cross-site_scripting)。请确保 `element-loading-svg` 的内容是可信的，**永远不要**将用户提交的内容赋值给 `element-loading-svg` 属性。
 :::
 
 ### 整页加载
@@ -166,34 +288,72 @@
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+  import { ElLoading } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      const fullscreenLoading = ref(false);
+      const openFullScreen1 = () => {
+        fullscreenLoading.value = true;
+        setTimeout(() => {
+          fullscreenLoading.value = false;
+        }, 2000);
+      };
+
+      const openFullScreen2 = () => {
+        const loading = ElLoading.service({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)',
+        });
+        setTimeout(() => {
+          loading.close();
+        }, 2000);
+      };
+
+      return {
+        fullscreenLoading,
+        openFullScreen1,
+        openFullScreen2,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
 ### 服务
 Loading 还可以以服务的方式调用。引入 Loading 服务：
 ```javascript
-import { Loading } from 'element-ui';
+import { ElLoading } from 'element-plus';
 ```
 在需要调用时：
 ```javascript
-Loading.service(options);
+ElLoading.service(options);
 ```
 其中 `options` 参数为 Loading 的配置项，具体见下表。`LoadingService` 会返回一个 Loading 实例，可通过调用该实例的 `close` 方法来关闭它：
 ```javascript
-let loadingInstance = Loading.service(options);
+let loadingInstance = ElLoading.service(options);
 this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
   loadingInstance.close();
 });
 ```
 需要注意的是，以服务的方式调用的全屏 Loading 是单例的：若在前一个全屏 Loading 关闭前再次调用全屏 Loading，并不会创建一个新的 Loading 实例，而是返回现有全屏 Loading 的实例：
 ```javascript
-let loadingInstance1 = Loading.service({ fullscreen: true });
-let loadingInstance2 = Loading.service({ fullscreen: true });
+let loadingInstance1 = ElLoading.service({ fullscreen: true });
+let loadingInstance2 = ElLoading.service({ fullscreen: true });
 console.log(loadingInstance1 === loadingInstance2); // true
 ```
 此时调用它们中任意一个的 `close` 方法都能关闭这个全屏 Loading。
 
-如果完整引入了 Element，那么 Vue.prototype 上会有一个全局方法 `$loading`，它的调用方式为：`this.$loading(options)`，同样会返回一个 Loading 实例。
+如果完整引入了 Element，那么 `app.config.globalProperties` 上会有一个全局方法 `$loading`，它的调用方式为：`this.$loading(options)`，同样会返回一个 Loading 实例。
 
 ### Options
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |

@@ -125,7 +125,9 @@ You can use named slot to customize the tab label content.
 ```html
 <el-tabs type="border-card">
   <el-tab-pane>
-    <span slot="label"><i class="el-icon-date"></i> Route</span>
+    <template #label>
+      <span><i class="el-icon-date"></i> Route</span>
+    </template>
     Route
   </el-tab-pane>
   <el-tab-pane label="Config">Config</el-tab-pane>
@@ -192,7 +194,7 @@ Only card type Tabs support addable & closeable.
               }
             });
           }
-          
+
           this.editableTabsValue = activeName;
           this.editableTabs = tabs.filter(tab => tab.name !== targetName);
         }
@@ -265,7 +267,7 @@ Only card type Tabs support addable & closeable.
             }
           });
         }
-        
+
         this.editableTabsValue = activeName;
         this.editableTabs = tabs.filter(tab => tab.name !== targetName);
       }
@@ -278,7 +280,7 @@ Only card type Tabs support addable & closeable.
 ### Tabs Attributes
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
 |---------- |-------- |---------- |-------------  |-------- |
-| value / v-model  | binding value, name of the selected tab  | string   |  —  |  name of first tab |
+| model-value / v-model  | binding value, name of the selected tab  | string   |  —  |  name of first tab |
 | type     | type of Tab | string   | card/border-card  |     —    |
 | closable  | whether Tab is closable | boolean   | — |  false  |
 | addable  | whether Tab is addable   | boolean   | — |  false  |
@@ -303,3 +305,10 @@ Only card type Tabs support addable & closeable.
 | name      | identifier corresponding to the name of Tabs, representing the alias of the tab-pane | string | — | ordinal number of the tab-pane in the sequence, e.g. the first tab-pane is '1' |
 | closable  | whether Tab is closable | boolean   | — |  false  |
 | lazy  | whether Tab is lazily rendered   | boolean   | — |  false  |
+
+### Tab-pane Slots
+
+| Name | Description |
+|------|--------|
+| - | Tab-pane's content |
+| label | Tab-pane's label |

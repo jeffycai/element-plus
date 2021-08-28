@@ -41,6 +41,26 @@ Puede expandir varios paneles
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const activeNames = ref(['1']);
+      const handleChange = (val) => {
+        console.log(val);
+      };
+      return {
+        activeNames,
+        handleChange,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -78,6 +98,23 @@ En modo acordeón sólo un panel puede ser expandido a la vez
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const activeName = ref('1');
+
+      return {
+        activeName,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -89,7 +126,7 @@ Además de usar el atributo `title`, se puede personalizar el título del panel 
 ```html
 <el-collapse accordion>
   <el-collapse-item name="1">
-    <template slot="title">
+    <template #title>
       Consistency<i class="header-icon el-icon-information"></i>
     </template>
     <div>Consistent with real life: in line with the process and logic of real life, and comply with languages and habits that the users are used to;</div>
@@ -115,7 +152,7 @@ Además de usar el atributo `title`, se puede personalizar el título del panel 
 ### Atributos de Collapse
 | Atributo  | Descripción                           | Tipo                                     | Valores aceptados | Por defecto |
 | --------- | ------------------------------------- | ---------------------------------------- | ----------------- | ----------- |
-| value / v-model     | panel activo                          | string (modo acordeón) / array (No modo acordeón) | —                 | —           |
+| model-value / v-model     | panel activo                          | string (modo acordeón) / array (No modo acordeón) | —                 | —           |
 | accordion | especifica si activa el modo acordeón | boolean                                  | —                 | false       |
 
 ### Eventos de Collapse

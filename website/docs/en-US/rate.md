@@ -30,6 +30,59 @@ Used for rating
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      return {
+        value1: ref(null),
+        value2: ref(null),
+        colors: ref(['#99A9BF', '#F7BA2A', '#FF9900']), // same as { 2: '#99A9BF', 4: { value: '#F7BA2A', excluded: true }, 5: '#FF9900' }
+      };
+    },
+  });
+
+</setup>
+-->
+```
+:::
+
+### With allow-half
+:::demo Add attribute `allow-half` Half star allowed
+```html
+
+<div class="block">
+  <el-rate  v-model="value"  allow-half />
+</div>
+
+
+<script>
+  export default {
+    data() {
+      return {
+        value: null
+      }
+    }
+  }
+</script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      return {
+        value: ref(null),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -55,6 +108,21 @@ Using text to indicate rating score
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      return {
+        value: ref(null),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -82,6 +150,22 @@ You can use different icons to distinguish different rate components.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      return {
+        value: ref(null),
+        iconClasses: ref(['icon-rate-face-1', 'icon-rate-face-2', 'icon-rate-face-3']) // same as { 2: 'icon-rate-face-1', 4: { value: 'icon-rate-face-2', excluded: true }, 5: 'icon-rate-face-3' }
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -109,13 +193,28 @@ Read-only Rate is for displaying rating score. Half star is supported.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      return {
+        value: ref(3.7),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
 ### Attributes
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
 |---------- |-------- |---------- |-------------  |-------- |
-| value / v-model | binding value | number | — | 0 |
+| model-value / v-model | binding value | number | — | 0 |
 | max | max rating score | number | — | 5 |
 | disabled | whether Rate is read-only | boolean | — | false |
 | allow-half | whether picking half start is allowed | boolean | — | false |
@@ -130,7 +229,7 @@ Read-only Rate is for displaying rating score. Half star is supported.
 | show-text | whether to display texts | boolean | — | false |
 | show-score | whether to display current score. show-score and show-text cannot be true at the same time | boolean | — | false |
 | text-color | color of texts | string | — | #1F2D3D |
-| texts | text array | array | — | ['极差', '失望', '一般', '满意', '惊喜'] |
+| texts | text array | array | — | ['Extremely bad','Disappointed','Fair','Satisfied','Surprise'] |
 | score-template | score template | string | — | {value} |
 
 ### Events

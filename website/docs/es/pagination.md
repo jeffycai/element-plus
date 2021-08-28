@@ -62,7 +62,7 @@ Agrega más módulos basados en su escenario.
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page.sync="currentPage1"
+      v-model:currentPage="currentPage1"
       :page-size="100"
       layout="total, prev, pager, next"
       :total="1000">
@@ -73,7 +73,7 @@ Agrega más módulos basados en su escenario.
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page.sync="currentPage2"
+      v-model:currentPage="currentPage2"
       :page-sizes="[100, 200, 300, 400]"
       :page-size="100"
       layout="sizes, prev, pager, next"
@@ -85,7 +85,7 @@ Agrega más módulos basados en su escenario.
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page.sync="currentPage3"
+      v-model:currentPage="currentPage3"
       :page-size="100"
       layout="prev, pager, next, jumper"
       :total="1000">
@@ -96,7 +96,7 @@ Agrega más módulos basados en su escenario.
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page.sync="currentPage4"
+      v-model:currentPage="currentPage4"
       :page-sizes="[100, 200, 300, 400]"
       :page-size="100"
       layout="total, sizes, prev, pager, next, jumper"
@@ -124,6 +124,33 @@ Agrega más módulos basados en su escenario.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const handleSizeChange = (val) => {
+        console.log(`${val} items per page`);
+      };
+      const handleCurrentChange = (val) => {
+        console.log(`current page: ${val}`);
+      };
+
+      return {
+        currentPage1: ref(5),
+        currentPage2: ref(5),
+        currentPage3: ref(5),
+        currentPage4: ref(4),
+        handleSizeChange,
+        handleCurrentChange,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 
 :::
@@ -152,6 +179,21 @@ Cuando sólo hay una página, oculte la paginación configurando el atributo `hi
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      return {
+        value: ref(false),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -159,11 +201,11 @@ Cuando sólo hay una página, oculte la paginación configurando el atributo `hi
 | Atributo     | Descripción                              | Tipo     | Valores aceptados                        | Por defecto                            |
 | ------------ | ---------------------------------------- | -------- | ---------------------------------------- | -------------------------------------- |
 | small        | usar paginación pequeña                  | boolean  | —                                        | false                                  |
-| page-size    | cantidad de elementos por página, soporta el modificador .sync         | number   | —                                        | 10                                     |
+| page-size    | cantidad de elementos por página, soporta v-model Unión bidireccional         | number   | —                                        | 10                                     |
 | total        | total de elementos                       | number   | —                                        | —                                      |
 | page-count   | total de páginas. Asigna `total` o `page-count` y las páginas serán mostradas; si necesitas `page-sizes`, `total` es **requerido** | number   | —                                        | —                                      |
 | pager-count  | número de paginadores. La paginación colapsa cuando el número total de páginas excede este valor. | number | odd number between 5 and 21 | 7 |
-| current-page | número actual de la página, soporta el modificador .sync | number   | —                                        | 1                                      |
+| current-page | número actual de la página, soporta v-model Unión bidireccional | number   | —                                        | 1                                      |
 | layout       | layout de la paginación, elementos separados por coma | string   | `sizes`, `prev`, `pager`, `next`, `jumper`, `->`, `total`, `slot` | 'prev, pager, next, jumper, ->, total' |
 | page-sizes   | opciones para la cantidad de elementos por página | number[] | —                                        | [10, 20, 30, 40, 50, 100]              |
 | popper-class | clase propia para el `dropdown` del `select` del número de páginas | string   | —                                        | —                                      |

@@ -119,7 +119,9 @@ Despliegue múltiples líneas de texto y establezca su formato.
 :::demo Sobrecriba el atributo `content` del `el-tooltip` añadiendo un slot llamado `content`.
 ```html
 <el-tooltip placement="top">
-  <div slot="content">multiple lines<br/>second line</div>
+  <template #content>
+    multiple lines<br/>second line
+  </template>
   <el-button>Top center</el-button>
 </el-tooltip>
 ```
@@ -127,7 +129,7 @@ Despliegue múltiples líneas de texto y establezca su formato.
 
 ### Uso Avanzado
 
-Adicional a los usos básicos, existen algunos atributos que permiten la personalización: 
+Adicional a los usos básicos, existen algunos atributos que permiten la personalización:
 
 el atributo `transition` permite personalizar la animación con la que el Tooltip se muestra o se esconda, el valor por defecto es `el-fade-in-linear`.
 
@@ -179,18 +181,20 @@ Es necesario envolver los elementos de forma deshabilitados en un elemento conte
 ### Atributos
 | Atributo       | Descripción                              | Tipo    | Valores aceptados                        | Por defecto                              |
 | -------------- | ---------------------------------------- | ------- | ---------------------------------------- | ---------------------------------------- |
+| append-to-body | Si adjuntar el cuadro de diálogo al cuerpo | boolean                                          | —                 |   true              |
 | effect         | tema del Tooltip                         | string  | dark/light                               | dark                                     |
 | content        | contenido a mostrar, puede ser sobre-escrito por `slot#content` | string  | —                                        | —                                        |
 | placement      | posición del Tooltip                     | string  | top/top-start/top-end/bottom/bottom-start/bottom-end/left/left-start/left-end/right/right-start/right-end | bottom                                   |
-| value / v-model | visibilidad del Tooltip                  | boolean | —                                        | false                                    |
+| model-value / v-model | visibilidad del Tooltip                  | boolean | —                                        | false                                    |
 | disabled       | saber si el Tooltip se encuentra deshabilitado | boolean | —                                        | false                                    |
 | offset         | offset del Tooltip                       | number  | —                                        | 0                                        |
 | transition     | nombre de animación                      | string  | —                                        | el-fade-in-linear                        |
 | visible-arrow  | si una flecha es mostrada. Para mayor información, revisar la página de [Vue-popper](https://github.com/element-component/vue-popper) | boolean | —                                        | true                                     |
 | popper-options | parámetros de [popper.js](https://popper.js.org/documentation.html) | Object  | referirse a la documentación de [popper.js](https://popper.js.org/documentation.html) | `{ boundariesElement: 'body', gpuAcceleration: false }` |
-| open-delay     | retraso de la apariencia, en milisegundos | number  | —                                        | 0                                        |
+| show-after     | retraso de la apariencia, en milisegundos | number  | —                                        | 0                                        |
+| hide-after     | retraso en el cierre, en milisegundos | number  | —                                        | 0                                        |
+| auto-close     | tiempo a esperar en milisegundos para esconder el Tooltip | number  | —                                        | 0                                        |
 | manual         | si el Tooltipo será controlado de forma manual. `mouseenter` y `mouseleave` no tendrán efecto si fue establecido como `true` | boolean | —                                        | false                                    |
 | popper-class   | nombre de clase personalizada para el popper del Tooltip | string  | —                                        | —                                        |
 | enterable      | si el mouse puede entrar al Tooltip      | Boolean | —                                        | true                                     |
-| hide-after     | tiempo a esperar en milisegundos para esconder el Tooltip | number  | —                                        | 0                                        |
 | tabindex       | [tabindex](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex) of Tooltip | number   | —                      | 0              |

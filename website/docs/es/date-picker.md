@@ -7,7 +7,7 @@ Utilice Date Picker para introducir la fecha.
 
 Date Picker básico por "día".
 
-:::demo La medida está determinada por el atributo `type` . Puede habilitar las opciones rápidas creando un objeto `picker-options` con la propiedad `shortcuts`. La fecha desactivada se ajusta mediante `disabledDate`, que es una función.
+:::demo La medida está determinada por el atributo `type` . You can enable quick options via `shortcuts` property. La fecha desactivada se ajusta mediante `disabledDate`, que es una función.
 
 
 ```html
@@ -45,18 +45,18 @@ Date Picker básico por "día".
           value: new Date(),
         }, {
           text: 'Yesterday',
-          value: (() => {
+          value: () => {
             const date = new Date()
             date.setTime(date.getTime() - 3600 * 1000 * 24)
             return date
-          })(),
+          },
         }, {
           text: 'A week ago',
-          value: (() => {
+          value: () => {
             const date = new Date()
             date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
             return date
-          })(),
+          },
         }],
         value1: '',
         value2: '',
@@ -64,6 +64,51 @@ Date Picker básico por "día".
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, reactive, toRefs } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const state = reactive({
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [
+          {
+            text: 'Today',
+            value: new Date(),
+          },
+          {
+            text: 'Yesterday',
+            value: () => {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              return date;
+            },
+          },
+          {
+            text: 'A week ago',
+            value: () => {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              return date;
+            },
+          },
+        ],
+        value1: '',
+        value2: '',
+      });
+
+      return {
+        ...toRefs(state),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 
 :::
@@ -125,6 +170,28 @@ Puede elegir la semana, el mes, el año o varias fechas ampliando el componente 
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, reactive, toRefs } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const state = reactive({
+        value1: '',
+        value2: '',
+        value3: '',
+        value4: '',
+      });
+
+      return {
+        ...toRefs(state),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 
 :::
@@ -152,7 +219,6 @@ Se soporta la selección de un rango de fechas.
     <el-date-picker
       v-model="value2"
       type="daterange"
-      align="right"
       unlink-panels
       range-separator="To"
       start-placeholder="Start date"
@@ -169,28 +235,28 @@ Se soporta la selección de un rango de fechas.
       return {
         shortcuts: [{
           text: 'Last week',
-          value: (() => {
+          value: () => {
             const end = new Date()
             const start = new Date()
             start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
             return [start, end]
-          })(),
+          },
         }, {
           text: 'Last month',
-          value: (() => {
+          value: () => {
             const end = new Date()
             const start = new Date()
             start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
             return [start, end]
-          })(),
+          },
         }, {
           text: 'Last 3 months',
-          value: (() => {
+          value: () => {
             const end = new Date()
             const start = new Date()
             start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
             return [start, end]
-          })(),
+          },
         }],
         value1: '',
         value2: ''
@@ -198,6 +264,55 @@ Se soporta la selección de un rango de fechas.
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, reactive, toRefs } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const state = reactive({
+        shortcuts: [
+          {
+            text: 'Last week',
+            value: () => {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              return [start, end];
+            },
+          },
+          {
+            text: 'Last month',
+            value: () => {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              return [start, end];
+            },
+          },
+          {
+            text: 'Last 3 months',
+            value: () => {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              return [start, end];
+            },
+          },
+        ],
+        value1: '',
+        value2: '',
+      });
+
+      return {
+        ...toRefs(state),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 
 :::
@@ -224,7 +339,6 @@ Se admite la selección de un intervalo de un mes.
     <el-date-picker
       v-model="value2"
       type="monthrange"
-      align="right"
       unlink-panels
       range-separator="To"
       start-placeholder="Start month"
@@ -244,19 +358,19 @@ Se admite la selección de un intervalo de un mes.
           value: [new Date(), new Date()],
         }, {
           text: 'This year',
-          value: (() => {
+          value: () => {
             const end = new Date()
             const start = new Date(new Date().getFullYear(), 0)
             return [start, end]
-          })(),
+          },
         }, {
           text: 'Last 6 months',
-          value: (() => {
+          value: () => {
             const end = new Date()
             const start = new Date()
             start.setMonth(start.getMonth() - 6)
             return [start, end]
-          })(),
+          },
         }],
         value1: '',
         value2: ''
@@ -264,6 +378,49 @@ Se admite la selección de un intervalo de un mes.
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, reactive, toRefs } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const state = reactive({
+        shortcuts: [
+          {
+            text: 'This month',
+            value: [new Date(), new Date()],
+          },
+          {
+            text: 'This year',
+            value: () => {
+              const end = new Date();
+              const start = new Date(new Date().getFullYear(), 0);
+              return [start, end];
+            },
+          },
+          {
+            text: 'Last 6 months',
+            value: () => {
+              const end = new Date();
+              const start = new Date();
+              start.setMonth(start.getMonth() - 6);
+              return [start, end];
+            },
+          },
+        ],
+        value1: '',
+        value2: '',
+      });
+
+      return {
+        ...toRefs(state),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -290,7 +447,6 @@ Si el tipo es `daterange`, `default-value` establece el calendario del lado izqu
     <el-date-picker
       v-model="value2"
       type="daterange"
-      align="right"
       start-placeholder="Start Date"
       end-placeholder="End Date"
       :default-value="[new Date(2010, 9, 1), new Date(2010, 10, 1)]">
@@ -308,39 +464,38 @@ Si el tipo es `daterange`, `default-value` establece el calendario del lado izqu
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const value1 = ref('');
+      const value2 = ref('');
+
+      return {
+        value1,
+        value2,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
 ###  Formatos de Date
 Utilice `format` para controlar el formato del texto visualizado en el input. Utilice `value-format` para controlar el formato del valor vinculado.
 
-Por defecto, el componente acepta y emite un objeto Date. A continuación se soportan cadenas de formato, usando UTC 2017-01-02 03:04:05 como ejemplo:
+Por defecto, el componente acepta y emite un objeto Date.
+
+Check the list [here](https://day.js.org/docs/en/display/format#list-of-all-available-formats) of all available formats of Day.js.
 
 :::warning
 Preste atención a la capitalización
 :::
-
-| formato     | significado  | nota                                     | ejemplo       |
-| ----------- | ------------ | ---------------------------------------- | ------------- |
-| `yyyy`      | año          |                                          | 2017          |
-| `M`         | mes          | no acepta 0                              | 1             |
-| `MM`        | mes          |                                          | 01            |
-| `W`         | semana       | solamente para semanas en picker's `format`; no acepta 0 | 1             |
-| `WW`        | semana       | solamente para semanas en  picker's `format` | 01            |
-| `d`         | dia          | no acepta 0                              | 2             |
-| `dd`        | dia          |                                          | 02            |
-| `H`         | hora         | 24-hora reloj; no acepta 0               | 3             |
-| `HH`        | hora         | 24-hora reloj                            | 03            |
-| `h`         | hora         | 12-hora reloj;  debe usarse con `A` o `a`; no acepta 0 | 3             |
-| `hh`        | hour         | 12-hora reloj;  debe usarse con `A` o `a` | 03            |
-| `m`         | minuto       | no acepta 0                              | 4             |
-| `mm`        | minuto       |                                          | 04            |
-| `s`         | segundo      | no acepta 0                              | 5             |
-| `ss`        | segundo      |                                          | 05            |
-| `A`         | AM/PM        | solamente para `format`, mayusculas      | AM            |
-| `a`         | am/pm        | solamente para `format`, minúsculas      | am            |
-| `timestamp` | JS timestamp | solamente para `value-format`; valor vinculado debe ser un `number` | 1483326245000 |
-| `[MM]` | No hay caracteres de escape | Para escapar de los caracteres, colóquelos entre corchetes (ejemplo: [A] [MM]). | MM |
 
 :::demo
 ```html
@@ -353,6 +508,28 @@ Preste atención a la capitalización
       type="date"
       placeholder="Pick a Date"
       format="YYYY/MM/DD">
+    </el-date-picker>
+  </div>
+  <div class="block">
+    <span class="demonstration">Use value-format</span>
+    <div class="demonstration">Value：{{ value2 }}</div>
+    <el-date-picker
+      v-model="value2"
+      type="date"
+      placeholder="Pick a Date"
+      format="YYYY/MM/DD"
+      value-format="YYYY-MM-DD">
+    </el-date-picker>
+  </div>
+  <div class="block">
+    <span class="demonstration">Timestamp</span>
+    <div class="demonstration">Value：{{ value3 }}</div>
+    <el-date-picker
+      v-model="value3"
+      type="date"
+      placeholder="Pick a Date"
+      format="YYYY/MM/DD"
+      value-format="x">
     </el-date-picker>
   </div>
 </template>
@@ -368,6 +545,27 @@ Preste atención a la capitalización
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const value1 = ref('');
+      const value2 = ref('');
+      const value3 = ref('');
+
+      return {
+        value1,
+        value2,
+        value3,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -375,7 +573,7 @@ Preste atención a la capitalización
 
 Al seleccionar un intervalo de fechas, puede asignar la hora para la fecha de inicio y la fecha final.
 
-:::demo Por defecto, la hora de la fecha de inicio y final es `00:00:00`. Configurar `default-time`  puede cambiar la hora respectivamente. Acepta un array de hasta dos cadenas con el formato  `12:00:00`. La primera cadena fija la hora para la fecha de inicio y la segunda para la fecha final.
+:::demo Por defecto, la hora de la fecha de inicio y final es `00:00:00`. Configurar `default-time`  puede cambiar la hora respectivamente. Acepta un array de Date dos cadenas. La primera cadena fija la hora para la fecha de inicio y la segunda para la fecha final.
 
 ```html
 <template>
@@ -386,8 +584,8 @@ Al seleccionar un intervalo de fechas, puede asignar la hora para la fecha de in
       type="daterange"
       start-placeholder="Start date"
       end-placeholder="End date"
-      :default-time="[new Date(2000, 1, 1, 0 , 0,0), new Date(2000, 2, 1, 23 , 59,59)]">
-    </el-date-picker>
+      :default-time="defaultTime"
+    ></el-date-picker>
   </div>
 </template>
 
@@ -395,21 +593,53 @@ Al seleccionar un intervalo de fechas, puede asignar la hora para la fecha de in
   export default {
     data() {
       return {
-        value: ''
+        value: '',
+        defaultTime: [
+          new Date(2000, 1, 1, 0, 0, 0),
+          new Date(2000, 2, 1, 23, 59, 59)
+        ] // '00:00:00', '23:59:59'
       };
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const value = ref('');
+      const defaultTime = ref([
+        new Date(2000, 1, 1, 0, 0, 0),
+        new Date(2000, 2, 1, 23, 59, 59),
+      ]); // '00:00:00', '23:59:59'
+
+      return {
+        value,
+        defaultTime,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
+
+### Localization
+
+The default locale of is English, if you need to use other languages, please check [Internationalization](#/es/component/i18n)
+
+Note, date time locale (month name, first day of the week ...) are also configed in localization.
 
 ### Atributos
 | Atributo          | Descripción                              | Tipo              | Valores aceptados                        | Por defecto          |
 | ----------------- | ---------------------------------------- | ----------------- | ---------------------------------------- | -------------------- |
-| value / v-model    | valor enlazado | date(DatePicker) / array(DateRangePicker) | — | — |
+| model-value / v-model    | valor enlazado | date(DatePicker) / array(DateRangePicker) | — | — |
 | readonly          | si DatePicker es solo de lectura         | boolean           | —                                        | false                |
 | disabled          | si DatePicker esta deshabilitado         | boolean           | —                                        | false                |
-| size              | tamaño del input                         | string            | large/small/mini                         | —                    |
+| size              | tamaño del input                         | string            | large/medium/small/mini  | large |
 | editable          | si el input es editable                  | boolean           | —                                        | true                 |
 | clearable         | si se muestra el botón de borrado   | boolean           | —                                        | true                 |
 | placeholder       | placeholder cuando el modo NO es rango   | string            | —                                        | —                    |
@@ -417,33 +647,17 @@ Al seleccionar un intervalo de fechas, puede asignar la hora para la fecha de in
 | end-placeholder   | placeholder para la fecha final en modo rango | string            | —                                        | —                    |
 | type              | tipo de picker                           | string            | year/month/date/dates/datetime/ week/datetimerange/daterange/ monthrange | date                 |
 | format            | formato en que se muestra el valor en el input | string            | ver [date formats](#/es/component/date-picker#date-formats) | yyyy-MM-dd           |
-| align             | alineación                               | left/center/right | left                                     |                      |
 | popper-class      | nombre de clase personalizada para el dropdown de DatePicker | string            | —                                        | —                    |
-| picker-options    | opciones adicionales, chequee la tabla debajo | object            | —                                        | {}                   |
 | range-separator   | separador de rangos                      | string            | —                                        | '-'                  |
 | default-value     | opcional, valor por defecto para el calendario | Date              | cualquiera aceptado por `new Date()`     | —                    |
-| default-time      | opcional, los valores para las horas que se deben usar en la seleccion de fechas cuando se usa el modo rango | string[]          | Array de dos valores, cada uno es un string del estilo `12:00:00`. El primer elemento es para la fecha de inicio y el segundo es para la fecha final. | —                    |
-| value-format      | opcional, formato del valor enlazado. Si no esta especificado, el valor enlazado será un objeto Date. | string            | ver [date formats](#/es/component/date-picker#date-formats) | —                    |
+| default-time | optional, the time value to use when selecting date range | Date[] | Array with length 2, each item is a Date. The first item for the start date and then second item for the end date | — |
+| value-format | opcional, formato del valor enlazado. Si no esta especificado, el valor enlazado será un objeto Date. | string | ver [date formats](#/es/component/date-picker#date-formats) | — |
 | name              | igual que `name` en el input nativo      | string            | —                                        | —                    |
 | unlink-panels     | desvincular los dos paneles de fecha en el range-picker | boolean           | —                                        | false                |
 | prefix-icon       | Clase personalizada para el icono prefijado | string            | —                                        | el-icon-date         |
 | clear-icon        | Clase personalizada para el icono `clear` | string            | —                                        | el-icon-circle-close |
-
-### Opciones del Picker
-| Atributo       | Descripción                                                  | Tipo                           | Valores aceptados | Por defecto |
-| -------------- | ------------------------------------------------------------ | ------------------------------ | ----------------- | ----------- |
-| shortcuts      | { text, onClick } un array de objetos para establecer opciones de acceso directo, verifique la tabla siguiente | object[]                       | —                 | —           |
 | disabledDate   | una función que determina si una fecha está desactivada con esa fecha como parámetro. Debería devolver un valor booleano | function                       | —                 | —           |
-| cellClassName | establecer nombre de clase personalizado | Function(Date) | — | — |
-| firstDayOfWeek | primer día de la semana                                      | Number                         | 1 to 7            | 7           |
-| onPick         | una función que se dispara cuando se cambia la fecha seleccionada. Solamente para `daterange` y `datetimerange`. | Function({ maxDate, minDate }) | -                 | -           |
-
-### Accesso directo
-| Atributo | Descripción                              | Tipo     | Valores aceptados | Por defecto |
-| -------- | ---------------------------------------- | -------- | ----------------- | ----------- |
-| text     | título del acceso directo                | string   | —                 | —           |
-| onClick  | una función se dispara al hacer clic en el acceso directo, con`vm`como parámetro. Puede modificar el valor del picker emitiendo el evento `pick`. Ejemplo: `vm.$emit('pick', new Date())` | function | —                 | —           |
-
+| shortcuts | un array de objetos para establecer opciones de acceso directo | object[{ text: string, value: date / function }] | — | — |
 
 ### Eventos
 | Nombre | Descripción                              | Parametros                   |
@@ -451,6 +665,7 @@ Al seleccionar un intervalo de fechas, puede asignar la hora para la fecha de in
 | change | se dispara cuando el usuario confirma el valor | valor enlazado al componente |
 | blur   | se dispara cuando el input pierde el foco | instancia del componente     |
 | focus  | se dispara cuando el input obtiene el foco | instancia del componente     |
+| calendar-change | se dispara cuando se cambia la fecha seleccionada. Solamente para `daterange` | [Date, Date] |
 
 ### Metodos
 | Metodo | Descripción                | Parameteros |

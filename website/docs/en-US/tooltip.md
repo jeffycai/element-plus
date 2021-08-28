@@ -119,7 +119,9 @@ Display multiple lines of text and set their format.
 :::demo Override attribute `content` of `el-tooltip` by adding a slot named `content`.
 ```html
 <el-tooltip placement="top">
-  <div slot="content">multiple lines<br/>second line</div>
+  <template #content>
+    multiple lines<br/>second line
+  </template>
   <el-button>Top center</el-button>
 </el-tooltip>
 ```
@@ -179,18 +181,20 @@ Disabled form elements are not supported for Tooltip, more information can be fo
 ### Attributes
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
 |----------------|---------|-----------|-------------|--------|
+| append-to-body | whether to append Dialog itself to body. A nested Dialog should have this attribute set to `true` | boolean   | — | true |
 |  effect   |  Tooltip theme  | string   | dark/light  | dark  |
 |  content  | display content, can be overridden by `slot#content` | String   | — | — |
 |  placement | position of Tooltip   | string    |  top/top-start/top-end/bottom/bottom-start/bottom-end/left/left-start/left-end/right/right-start/right-end |  bottom |
-|  value / v-model | visibility of Tooltip | boolean           | — |  false |
+|  model-value / v-model | visibility of Tooltip | boolean           | — |  false |
 |  disabled       |  whether Tooltip is disabled  | boolean    | — |  false |
 |  offset        |  offset of the Tooltip   | number    | — |  0 |
 |  transition     |  animation name | string             | — | el-fade-in-linear |
 |  visible-arrow   |  whether an arrow is displayed. For more information, check [Vue-popper](https://github.com/element-component/vue-popper) page | boolean | — | true |
 |  popper-options        | [popper.js](https://popper.js.org/documentation.html) parameters | Object            | refer to [popper.js](https://popper.js.org/documentation.html) doc | `{ boundariesElement: 'body', gpuAcceleration: false }` |
-| open-delay | delay of appearance, in millisecond | number | — | 0 |
+| show-after | delay of appearance, in millisecond | number | — | 0 |
+| hide-after | delay of disappear, in millisecond | number | — | 0 |
+| auto-close | timeout in milliseconds to hide tooltip | number | — | 0 |
 | manual | whether to control Tooltip manually. `mouseenter` and `mouseleave` won't have effects if set to `true` | boolean | — | false |
 |  popper-class  |  custom class name for Tooltip's popper | string | — | — |
 | enterable | whether the mouse can enter the tooltip | Boolean | — | true |
-| hide-after | timeout in milliseconds to hide tooltip | number | — | 0 |
 | tabindex   | [tabindex](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex) of Tooltip | number | — | 0 |

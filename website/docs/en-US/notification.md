@@ -4,7 +4,7 @@ Displays a global notification message at a corner of the page.
 
 ### Basic usage
 
-:::demo Element has registered the `$notify` method and it receives an object as its parameter. In the simplest case, you can set the `title` field and the` message` field for the title and body of the notification. By default, the notification automatically closes after 4500ms, but by setting `duration` you can control its duration. Specifically, if set to `0`, it will not close automatically. Note that `duration` receives a `Number` in milliseconds.
+:::demo Element Plus has registered the `$notify` method and it receives an object as its parameter. In the simplest case, you can set the `title` field and the` message` field for the title and body of the notification. By default, the notification automatically closes after 4500ms, but by setting `duration` you can control its duration. Specifically, if set to `0`, it will not close automatically. Note that `duration` receives a `Number` in milliseconds.
 
 ```html
 <template>
@@ -21,11 +21,11 @@ Displays a global notification message at a corner of the page.
 </template>
 
 <script>
+  import { h } from 'vue';
+
   export default {
     methods: {
       open1() {
-        const h = this.$createElement;
-
         this.$notify({
           title: 'Title',
           message: h('i', { style: 'color: teal' }, 'This is a reminder')
@@ -42,6 +42,38 @@ Displays a global notification message at a corner of the page.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, h } from 'vue';
+  import { ElNotification } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open1 = () => {
+        ElNotification({
+          title: 'Title',
+          message: h('i', { style: 'color: teal' }, 'This is a reminder')
+        });
+      };
+
+      const open2 = () => {
+        ElNotification({
+          title: 'Prompt',
+          message: 'This is a message that does not automatically close',
+          duration: 0
+        });
+      };
+      return {
+        open1,
+        open2,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -49,7 +81,7 @@ Displays a global notification message at a corner of the page.
 
 We provide four types: success, warning, info and error.
 
-:::demo Element provides four notification types: `success`, `warning`, `info` and `error`. They are set by the `type` field, and other values will be ignored. We also registered methods for these types that can be invoked directly like `open3` and `open4` without passing a `type` field.
+:::demo Element Plus provides four notification types: `success`, `warning`, `info` and `error`. They are set by the `type` field, and other values will be ignored. We also registered methods for these types that can be invoked directly like `open3` and `open4` without passing a `type` field.
 ```html
 <template>
   <el-button
@@ -109,6 +141,55 @@ We provide four types: success, warning, info and error.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElNotification } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open1 = () => {
+        ElNotification({
+          title: 'Success',
+          message: 'This is a success message',
+          type: 'success',
+        });
+      };
+
+      const open2 = () => {
+        ElNotification({
+          title: 'Warning',
+          message: 'This is a warning message',
+          type: 'warning',
+        });
+      };
+
+      const open3 = () => {
+        ElNotification({
+          title: 'Info',
+          message: 'This is an info message',
+        });
+      };
+
+      const open4 = () => {
+        ElNotification({
+          title: 'Error',
+          message: 'This is an error message',
+        });
+      };
+      return {
+        open1,
+        open2,
+        open3,
+        open4,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -177,6 +258,56 @@ Notification can emerge from any corner you like.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElNotification } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open1 = () => {
+        ElNotification({
+          title: 'Custom Position',
+          message: 'I\'m at the top right corner',
+        });
+      };
+
+      const open2 = () => {
+        ElNotification({
+          title: 'Custom Position',
+          message: 'I\'m at the bottom right corner',
+          position: 'bottom-right',
+        });
+      };
+
+      const open3 = () => {
+        ElNotification({
+          title: 'Custom Position',
+          message: 'I\'m at the bottom left corner',
+          position: 'bottom-left',
+        });
+      };
+
+      const open4 = () => {
+        ElNotification({
+          title: 'Custom Position',
+          message: 'I\'m at the top left corner',
+          position: 'top-left',
+        });
+      };
+      return {
+        open1,
+        open2,
+        open3,
+        open4,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -207,6 +338,31 @@ Customize Notification's offset from the edge of the screen.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElNotification } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open = () => {
+        ElNotification.success({
+          title: 'Success',
+          message: 'This is a success message',
+          offset: 100,
+        });
+      };
+
+      return {
+        open,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -236,6 +392,31 @@ Customize Notification's offset from the edge of the screen.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElNotification } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open = () => {
+        ElNotification({
+          title: 'HTML String',
+          dangerouslyUseHTMLString: true,
+          message: '<strong>This is <i>HTML</i> string</strong>',
+        });
+      };
+
+      return {
+        open,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -270,22 +451,45 @@ It is possible to hide the close button
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElNotification } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open = () => {
+        ElNotification.success({
+          title: 'Info',
+          message: 'This is a message without close button',
+          showClose: false,
+        });
+      };
+
+      return {
+        open,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
 ### Global method
 
-Element has added a global method `$notify` for Vue.prototype. So in a vue instance you can call `Notification` like what we did in this page.
+Element Plus has added a global method `$notify` for `app.config.globalProperties`. So in a vue instance you can call `Notification` like what we did in this page.
 
 ### Local import
 
-Import `Notification`:
-
 ```javascript
-import { Notification } from 'element-ui';
+import { ElNotification } from 'element-plus';
 ```
 
-In this case you should call `Notification(options)`. We have also registered methods for different types, e.g. `Notification.success(options)`. You can call `Notification.closeAll()` to manually close all the instances.
+In this case you should call `ElNotification(options)`. We have also registered methods for different types, e.g. `ElNotification.success(options)`. You can call `ElNotification.closeAll()` to manually close all the instances.
 
 ### Options
 | Attribute      | Description          | Type      | Accepted Values       | Default  |

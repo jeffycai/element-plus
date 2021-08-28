@@ -1,26 +1,20 @@
-import { castArray } from 'lodash'
-
-import {
-  isObject,
-  isArray,
-  isString,
-  capitalize,
-  hyphenate,
-  looseEqual,
-  extend,
-  camelize,
-  hasOwn,
-  toRawType,
-} from '@vue/shared'
-
-import isServer from './isServer'
-import type { AnyFunction } from './types'
-import type { Ref } from 'vue'
 import { getCurrentInstance } from 'vue'
+import { camelize, capitalize, extend, hasOwn, hyphenate, isArray, isObject, isString, isFunction, looseEqual, toRawType } from '@vue/shared'
+import isEqualWith from 'lodash/isEqualWith'
+import isServer from './isServer'
+import { warn } from './error'
 
-export type PartialCSSStyleDeclaration = Partial<
-  Pick<CSSStyleDeclaration, 'transform' | 'transition' | 'animation'>
->
+import type { ComponentPublicInstance, CSSProperties, Ref } from 'vue'
+import type { AnyFunction, TimeoutHandle, Hash, Nullable } from './types'
+
+// type polyfill for compat isIE method
+declare global {
+  interface Document {
+    documentMode?: any
+  }
+}
+
+export const SCOPE = 'Util'
 
 export function toObject<T>(arr: Array<T>): Record<string, T> {
   const res = {}
@@ -32,7 +26,7 @@ export function toObject<T>(arr: Array<T>): Record<string, T> {
   return res
 }
 
-export const getValueByPath = (obj: any, paths = ''): unknown => {
+export const getValueByPath = (obj, paths = ''): unknown => {
   let ret: unknown = obj
   paths.split('.').map(path => {
     ret = ret?.[path]
@@ -54,9 +48,14 @@ export function getPropByPath(obj: any, path: string, strict: boolean): {
   for (i; i < keyArr.length - 1; i++) {
     if (!tempObj && !strict) break
     const key = keyArr[i]
-    tempObj = tempObj?.[key]
-    if (!tempObj && strict) {
-      throw new Error('please transfer a valid prop path to form item!')
+
+    if (key in tempObj) {
+      tempObj = tempObj[key]
+    } else {
+      if (strict) {
+        throw new Error('please transfer a valid prop path to form item!')
+      }
+      break
     }
   }
   return {
@@ -82,25 +81,27 @@ export const escapeRegexpString = (value = ''): string =>
 
 // coerce truthy value to array
 export const coerceTruthyValueToArray = arr => {
-  if (!arr) { return [] }
-  return castArray(arr)
+  if (!arr && arr !== 0) {
+    return []
+  }
+  return Array.isArray(arr) ? arr : [arr]
 }
 
-export const isIE = function(): boolean {
-  return !isServer && !isNaN(Number(document.DOCUMENT_NODE))
+export const isIE = function (): boolean {
+  return !isServer && !isNaN(Number(document.documentMode))
 }
 
-export const isEdge = function(): boolean {
+export const isEdge = function (): boolean {
   return !isServer && navigator.userAgent.indexOf('Edge') > -1
 }
 
-export const isFirefox = function(): boolean {
+export const isFirefox = function (): boolean {
   return !isServer && !!window.navigator.userAgent.match(/firefox/i)
 }
 
-export const autoprefixer = function(
-  style: PartialCSSStyleDeclaration,
-): PartialCSSStyleDeclaration {
+export const autoprefixer = function (
+  style: CSSProperties,
+): CSSProperties {
   const rules = ['transform', 'transition', 'animation']
   const prefixes = ['ms-', 'webkit-']
   rules.forEach(rule => {
@@ -136,7 +137,7 @@ export const isHTMLElement = (val: unknown) => toRawType(val).startsWith('HTML')
 
 export function rafThrottle<T extends AnyFunction<any>>(fn: T): AnyFunction<void> {
   let locked = false
-  return function(...args: any[]) {
+  return function (...args: any[]) {
     if (locked) return
     locked = true
     window.requestAnimationFrame(() => {
@@ -145,8 +146,6 @@ export function rafThrottle<T extends AnyFunction<any>>(fn: T): AnyFunction<void
     })
   }
 }
-
-export const objToArray = castArray
 
 export const clearTimer = (timer: Ref<TimeoutHandle>) => {
   clearTimeout(timer.value)
@@ -167,7 +166,7 @@ export function entries<T>(obj: Hash<T>): [string, T][] {
     .map((key: string) => ([key, obj[key]]))
 }
 
-export function isUndefined(val: any) {
+export function isUndefined(val: any): val is undefined {
   return val === void 0
 }
 
@@ -180,3 +179,86 @@ export function useGlobalConfig() {
   }
   return {}
 }
+
+export const arrayFindIndex = function <T = any>(
+  arr: Array<T>,
+  pred: (args: T) => boolean,
+): number {
+  return arr.findIndex(pred)
+}
+
+export const arrayFind = function <T>(
+  arr: Array<T>,
+  pred: (args: T) => boolean,
+): T {
+  return arr.find(pred)
+}
+
+export function isEmpty(val: unknown) {
+  if (
+    !val && val !== 0 ||
+    isArray(val) && !val.length ||
+    isObject(val) && !Object.keys(val).length
+  ) return true
+
+  return false
+}
+
+export function arrayFlat(arr: unknown[]) {
+  return arr.reduce((acm: unknown[], item) => {
+    const val = Array.isArray(item) ? arrayFlat(item) : item
+    return acm.concat(val)
+  }, [])
+}
+
+export function deduplicate<T>(arr: T[]) {
+  return Array.from(new Set(arr))
+}
+
+/**
+ * Unwraps refed value
+ * @param ref Refed value
+ */
+export function $<T>(ref: Ref<T>) {
+  return ref.value
+}
+
+export function addUnit(value: string | number) {
+  if (isString(value)) {
+    return value
+  } else if (isNumber(value)) {
+    return value + 'px'
+  }
+  if (process.env.NODE_ENV === 'development') {
+    warn(SCOPE, 'binding value must be a string or number')
+  }
+  return ''
+}
+
+/**
+ * Enhance `lodash.isEqual` for it always return false even two functions have completely same statements.
+ * @param obj The value to compare
+ * @param other The other value to compare
+ * @returns Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *  lodash.isEqual(() => 1, () => 1)      // false
+ *  isEqualWith(() => 1, () => 1)         // true
+ */
+export function isEqualWithFunction (obj: any, other: any) {
+  return isEqualWith(obj, other, (objVal, otherVal) => {
+    return isFunction(objVal) && isFunction(otherVal) ? `${objVal}` === `${otherVal}` : undefined
+  })
+}
+
+/**
+ * Generate function for attach ref for the h renderer
+ * @param ref Ref<HTMLElement | ComponentPublicInstance>
+ * @returns (val: T) => void
+ */
+
+export const refAttacher =
+  <T extends (HTMLElement | ComponentPublicInstance)>(ref: Ref<T>) => {
+    return (val: T) => {
+      ref.value = val
+    }
+  }

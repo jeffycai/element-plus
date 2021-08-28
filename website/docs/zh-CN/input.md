@@ -17,13 +17,15 @@ Input 为受控组件，它**总会显示 Vue 绑定值**。
 <el-input v-model="input" placeholder="请输入内容"></el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent ({
+  setup() {
     return {
-      input: ''
+      input: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -40,13 +42,15 @@ export default {
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent ({
+  setup() {
     return {
-      input: ''
+      input: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -63,13 +67,15 @@ export default {
 </el-input>
 
 <script>
-  export default {
-    data() {
-      return {
-        input: ''
-      }
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent ({
+  setup() {
+    return {
+      input: ref('')
     }
   }
+})
 </script>
 ```
 :::
@@ -82,13 +88,15 @@ export default {
 <el-input placeholder="请输入密码" v-model="input" show-password></el-input>
 
 <script>
-  export default {
-    data() {
-      return {
-        input: ''
-      }
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent ({
+  setup() {
+    return {
+      input: ref('')
     }
   }
+})
 </script>
 ```
 :::
@@ -117,26 +125,39 @@ export default {
   <el-input
     placeholder="请选择日期"
     v-model="input3">
-    <i slot="suffix" class="el-input__icon el-icon-date"></i>
+    <template #suffix>
+      <i class="el-input__icon el-icon-date"></i>
+    </template>
   </el-input>
   <el-input
     placeholder="请输入内容"
     v-model="input4">
-    <i slot="prefix" class="el-input__icon el-icon-search"></i>
+    <template #prefix>
+      <i class="el-input__icon el-icon-search"></i>
+    </template>
   </el-input>
 </div>
 
+<style>
+  .demo-input-label {
+    display: inline-block;
+    width: 130px;
+  }
+</style>
+
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent ({
+  setup() {
     return {
-      input1: '',
-      input2: '',
-      input3: '',
-      input4: ''
+      input1: ref(''),
+      input2: ref(''),
+      input3: ref(''),
+      input4: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -155,13 +176,15 @@ export default {
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent ({
+  setup() {
     return {
-      textarea: ''
+      textarea: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -187,14 +210,16 @@ export default {
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent ({
+  setup() {
     return {
-      textarea1: '',
-      textarea2: ''
+      textarea1: ref(''),
+      textarea2: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -204,27 +229,37 @@ export default {
 可前置或后置元素，一般为标签或按钮
 
 :::demo 可通过 slot 来指定在 input 中前置或者后置内容。
+
 ```html
 <div>
   <el-input placeholder="请输入内容" v-model="input1">
-    <template slot="prepend">Http://</template>
+    <template #prepend>Http://</template>
   </el-input>
 </div>
-<div style="margin-top: 15px;">
+<div style="margin-top: 15px">
   <el-input placeholder="请输入内容" v-model="input2">
-    <template slot="append">.com</template>
+    <template #append>.com</template>
   </el-input>
 </div>
-<div style="margin-top: 15px;">
-  <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
-    <el-select v-model="select" slot="prepend" placeholder="请选择">
-      <el-option label="餐厅名" value="1"></el-option>
-      <el-option label="订单号" value="2"></el-option>
-      <el-option label="用户电话" value="3"></el-option>
-    </el-select>
-    <el-button slot="append" icon="el-icon-search"></el-button>
+<div style="margin-top: 15px">
+  <el-input
+    placeholder="请输入内容"
+    v-model="input3"
+    class="input-with-select"
+  >
+    <template #prepend>
+      <el-select v-model="select" placeholder="请选择">
+        <el-option label="餐厅名" value="1"></el-option>
+        <el-option label="订单号" value="2"></el-option>
+        <el-option label="用户电话" value="3"></el-option>
+      </el-select>
+    </template>
+    <template #append>
+      <el-button icon="el-icon-search"></el-button>
+    </template>
   </el-input>
 </div>
+
 <style>
   .el-select .el-input {
     width: 130px;
@@ -233,17 +268,20 @@ export default {
     background-color: #fff;
   }
 </style>
+
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent ({
+  setup() {
     return {
-      input1: '',
-      input2: '',
-      input3: '',
-      select: ''
+      input1: ref(''),
+      input2: ref(''),
+      input3: ref(''),
+      select: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -279,16 +317,18 @@ export default {
 </div>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent ({
+  setup() {
     return {
-      input1: '',
-      input2: '',
-      input3: '',
-      input4: ''
+      input1: ref(''),
+      input2: ref(''),
+      input3: ref(''),
+      input4: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -323,86 +363,162 @@ export default {
   </el-col>
 </el-row>
 <script>
-  export default {
-    data() {
-      return {
-        restaurants: [],
-        state1: '',
-        state2: ''
+import { defineComponent, ref, onMounted } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const restaurants = ref([]);
+    const querySearch = (queryString, cb) => {
+      var results = queryString
+        ? restaurants.value.filter(createFilter(queryString))
+        : restaurants.value;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
+    };
+    const createFilter = (queryString) => {
+      return (restaurant) => {
+        return (
+          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
+          0
+        );
       };
-    },
-    methods: {
-      querySearch(queryString, cb) {
-        var restaurants = this.restaurants;
-        var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
-        // 调用 callback 返回建议列表的数据
-        cb(results);
-      },
-      createFilter(queryString) {
-        return (restaurant) => {
-          return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      loadAll() {
-        return [
-          { "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
-          { "value": "Hot honey 首尔炸鸡（仙霞路）", "address": "上海市长宁区淞虹路661号" },
-          { "value": "新旺角茶餐厅", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
-          { "value": "泷千家(天山西路店)", "address": "天山西路438号" },
-          { "value": "胖仙女纸杯蛋糕（上海凌空店）", "address": "上海市长宁区金钟路968号1幢18号楼一层商铺18-101" },
-          { "value": "贡茶", "address": "上海市长宁区金钟路633号" },
-          { "value": "豪大大香鸡排超级奶爸", "address": "上海市嘉定区曹安公路曹安路1685号" },
-          { "value": "茶芝兰（奶茶，手抓饼）", "address": "上海市普陀区同普路1435号" },
-          { "value": "十二泷町", "address": "上海市北翟路1444弄81号B幢-107" },
-          { "value": "星移浓缩咖啡", "address": "上海市嘉定区新郁路817号" },
-          { "value": "阿姨奶茶/豪大大", "address": "嘉定区曹安路1611号" },
-          { "value": "新麦甜四季甜品炸鸡", "address": "嘉定区曹安公路2383弄55号" },
-          { "value": "Monica摩托主题咖啡店", "address": "嘉定区江桥镇曹安公路2409号1F，2383弄62号1F" },
-          { "value": "浮生若茶（凌空soho店）", "address": "上海长宁区金钟路968号9号楼地下一层" },
-          { "value": "NONO JUICE  鲜榨果汁", "address": "上海市长宁区天山西路119号" },
-          { "value": "CoCo都可(北新泾店）", "address": "上海市长宁区仙霞西路" },
-          { "value": "快乐柠檬（神州智慧店）", "address": "上海市长宁区天山西路567号1层R117号店铺" },
-          { "value": "Merci Paul cafe", "address": "上海市普陀区光复西路丹巴路28弄6号楼819" },
-          { "value": "猫山王（西郊百联店）", "address": "上海市长宁区仙霞西路88号第一层G05-F01-1-306" },
-          { "value": "枪会山", "address": "上海市普陀区棕榈路" },
-          { "value": "纵食", "address": "元丰天山花园(东门) 双流路267号" },
-          { "value": "钱记", "address": "上海市长宁区天山西路" },
-          { "value": "壹杯加", "address": "上海市长宁区通协路" },
-          { "value": "唦哇嘀咖", "address": "上海市长宁区新泾镇金钟路999号2幢（B幢）第01层第1-02A单元" },
-          { "value": "爱茜茜里(西郊百联)", "address": "长宁区仙霞西路88号1305室" },
-          { "value": "爱茜茜里(近铁广场)", "address": "上海市普陀区真北路818号近铁城市广场北区地下二楼N-B2-O2-C商铺" },
-          { "value": "鲜果榨汁（金沙江路和美广店）", "address": "普陀区金沙江路2239号金沙和美广场B1-10-6" },
-          { "value": "开心丽果（缤谷店）", "address": "上海市长宁区威宁路天山路341号" },
-          { "value": "超级鸡车（丰庄路店）", "address": "上海市嘉定区丰庄路240号" },
-          { "value": "妙生活果园（北新泾店）", "address": "长宁区新渔路144号" },
-          { "value": "香宜度麻辣香锅", "address": "长宁区淞虹路148号" },
-          { "value": "凡仔汉堡（老真北路店）", "address": "上海市普陀区老真北路160号" },
-          { "value": "港式小铺", "address": "上海市长宁区金钟路968号15楼15-105室" },
-          { "value": "蜀香源麻辣香锅（剑河路店）", "address": "剑河路443-1" },
-          { "value": "北京饺子馆", "address": "长宁区北新泾街道天山西路490-1号" },
-          { "value": "饭典*新简餐（凌空SOHO店）", "address": "上海市长宁区金钟路968号9号楼地下一层9-83室" },
-          { "value": "焦耳·川式快餐（金钟路店）", "address": "上海市金钟路633号地下一层甲部" },
-          { "value": "动力鸡车", "address": "长宁区仙霞西路299弄3号101B" },
-          { "value": "浏阳蒸菜", "address": "天山西路430号" },
-          { "value": "四海游龙（天山西路店）", "address": "上海市长宁区天山西路" },
-          { "value": "樱花食堂（凌空店）", "address": "上海市长宁区金钟路968号15楼15-105室" },
-          { "value": "壹分米客家传统调制米粉(天山店)", "address": "天山西路428号" },
-          { "value": "福荣祥烧腊（平溪路店）", "address": "上海市长宁区协和路福泉路255弄57-73号" },
-          { "value": "速记黄焖鸡米饭", "address": "上海市长宁区北新泾街道金钟路180号1层01号摊位" },
-          { "value": "红辣椒麻辣烫", "address": "上海市长宁区天山西路492号" },
-          { "value": "(小杨生煎)西郊百联餐厅", "address": "长宁区仙霞西路88号百联2楼" },
-          { "value": "阳阳麻辣烫", "address": "天山西路389号" },
-          { "value": "南拳妈妈龙虾盖浇饭", "address": "普陀区金沙江路1699号鑫乐惠美食广场A13" }
-        ];
-      },
-      handleSelect(item) {
-        console.log(item);
-      }
-    },
-    mounted() {
-      this.restaurants = this.loadAll();
-    }
-  }
+    };
+    const loadAll = () => {
+      return [
+        { value: "三全鲜食（北新泾店）", address: "长宁区新渔路144号" },
+        {
+          value: "Hot honey 首尔炸鸡（仙霞路）",
+          address: "上海市长宁区淞虹路661号",
+        },
+        {
+          value: "新旺角茶餐厅",
+          address: "上海市普陀区真北路988号创邑金沙谷6号楼113",
+        },
+        { value: "泷千家(天山西路店)", address: "天山西路438号" },
+        {
+          value: "胖仙女纸杯蛋糕（上海凌空店）",
+          address: "上海市长宁区金钟路968号1幢18号楼一层商铺18-101",
+        },
+        { value: "贡茶", address: "上海市长宁区金钟路633号" },
+        {
+          value: "豪大大香鸡排超级奶爸",
+          address: "上海市嘉定区曹安公路曹安路1685号",
+        },
+        {
+          value: "茶芝兰（奶茶，手抓饼）",
+          address: "上海市普陀区同普路1435号",
+        },
+        { value: "十二泷町", address: "上海市北翟路1444弄81号B幢-107" },
+        { value: "星移浓缩咖啡", address: "上海市嘉定区新郁路817号" },
+        { value: "阿姨奶茶/豪大大", address: "嘉定区曹安路1611号" },
+        { value: "新麦甜四季甜品炸鸡", address: "嘉定区曹安公路2383弄55号" },
+        {
+          value: "Monica摩托主题咖啡店",
+          address: "嘉定区江桥镇曹安公路2409号1F，2383弄62号1F",
+        },
+        {
+          value: "浮生若茶（凌空soho店）",
+          address: "上海长宁区金钟路968号9号楼地下一层",
+        },
+        { value: "NONO JUICE  鲜榨果汁", address: "上海市长宁区天山西路119号" },
+        { value: "CoCo都可(北新泾店）", address: "上海市长宁区仙霞西路" },
+        {
+          value: "快乐柠檬（神州智慧店）",
+          address: "上海市长宁区天山西路567号1层R117号店铺",
+        },
+        {
+          value: "Merci Paul cafe",
+          address: "上海市普陀区光复西路丹巴路28弄6号楼819",
+        },
+        {
+          value: "猫山王（西郊百联店）",
+          address: "上海市长宁区仙霞西路88号第一层G05-F01-1-306",
+        },
+        { value: "枪会山", address: "上海市普陀区棕榈路" },
+        { value: "纵食", address: "元丰天山花园(东门) 双流路267号" },
+        { value: "钱记", address: "上海市长宁区天山西路" },
+        { value: "壹杯加", address: "上海市长宁区通协路" },
+        {
+          value: "唦哇嘀咖",
+          address: "上海市长宁区新泾镇金钟路999号2幢（B幢）第01层第1-02A单元",
+        },
+        { value: "爱茜茜里(西郊百联)", address: "长宁区仙霞西路88号1305室" },
+        {
+          value: "爱茜茜里(近铁广场)",
+          address:
+            "上海市普陀区真北路818号近铁城市广场北区地下二楼N-B2-O2-C商铺",
+        },
+        {
+          value: "鲜果榨汁（金沙江路和美广店）",
+          address: "普陀区金沙江路2239号金沙和美广场B1-10-6",
+        },
+        {
+          value: "开心丽果（缤谷店）",
+          address: "上海市长宁区威宁路天山路341号",
+        },
+        { value: "超级鸡车（丰庄路店）", address: "上海市嘉定区丰庄路240号" },
+        { value: "妙生活果园（北新泾店）", address: "长宁区新渔路144号" },
+        { value: "香宜度麻辣香锅", address: "长宁区淞虹路148号" },
+        {
+          value: "凡仔汉堡（老真北路店）",
+          address: "上海市普陀区老真北路160号",
+        },
+        { value: "港式小铺", address: "上海市长宁区金钟路968号15楼15-105室" },
+        { value: "蜀香源麻辣香锅（剑河路店）", address: "剑河路443-1" },
+        { value: "北京饺子馆", address: "长宁区北新泾街道天山西路490-1号" },
+        {
+          value: "饭典*新简餐（凌空SOHO店）",
+          address: "上海市长宁区金钟路968号9号楼地下一层9-83室",
+        },
+        {
+          value: "焦耳·川式快餐（金钟路店）",
+          address: "上海市金钟路633号地下一层甲部",
+        },
+        { value: "动力鸡车", address: "长宁区仙霞西路299弄3号101B" },
+        { value: "浏阳蒸菜", address: "天山西路430号" },
+        { value: "四海游龙（天山西路店）", address: "上海市长宁区天山西路" },
+        {
+          value: "樱花食堂（凌空店）",
+          address: "上海市长宁区金钟路968号15楼15-105室",
+        },
+        { value: "壹分米客家传统调制米粉(天山店)", address: "天山西路428号" },
+        {
+          value: "福荣祥烧腊（平溪路店）",
+          address: "上海市长宁区协和路福泉路255弄57-73号",
+        },
+        {
+          value: "速记黄焖鸡米饭",
+          address: "上海市长宁区北新泾街道金钟路180号1层01号摊位",
+        },
+        { value: "红辣椒麻辣烫", address: "上海市长宁区天山西路492号" },
+        {
+          value: "(小杨生煎)西郊百联餐厅",
+          address: "长宁区仙霞西路88号百联2楼",
+        },
+        { value: "阳阳麻辣烫", address: "天山西路389号" },
+        {
+          value: "南拳妈妈龙虾盖浇饭",
+          address: "普陀区金沙江路1699号鑫乐惠美食广场A13",
+        },
+      ];
+    };
+    const handleSelect = (item) => {
+      console.log(item);
+    };
+    onMounted(() => {
+      restaurants.value = loadAll();
+    });
+    return {
+      restaurants,
+      state1: ref(''),
+      state2: ref(''),
+      querySearch,
+      createFilter,
+      loadAll,
+      handleSelect,
+    };
+  },
+});
 </script>
 ```
 :::
@@ -411,130 +527,206 @@ export default {
 
 可自定义输入建议的显示
 
-:::demo 使用`scoped slot`自定义输入建议的模板。该 scope 的参数为`item`，表示当前输入建议对象。
+:::demo 使用`#default`自定义输入建议的模板。该 scope 的参数为`item`，表示当前输入建议对象。
 ```html
 <el-autocomplete
   popper-class="my-autocomplete"
   v-model="state"
   :fetch-suggestions="querySearch"
   placeholder="请输入内容"
-  @select="handleSelect">
-  <i
-    class="el-icon-edit el-input__icon"
-    slot="suffix"
-    @click="handleIconClick">
-  </i>
-  <template slot-scope="{ item }">
+  @select="handleSelect"
+>
+  <template #suffix>
+    <i class="el-icon-edit el-input__icon" @click="handleIconClick"> </i>
+  </template>
+  <template #default="{ item }">
     <div class="name">{{ item.value }}</div>
     <span class="addr">{{ item.address }}</span>
   </template>
 </el-autocomplete>
 
 <style>
-.my-autocomplete {
-  li {
-    line-height: normal;
-    padding: 7px;
-
-    .name {
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-    .addr {
-      font-size: 12px;
-      color: #b4b4b4;
-    }
-
-    .highlighted .addr {
-      color: #ddd;
-    }
-  }
+.my-autocomplete li {
+  line-height: normal;
+  padding: 7px;
+}
+.my-autocomplete li .name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.my-autocomplete li .addr {
+  font-size: 12px;
+  color: #b4b4b4;
+}
+.my-autocomplete li .highlighted .addr {
+  color: #ddd;
 }
 </style>
 
 <script>
-  export default {
-    data() {
-      return {
-        restaurants: [],
-        state: ''
+import { defineComponent, ref, onMounted } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const restaurants = ref([]);
+
+    const querySearch = (queryString, cb) => {
+      var results = queryString
+        ? restaurants.value.filter(createFilter(queryString))
+        : restaurants.value;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
+    };
+    const createFilter = (queryString) => {
+      return (restaurant) => {
+        return (
+          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
+          0
+        );
       };
-    },
-    methods: {
-      querySearch(queryString, cb) {
-        var restaurants = this.restaurants;
-        var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
-        // 调用 callback 返回建议列表的数据
-        cb(results);
-      },
-      createFilter(queryString) {
-        return (restaurant) => {
-          return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      loadAll() {
-        return [
-          { "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
-          { "value": "Hot honey 首尔炸鸡（仙霞路）", "address": "上海市长宁区淞虹路661号" },
-          { "value": "新旺角茶餐厅", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
-          { "value": "泷千家(天山西路店)", "address": "天山西路438号" },
-          { "value": "胖仙女纸杯蛋糕（上海凌空店）", "address": "上海市长宁区金钟路968号1幢18号楼一层商铺18-101" },
-          { "value": "贡茶", "address": "上海市长宁区金钟路633号" },
-          { "value": "豪大大香鸡排超级奶爸", "address": "上海市嘉定区曹安公路曹安路1685号" },
-          { "value": "茶芝兰（奶茶，手抓饼）", "address": "上海市普陀区同普路1435号" },
-          { "value": "十二泷町", "address": "上海市北翟路1444弄81号B幢-107" },
-          { "value": "星移浓缩咖啡", "address": "上海市嘉定区新郁路817号" },
-          { "value": "阿姨奶茶/豪大大", "address": "嘉定区曹安路1611号" },
-          { "value": "新麦甜四季甜品炸鸡", "address": "嘉定区曹安公路2383弄55号" },
-          { "value": "Monica摩托主题咖啡店", "address": "嘉定区江桥镇曹安公路2409号1F，2383弄62号1F" },
-          { "value": "浮生若茶（凌空soho店）", "address": "上海长宁区金钟路968号9号楼地下一层" },
-          { "value": "NONO JUICE  鲜榨果汁", "address": "上海市长宁区天山西路119号" },
-          { "value": "CoCo都可(北新泾店）", "address": "上海市长宁区仙霞西路" },
-          { "value": "快乐柠檬（神州智慧店）", "address": "上海市长宁区天山西路567号1层R117号店铺" },
-          { "value": "Merci Paul cafe", "address": "上海市普陀区光复西路丹巴路28弄6号楼819" },
-          { "value": "猫山王（西郊百联店）", "address": "上海市长宁区仙霞西路88号第一层G05-F01-1-306" },
-          { "value": "枪会山", "address": "上海市普陀区棕榈路" },
-          { "value": "纵食", "address": "元丰天山花园(东门) 双流路267号" },
-          { "value": "钱记", "address": "上海市长宁区天山西路" },
-          { "value": "壹杯加", "address": "上海市长宁区通协路" },
-          { "value": "唦哇嘀咖", "address": "上海市长宁区新泾镇金钟路999号2幢（B幢）第01层第1-02A单元" },
-          { "value": "爱茜茜里(西郊百联)", "address": "长宁区仙霞西路88号1305室" },
-          { "value": "爱茜茜里(近铁广场)", "address": "上海市普陀区真北路818号近铁城市广场北区地下二楼N-B2-O2-C商铺" },
-          { "value": "鲜果榨汁（金沙江路和美广店）", "address": "普陀区金沙江路2239号金沙和美广场B1-10-6" },
-          { "value": "开心丽果（缤谷店）", "address": "上海市长宁区威宁路天山路341号" },
-          { "value": "超级鸡车（丰庄路店）", "address": "上海市嘉定区丰庄路240号" },
-          { "value": "妙生活果园（北新泾店）", "address": "长宁区新渔路144号" },
-          { "value": "香宜度麻辣香锅", "address": "长宁区淞虹路148号" },
-          { "value": "凡仔汉堡（老真北路店）", "address": "上海市普陀区老真北路160号" },
-          { "value": "港式小铺", "address": "上海市长宁区金钟路968号15楼15-105室" },
-          { "value": "蜀香源麻辣香锅（剑河路店）", "address": "剑河路443-1" },
-          { "value": "北京饺子馆", "address": "长宁区北新泾街道天山西路490-1号" },
-          { "value": "饭典*新简餐（凌空SOHO店）", "address": "上海市长宁区金钟路968号9号楼地下一层9-83室" },
-          { "value": "焦耳·川式快餐（金钟路店）", "address": "上海市金钟路633号地下一层甲部" },
-          { "value": "动力鸡车", "address": "长宁区仙霞西路299弄3号101B" },
-          { "value": "浏阳蒸菜", "address": "天山西路430号" },
-          { "value": "四海游龙（天山西路店）", "address": "上海市长宁区天山西路" },
-          { "value": "樱花食堂（凌空店）", "address": "上海市长宁区金钟路968号15楼15-105室" },
-          { "value": "壹分米客家传统调制米粉(天山店)", "address": "天山西路428号" },
-          { "value": "福荣祥烧腊（平溪路店）", "address": "上海市长宁区协和路福泉路255弄57-73号" },
-          { "value": "速记黄焖鸡米饭", "address": "上海市长宁区北新泾街道金钟路180号1层01号摊位" },
-          { "value": "红辣椒麻辣烫", "address": "上海市长宁区天山西路492号" },
-          { "value": "(小杨生煎)西郊百联餐厅", "address": "长宁区仙霞西路88号百联2楼" },
-          { "value": "阳阳麻辣烫", "address": "天山西路389号" },
-          { "value": "南拳妈妈龙虾盖浇饭", "address": "普陀区金沙江路1699号鑫乐惠美食广场A13" }
-        ];
-      },
-      handleSelect(item) {
-        console.log(item);
-      },
-      handleIconClick(ev) {
-        console.log(ev);
-      }
-    },
-    mounted() {
-      this.restaurants = this.loadAll();
-    }
-  }
+    };
+    const loadAll = () => {
+      return [
+        { value: "三全鲜食（北新泾店）", address: "长宁区新渔路144号" },
+        {
+          value: "Hot honey 首尔炸鸡（仙霞路）",
+          address: "上海市长宁区淞虹路661号",
+        },
+        {
+          value: "新旺角茶餐厅",
+          address: "上海市普陀区真北路988号创邑金沙谷6号楼113",
+        },
+        { value: "泷千家(天山西路店)", address: "天山西路438号" },
+        {
+          value: "胖仙女纸杯蛋糕（上海凌空店）",
+          address: "上海市长宁区金钟路968号1幢18号楼一层商铺18-101",
+        },
+        { value: "贡茶", address: "上海市长宁区金钟路633号" },
+        {
+          value: "豪大大香鸡排超级奶爸",
+          address: "上海市嘉定区曹安公路曹安路1685号",
+        },
+        {
+          value: "茶芝兰（奶茶，手抓饼）",
+          address: "上海市普陀区同普路1435号",
+        },
+        { value: "十二泷町", address: "上海市北翟路1444弄81号B幢-107" },
+        { value: "星移浓缩咖啡", address: "上海市嘉定区新郁路817号" },
+        { value: "阿姨奶茶/豪大大", address: "嘉定区曹安路1611号" },
+        { value: "新麦甜四季甜品炸鸡", address: "嘉定区曹安公路2383弄55号" },
+        {
+          value: "Monica摩托主题咖啡店",
+          address: "嘉定区江桥镇曹安公路2409号1F，2383弄62号1F",
+        },
+        {
+          value: "浮生若茶（凌空soho店）",
+          address: "上海长宁区金钟路968号9号楼地下一层",
+        },
+        { value: "NONO JUICE  鲜榨果汁", address: "上海市长宁区天山西路119号" },
+        { value: "CoCo都可(北新泾店）", address: "上海市长宁区仙霞西路" },
+        {
+          value: "快乐柠檬（神州智慧店）",
+          address: "上海市长宁区天山西路567号1层R117号店铺",
+        },
+        {
+          value: "Merci Paul cafe",
+          address: "上海市普陀区光复西路丹巴路28弄6号楼819",
+        },
+        {
+          value: "猫山王（西郊百联店）",
+          address: "上海市长宁区仙霞西路88号第一层G05-F01-1-306",
+        },
+        { value: "枪会山", address: "上海市普陀区棕榈路" },
+        { value: "纵食", address: "元丰天山花园(东门) 双流路267号" },
+        { value: "钱记", address: "上海市长宁区天山西路" },
+        { value: "壹杯加", address: "上海市长宁区通协路" },
+        {
+          value: "唦哇嘀咖",
+          address: "上海市长宁区新泾镇金钟路999号2幢（B幢）第01层第1-02A单元",
+        },
+        { value: "爱茜茜里(西郊百联)", address: "长宁区仙霞西路88号1305室" },
+        {
+          value: "爱茜茜里(近铁广场)",
+          address:
+            "上海市普陀区真北路818号近铁城市广场北区地下二楼N-B2-O2-C商铺",
+        },
+        {
+          value: "鲜果榨汁（金沙江路和美广店）",
+          address: "普陀区金沙江路2239号金沙和美广场B1-10-6",
+        },
+        {
+          value: "开心丽果（缤谷店）",
+          address: "上海市长宁区威宁路天山路341号",
+        },
+        { value: "超级鸡车（丰庄路店）", address: "上海市嘉定区丰庄路240号" },
+        { value: "妙生活果园（北新泾店）", address: "长宁区新渔路144号" },
+        { value: "香宜度麻辣香锅", address: "长宁区淞虹路148号" },
+        {
+          value: "凡仔汉堡（老真北路店）",
+          address: "上海市普陀区老真北路160号",
+        },
+        { value: "港式小铺", address: "上海市长宁区金钟路968号15楼15-105室" },
+        { value: "蜀香源麻辣香锅（剑河路店）", address: "剑河路443-1" },
+        { value: "北京饺子馆", address: "长宁区北新泾街道天山西路490-1号" },
+        {
+          value: "饭典*新简餐（凌空SOHO店）",
+          address: "上海市长宁区金钟路968号9号楼地下一层9-83室",
+        },
+        {
+          value: "焦耳·川式快餐（金钟路店）",
+          address: "上海市金钟路633号地下一层甲部",
+        },
+        { value: "动力鸡车", address: "长宁区仙霞西路299弄3号101B" },
+        { value: "浏阳蒸菜", address: "天山西路430号" },
+        { value: "四海游龙（天山西路店）", address: "上海市长宁区天山西路" },
+        {
+          value: "樱花食堂（凌空店）",
+          address: "上海市长宁区金钟路968号15楼15-105室",
+        },
+        { value: "壹分米客家传统调制米粉(天山店)", address: "天山西路428号" },
+        {
+          value: "福荣祥烧腊（平溪路店）",
+          address: "上海市长宁区协和路福泉路255弄57-73号",
+        },
+        {
+          value: "速记黄焖鸡米饭",
+          address: "上海市长宁区北新泾街道金钟路180号1层01号摊位",
+        },
+        { value: "红辣椒麻辣烫", address: "上海市长宁区天山西路492号" },
+        {
+          value: "(小杨生煎)西郊百联餐厅",
+          address: "长宁区仙霞西路88号百联2楼",
+        },
+        { value: "阳阳麻辣烫", address: "天山西路389号" },
+        {
+          value: "南拳妈妈龙虾盖浇饭",
+          address: "普陀区金沙江路1699号鑫乐惠美食广场A13",
+        },
+      ];
+    };
+    const handleSelect = (item) => {
+      console.log(item);
+    };
+
+    const handleIconClick = (ev) => {
+      console.log(ev);
+    };
+
+    onMounted(() => {
+      restaurants.value = loadAll();
+    });
+
+    return {
+      restaurants,
+      state: ref(''),
+      querySearch,
+      createFilter,
+      loadAll,
+      handleSelect,
+      handleIconClick,
+    };
+  },
+});
 </script>
 ```
 :::
@@ -552,96 +744,173 @@ export default {
   @select="handleSelect"
 ></el-autocomplete>
 <script>
-  export default {
-    data() {
-      return {
-        restaurants: [],
-        state: '',
-        timeout:  null
-      };
-    },
-    methods: {
-      loadAll() {
-        return [
-          { "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
-          { "value": "Hot honey 首尔炸鸡（仙霞路）", "address": "上海市长宁区淞虹路661号" },
-          { "value": "新旺角茶餐厅", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
-          { "value": "泷千家(天山西路店)", "address": "天山西路438号" },
-          { "value": "胖仙女纸杯蛋糕（上海凌空店）", "address": "上海市长宁区金钟路968号1幢18号楼一层商铺18-101" },
-          { "value": "贡茶", "address": "上海市长宁区金钟路633号" },
-          { "value": "豪大大香鸡排超级奶爸", "address": "上海市嘉定区曹安公路曹安路1685号" },
-          { "value": "茶芝兰（奶茶，手抓饼）", "address": "上海市普陀区同普路1435号" },
-          { "value": "十二泷町", "address": "上海市北翟路1444弄81号B幢-107" },
-          { "value": "星移浓缩咖啡", "address": "上海市嘉定区新郁路817号" },
-          { "value": "阿姨奶茶/豪大大", "address": "嘉定区曹安路1611号" },
-          { "value": "新麦甜四季甜品炸鸡", "address": "嘉定区曹安公路2383弄55号" },
-          { "value": "Monica摩托主题咖啡店", "address": "嘉定区江桥镇曹安公路2409号1F，2383弄62号1F" },
-          { "value": "浮生若茶（凌空soho店）", "address": "上海长宁区金钟路968号9号楼地下一层" },
-          { "value": "NONO JUICE  鲜榨果汁", "address": "上海市长宁区天山西路119号" },
-          { "value": "CoCo都可(北新泾店）", "address": "上海市长宁区仙霞西路" },
-          { "value": "快乐柠檬（神州智慧店）", "address": "上海市长宁区天山西路567号1层R117号店铺" },
-          { "value": "Merci Paul cafe", "address": "上海市普陀区光复西路丹巴路28弄6号楼819" },
-          { "value": "猫山王（西郊百联店）", "address": "上海市长宁区仙霞西路88号第一层G05-F01-1-306" },
-          { "value": "枪会山", "address": "上海市普陀区棕榈路" },
-          { "value": "纵食", "address": "元丰天山花园(东门) 双流路267号" },
-          { "value": "钱记", "address": "上海市长宁区天山西路" },
-          { "value": "壹杯加", "address": "上海市长宁区通协路" },
-          { "value": "唦哇嘀咖", "address": "上海市长宁区新泾镇金钟路999号2幢（B幢）第01层第1-02A单元" },
-          { "value": "爱茜茜里(西郊百联)", "address": "长宁区仙霞西路88号1305室" },
-          { "value": "爱茜茜里(近铁广场)", "address": "上海市普陀区真北路818号近铁城市广场北区地下二楼N-B2-O2-C商铺" },
-          { "value": "鲜果榨汁（金沙江路和美广店）", "address": "普陀区金沙江路2239号金沙和美广场B1-10-6" },
-          { "value": "开心丽果（缤谷店）", "address": "上海市长宁区威宁路天山路341号" },
-          { "value": "超级鸡车（丰庄路店）", "address": "上海市嘉定区丰庄路240号" },
-          { "value": "妙生活果园（北新泾店）", "address": "长宁区新渔路144号" },
-          { "value": "香宜度麻辣香锅", "address": "长宁区淞虹路148号" },
-          { "value": "凡仔汉堡（老真北路店）", "address": "上海市普陀区老真北路160号" },
-          { "value": "港式小铺", "address": "上海市长宁区金钟路968号15楼15-105室" },
-          { "value": "蜀香源麻辣香锅（剑河路店）", "address": "剑河路443-1" },
-          { "value": "北京饺子馆", "address": "长宁区北新泾街道天山西路490-1号" },
-          { "value": "饭典*新简餐（凌空SOHO店）", "address": "上海市长宁区金钟路968号9号楼地下一层9-83室" },
-          { "value": "焦耳·川式快餐（金钟路店）", "address": "上海市金钟路633号地下一层甲部" },
-          { "value": "动力鸡车", "address": "长宁区仙霞西路299弄3号101B" },
-          { "value": "浏阳蒸菜", "address": "天山西路430号" },
-          { "value": "四海游龙（天山西路店）", "address": "上海市长宁区天山西路" },
-          { "value": "樱花食堂（凌空店）", "address": "上海市长宁区金钟路968号15楼15-105室" },
-          { "value": "壹分米客家传统调制米粉(天山店)", "address": "天山西路428号" },
-          { "value": "福荣祥烧腊（平溪路店）", "address": "上海市长宁区协和路福泉路255弄57-73号" },
-          { "value": "速记黄焖鸡米饭", "address": "上海市长宁区北新泾街道金钟路180号1层01号摊位" },
-          { "value": "红辣椒麻辣烫", "address": "上海市长宁区天山西路492号" },
-          { "value": "(小杨生煎)西郊百联餐厅", "address": "长宁区仙霞西路88号百联2楼" },
-          { "value": "阳阳麻辣烫", "address": "天山西路389号" },
-          { "value": "南拳妈妈龙虾盖浇饭", "address": "普陀区金沙江路1699号鑫乐惠美食广场A13" }
-        ];
-      },
-      querySearchAsync(queryString, cb) {
-        var restaurants = this.restaurants;
-        var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+import { defineComponent, ref, onMounted } from 'vue'
 
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-          cb(results);
-        }, 3000 * Math.random());
-      },
-      createStateFilter(queryString) {
-        return (state) => {
-          return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      handleSelect(item) {
-        console.log(item);
-      }
-    },
-    mounted() {
-      this.restaurants = this.loadAll();
-    }
-  };
+export default defineComponent({
+  setup() {
+    const restaurants = ref([]);
+    const loadAll = () => {
+      return [
+        { value: "三全鲜食（北新泾店）", address: "长宁区新渔路144号" },
+        {
+          value: "Hot honey 首尔炸鸡（仙霞路）",
+          address: "上海市长宁区淞虹路661号",
+        },
+        {
+          value: "新旺角茶餐厅",
+          address: "上海市普陀区真北路988号创邑金沙谷6号楼113",
+        },
+        { value: "泷千家(天山西路店)", address: "天山西路438号" },
+        {
+          value: "胖仙女纸杯蛋糕（上海凌空店）",
+          address: "上海市长宁区金钟路968号1幢18号楼一层商铺18-101",
+        },
+        { value: "贡茶", address: "上海市长宁区金钟路633号" },
+        {
+          value: "豪大大香鸡排超级奶爸",
+          address: "上海市嘉定区曹安公路曹安路1685号",
+        },
+        {
+          value: "茶芝兰（奶茶，手抓饼）",
+          address: "上海市普陀区同普路1435号",
+        },
+        { value: "十二泷町", address: "上海市北翟路1444弄81号B幢-107" },
+        { value: "星移浓缩咖啡", address: "上海市嘉定区新郁路817号" },
+        { value: "阿姨奶茶/豪大大", address: "嘉定区曹安路1611号" },
+        { value: "新麦甜四季甜品炸鸡", address: "嘉定区曹安公路2383弄55号" },
+        {
+          value: "Monica摩托主题咖啡店",
+          address: "嘉定区江桥镇曹安公路2409号1F，2383弄62号1F",
+        },
+        {
+          value: "浮生若茶（凌空soho店）",
+          address: "上海长宁区金钟路968号9号楼地下一层",
+        },
+        { value: "NONO JUICE  鲜榨果汁", address: "上海市长宁区天山西路119号" },
+        { value: "CoCo都可(北新泾店）", address: "上海市长宁区仙霞西路" },
+        {
+          value: "快乐柠檬（神州智慧店）",
+          address: "上海市长宁区天山西路567号1层R117号店铺",
+        },
+        {
+          value: "Merci Paul cafe",
+          address: "上海市普陀区光复西路丹巴路28弄6号楼819",
+        },
+        {
+          value: "猫山王（西郊百联店）",
+          address: "上海市长宁区仙霞西路88号第一层G05-F01-1-306",
+        },
+        { value: "枪会山", address: "上海市普陀区棕榈路" },
+        { value: "纵食", address: "元丰天山花园(东门) 双流路267号" },
+        { value: "钱记", address: "上海市长宁区天山西路" },
+        { value: "壹杯加", address: "上海市长宁区通协路" },
+        {
+          value: "唦哇嘀咖",
+          address: "上海市长宁区新泾镇金钟路999号2幢（B幢）第01层第1-02A单元",
+        },
+        { value: "爱茜茜里(西郊百联)", address: "长宁区仙霞西路88号1305室" },
+        {
+          value: "爱茜茜里(近铁广场)",
+          address:
+            "上海市普陀区真北路818号近铁城市广场北区地下二楼N-B2-O2-C商铺",
+        },
+        {
+          value: "鲜果榨汁（金沙江路和美广店）",
+          address: "普陀区金沙江路2239号金沙和美广场B1-10-6",
+        },
+        {
+          value: "开心丽果（缤谷店）",
+          address: "上海市长宁区威宁路天山路341号",
+        },
+        { value: "超级鸡车（丰庄路店）", address: "上海市嘉定区丰庄路240号" },
+        { value: "妙生活果园（北新泾店）", address: "长宁区新渔路144号" },
+        { value: "香宜度麻辣香锅", address: "长宁区淞虹路148号" },
+        {
+          value: "凡仔汉堡（老真北路店）",
+          address: "上海市普陀区老真北路160号",
+        },
+        { value: "港式小铺", address: "上海市长宁区金钟路968号15楼15-105室" },
+        { value: "蜀香源麻辣香锅（剑河路店）", address: "剑河路443-1" },
+        { value: "北京饺子馆", address: "长宁区北新泾街道天山西路490-1号" },
+        {
+          value: "饭典*新简餐（凌空SOHO店）",
+          address: "上海市长宁区金钟路968号9号楼地下一层9-83室",
+        },
+        {
+          value: "焦耳·川式快餐（金钟路店）",
+          address: "上海市金钟路633号地下一层甲部",
+        },
+        { value: "动力鸡车", address: "长宁区仙霞西路299弄3号101B" },
+        { value: "浏阳蒸菜", address: "天山西路430号" },
+        { value: "四海游龙（天山西路店）", address: "上海市长宁区天山西路" },
+        {
+          value: "樱花食堂（凌空店）",
+          address: "上海市长宁区金钟路968号15楼15-105室",
+        },
+        { value: "壹分米客家传统调制米粉(天山店)", address: "天山西路428号" },
+        {
+          value: "福荣祥烧腊（平溪路店）",
+          address: "上海市长宁区协和路福泉路255弄57-73号",
+        },
+        {
+          value: "速记黄焖鸡米饭",
+          address: "上海市长宁区北新泾街道金钟路180号1层01号摊位",
+        },
+        { value: "红辣椒麻辣烫", address: "上海市长宁区天山西路492号" },
+        {
+          value: "(小杨生煎)西郊百联餐厅",
+          address: "长宁区仙霞西路88号百联2楼",
+        },
+        { value: "阳阳麻辣烫", address: "天山西路389号" },
+        {
+          value: "南拳妈妈龙虾盖浇饭",
+          address: "普陀区金沙江路1699号鑫乐惠美食广场A13",
+        },
+      ];
+    };
+
+    let timeout;
+    const querySearchAsync = (queryString, cb) => {
+      var results = queryString
+        ? restaurants.value.filter(createFilter(queryString))
+        : restaurants.value;
+
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        cb(results);
+      }, 3000 * Math.random());
+    };
+    const createFilter = (queryString) => {
+      return (restaurant) => {
+        return (
+          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
+          0
+        );
+      };
+    };
+    const handleSelect = (item) => {
+      console.log(item);
+    };
+    onMounted(() => {
+      restaurants.value = loadAll();
+    });
+    return {
+      restaurants,
+      state: ref(''),
+      querySearchAsync,
+      createFilter,
+      loadAll,
+      handleSelect,
+    };
+  },
+});
 </script>
 ```
 :::
 
 ### 输入长度限制
 
-:::demo  `maxlength` 和 `minlength` 是原生属性，用来限制输入框的字符长度，其中字符长度是用 Javascript 的字符串长度统计的。对于类型为 `text` 或 `textarea` 的输入框，在使用 `maxlength` 属性限制最大输入长度的同时，可通过设置 `show-word-limit` 属性来展示字数统计。
+:::demo  `maxlength` 和 `minlength` 属性，用来限制输入框的字符长度，其中字符长度是用 Javascript 的字符串长度统计的。对于类型为 `text` 或 `textarea` 的输入框，在使用 `maxlength` 属性限制最大输入长度的同时，可通过设置 `show-word-limit` 属性来展示字数统计。
 ```html
 <el-input
   type="text"
@@ -662,14 +931,16 @@ export default {
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent ({
+  setup() {
     return {
-      text: '',
-      textarea: ''
+      text: ref(''),
+      textarea: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -679,8 +950,8 @@ export default {
 | 参数          | 说明            | 类型            | 可选值                 | 默认值   |
 |-------------  |---------------- |---------------- |---------------------- |-------- |
 | type         | 类型   | string  | text，textarea 和其他 [原生 input 的 type 值](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types) | text |
-| value / v-model | 绑定值           | string / number  | — | — |
-| maxlength     | 原生属性，最大输入长度      | number          |  —  | — |
+| model-value / v-model | 绑定值           | string / number  | — | — |
+| maxlength     | 最大输入长度      | string / number          |  —  | — |
 | minlength     | 原生属性，最小输入长度      | number          | — | — |
 | show-word-limit | 是否显示输入字数统计，只在 `type = "text"` 或 `type = "textarea"` 时有效 | boolean    |  —  | false |
 | placeholder   | 输入框占位文本    | string          | — | — |
@@ -692,8 +963,7 @@ export default {
 | suffix-icon   | 输入框尾部图标    | string          | — | — |
 | rows          | 输入框行数，只对 `type="textarea"` 有效  |  number | — |  2   |
 | autosize      | 自适应内容高度，只对 `type="textarea"` 有效，可传入对象，如，{ minRows: 2, maxRows: 6 }  |  boolean / object | — |  false   |
-| autocomplete | 原生属性，自动补全 | string | on, off | off |
-| auto-complete | 下个主版本弃用 | string | on, off | off |
+| autocomplete | 原生属性，自动补全 | string | — | off |
 | name | 原生属性 | string | — | — |
 | readonly | 原生属性，是否只读 | boolean | — | false |
 | max | 原生属性，设置最大值 | — | — | — |
@@ -703,8 +973,9 @@ export default {
 | autofocus | 原生属性，自动获取焦点 | boolean | true, false | false |
 | form | 原生属性 | string | — | — |
 | label | 输入框关联的label文字 | string | — | — |
-| tabindex | 输入框的tabindex | string | - | - |
+| tabindex | 输入框的tabindex | string / number | - | - |
 | validate-event | 输入时是否触发表单的校验 | boolean | - | true |
+| input-style | input元素或textarea元素的style | object | - | {} |
 
 ### Input Slots
 | name | 说明 |
@@ -737,7 +1008,7 @@ export default {
 | placeholder   | 输入框占位文本   | string          | — | — |
 | disabled      | 禁用            | boolean         | — | false   |
 | value-key | 输入建议对象中用于显示的键名 | string | — | value |
-| value         | 必填值，输入绑定值   | string  | — | — |
+| model-value / v-model | 必填值，输入绑定值   | string  | — | — |
 | debounce      | 获取输入建议的去抖延时 | number         | — | 300 |
 | placement     | 菜单弹出位置 | string         | top / top-start / top-end / bottom / bottom-start / bottom-end | bottom-start |
 | fetch-suggestions | 返回输入建议的方法，仅当你的输入建议数据 resolve 时，通过调用 callback(data:[]) 来返回它  | Function(queryString, callback)  | — | — |
@@ -749,7 +1020,7 @@ export default {
 | prefix-icon | 输入框头部图标 | string | — | — |
 | suffix-icon | 输入框尾部图标 | string | — | — |
 | hide-loading | 是否隐藏远程加载时的加载图标 | boolean | — | false |
-| popper-append-to-body | 是否将下拉列表插入至 body 元素。在下拉列表的定位出现问题时，可将该属性设置为 false | boolean | - | true |
+| popper-append-to-body | 是否将下拉列表插入至 body 元素。在下拉列表的定位出现问题时，可将该属性设置为 false | boolean | - | false |
 | highlight-first-item | 是否默认突出显示远程搜索建议中的第一项 | boolean | — | false |
 
 ### Autocomplete Slots

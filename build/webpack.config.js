@@ -1,88 +1,69 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
+const webpack = require('webpack')
 const { VueLoaderPlugin } = require('vue-loader')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-const babelOptions = {
-  plugins: ['@vue/babel-plugin-jsx'],
+const libMode = process.env.LIBMODE
+const isFullMode = libMode === 'full'
+let externals = [
+  {
+    vue: {
+      root: 'Vue',
+      commonjs: 'vue',
+      commonjs2: 'vue',
+    },
+  },
+]
+const plugins = [
+  new VueLoaderPlugin(),
+  // new BundleAnalyzerPlugin(),
+]
+
+const entry = path.resolve(__dirname, '../packages/element-plus/index.ts')
+
+if (!isFullMode) {
+  externals.push({
+    '@popperjs/core': '@popperjs/core',
+    'async-validator': 'async-validator',
+    'mitt': 'mitt',
+    'normalize-wheel': 'normalize-wheel',
+    'resize-observer-polyfill': 'resize-observer-polyfill',
+  },
+  /^dayjs.*/,
+  /^lodash.*/)
 }
 
-module.exports = {
+const config = {
   mode: 'production',
-  entry: path.resolve(__dirname, '../packages/element-plus/index.ts'),
+  entry,
   output: {
-    path: path.resolve(__dirname, '../lib'),
+    path: path.resolve(__dirname, '../dist/element-plus/dist'),
     publicPath: '/',
-    filename: 'index.js',
+    filename: isFullMode ? 'index.full.js' : 'index.js',
     libraryTarget: 'umd',
-    libraryExport: 'default',
-    library: 'ELEMENT',
+    library: 'ElementPlus',
     umdNamedDefine: true,
+    globalObject: 'typeof self !== \'undefined\' ? self : this',
   },
-  stats: 'verbose',
   module: {
     rules: [
       {
         test: /\.vue$/,
         use: 'vue-loader',
       },
-      { // todo remote
-        test: /\.(sass|scss|css)$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          {
-            loader: 'sass-loader',
-            options: {
-              implementation: require('sass'),
-            },
-          },
-        ],
-      },
       {
-        test: /\.ts$/,
+        test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
-        loader: 'ts-loader',
-        options: {
-          appendTsSuffixTo: [/\.vue$/],
-          transpileOnly: true,
-        },
-      },
-      {
-        test: /\.tsx$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: babelOptions,
-          },
-          {
-            loader: 'ts-loader',
-            options: {
-              appendTsxSuffixTo: [/\.vue$/],
-              transpileOnly: true,
-            },
-          },
-        ],
-      },
-      {
-        test: /\.js(x?)$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: babelOptions,
-          },
-        ],
+        loader: 'babel-loader',
       },
     ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.vue', '.json'],
+    extensions: ['.ts', '.tsx', '.js', '.json'],
   },
-  externals: {
-    vue: 'Vue',
-  },
-  plugins: [
-    new VueLoaderPlugin(),
-  ],
+  externals,
+  plugins,
 }
+
+module.exports = config

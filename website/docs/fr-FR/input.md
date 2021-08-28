@@ -18,13 +18,14 @@ Les modificateurs de `v-model` ne sont pas supportés.
 <el-input placeholder="Entrez quelque chose" v-model="input"></el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input: ''
+      input: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -41,13 +42,14 @@ export default {
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input: ''
+      input: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -64,13 +66,14 @@ export default {
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input: ''
+      input: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -83,13 +86,14 @@ export default {
 <el-input placeholder="Entrez votre mot de passe" v-model="input" show-password></el-input>
 
 <script>
-  export default {
-    data() {
-      return {
-        input: ''
-      }
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
+    return {
+      input: ref('')
     }
   }
+})
 </script>
 ```
 :::
@@ -118,12 +122,16 @@ Ajoutez une icône pour indiquer le type d'input.
   <el-input
     placeholder="Entrez une date"
     v-model="input3">
-    <i slot="suffix" class="el-input__icon el-icon-date"></i>
+    <template #suffix>
+      <i class="el-input__icon el-icon-date"></i>
+    </template>
   </el-input>
   <el-input
     placeholder="Entrez du texte"
     v-model="input4">
-    <i slot="prefix" class="el-input__icon el-icon-search"></i>
+    <template #prefix>
+      <i class="el-input__icon el-icon-search"></i>
+    </template>
   </el-input>
 </div>
 
@@ -135,16 +143,17 @@ Ajoutez une icône pour indiquer le type d'input.
 </style>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input1: '',
-      input2: '',
-      input3: '',
-      input4: ''
+      input1: ref(''),
+      input2: ref(''),
+      input3: ref(''),
+      input4: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -164,13 +173,14 @@ Une zone de texte de taille réglable à la souris pour écrire plusieurs lignes
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      textarea: ''
+      textarea: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -197,14 +207,15 @@ Configurer la propriété `autosize` pour une zone de texte permet de rendre la 
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      textarea1: '',
-      textarea2: ''
+      textarea1: ref(''),
+      textarea2: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -218,22 +229,26 @@ Ajouter un élément avant ou après l'input, généralement du texte ou un bout
 ```html
 <div>
   <el-input placeholder="Entrez quelque chose" v-model="input1">
-    <template slot="prepend">Http://</template>
+    <template #prepend>Http://</template>
   </el-input>
 </div>
 <div style="margin-top: 15px;">
   <el-input placeholder="Entrez quelque chose" v-model="input2">
-    <template slot="append">.com</template>
+    <template #append>.com</template>
   </el-input>
 </div>
 <div style="margin-top: 15px;">
   <el-input placeholder="Entrez quelque chose" v-model="input3" class="input-with-select">
-    <el-select v-model="select" slot="prepend" placeholder="Choisir">
-      <el-option label="Restaurant" value="1"></el-option>
-      <el-option label="Num. Commande" value="2"></el-option>
-      <el-option label="Tel" value="3"></el-option>
-    </el-select>
-    <el-button slot="append" icon="el-icon-search"></el-button>
+    <template #prepend>
+      <el-select v-model="select" placeholder="Choisir">
+        <el-option label="Restaurant" value="1"></el-option>
+        <el-option label="Num. Commande" value="2"></el-option>
+        <el-option label="Tel" value="3"></el-option>
+      </el-select>
+    </template>
+    <template #append>
+      <el-button icon="el-icon-search"></el-button>
+    </template>
   </el-input>
 </div>
 
@@ -245,17 +260,19 @@ Ajouter un élément avant ou après l'input, généralement du texte ou un bout
     background-color: #fff;
   }
 </style>
+
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input1: '',
-      input2: '',
-      input3: '',
-      select: ''
+      input1: ref(''),
+      input2: ref(''),
+      input3: ref(''),
+      select: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -287,16 +304,17 @@ export default {
 </div>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input1: '',
-      input2: '',
-      input3: '',
-      input4: ''
+      input1: ref(''),
+      input2: ref(''),
+      input3: ref(''),
+      input4: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -331,45 +349,53 @@ Vous pouvez obtenir de l'aide ou des suggestions basées sur ce que vous entrez.
   </el-col>
 </el-row>
 <script>
-  export default {
-    data() {
-      return {
-        links: [],
-        state1: '',
-        state2: ''
-      };
-    },
-    methods: {
-      querySearch(queryString, cb) {
-        var links = this.links;
-        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+import { defineComponent, ref, onMounted } from 'vue';
+export default defineComponent({
+  setup() {
+    const links = ref([]);
+    const querySearch = (queryString, cb) => {
+      var results = queryString
+        ? links.value.filter(createFilter(queryString))
+        : links.value;
         // call callback function to return suggestions
         cb(results);
-      },
-      createFilter(queryString) {
-        return (link) => {
-          return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      loadAll() {
-        return [
-          { "value": "vue", "link": "https://github.com/vuejs/vue" },
-          { "value": "element", "link": "https://github.com/ElemeFE/element" },
-          { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-          { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-          { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-          { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-          { "value": "babel", "link": "https://github.com/babel/babel" }
-         ];
-      },
-      handleSelect(item) {
-        console.log(item);
-      }
-    },
-    mounted() {
-      this.links = this.loadAll();
-    }
-  }
+    };
+    const createFilter = (queryString) => {
+      return (restaurant) => {
+        return (
+          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
+          0
+        );
+      };
+    };
+    const loadAll = () => {
+      return [
+        { "value": "vue", "link": "https://github.com/vuejs/vue" },
+        { "value": "element", "link": "https://github.com/ElemeFE/element" },
+        { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
+        { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
+        { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
+        { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
+        { "value": "babel", "link": "https://github.com/babel/babel" }
+        ];
+    };
+    const handleSelect = (item) => {
+      console.log(item);
+    };
+    onMounted(() => {
+      links.value = loadAll();
+    });
+    return {
+      links,
+      state1: ref(''),
+      state2: ref(''),
+      querySearch,
+      createFilter,
+      loadAll,
+      handleSelect,
+    };
+  },
+});
 </script>
 ```
 :::
@@ -386,77 +412,87 @@ Vous pouvez personnaliser la manière dont les suggestions sont affichées.
   :fetch-suggestions="querySearch"
   placeholder="Entrez quelque chose"
   @select="handleSelect">
-  <i
-    class="el-icon-edit el-input__icon"
-    slot="suffix"
-    @click="handleIconClick">
-  </i>
-  <template slot-scope="{ item }">
+  <template #suffix>
+    <i class="el-icon-edit el-input__icon" @click="handleIconClick"></i>
+  </template>
+  <template #default="{ item }">
     <div class="value">{{ item.value }}</div>
     <span class="link">{{ item.link }}</span>
   </template>
 </el-autocomplete>
 
 <style>
-  .my-autocomplete {
-    li {
-      line-height: normal;
-      padding: 7px;
-
-      .value {
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-      .link {
-        font-size: 12px;
-        color: #b4b4b4;
-      }
-    }
-  }
+.my-autocomplete li {
+  line-height: normal;
+  padding: 7px;
+}
+.my-autocomplete li .name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.my-autocomplete li .addr {
+  font-size: 12px;
+  color: #b4b4b4;
+}
+.my-autocomplete li .highlighted .addr {
+  color: #ddd;
+}
 </style>
 
 <script>
-  export default {
-    data() {
-      return {
-        links: [],
-        state: ''
+import { defineComponent, ref, onMounted } from 'vue';
+export default defineComponent({
+  setup() {
+    const links = ref([]);
+    const querySearch = (queryString, cb) => {
+      var results = queryString
+        ? links.value.filter(createFilter(queryString))
+        : links.value;
+      // call callback function to return suggestion objects
+      cb(results);
+    };
+    const createFilter = (queryString) => {
+      return (restaurant) => {
+        return (
+          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
+          0
+        );
       };
-    },
-    methods: {
-      querySearch(queryString, cb) {
-        var links = this.links;
-        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
-        // call callback function to return suggestion objects
-        cb(results);
-      },
-      createFilter(queryString) {
-        return (link) => {
-          return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      loadAll() {
-        return [
-          { "value": "vue", "link": "https://github.com/vuejs/vue" },
-          { "value": "element", "link": "https://github.com/ElemeFE/element" },
-          { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-          { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-          { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-          { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-          { "value": "babel", "link": "https://github.com/babel/babel" }
-         ];
-      },
-      handleSelect(item) {
-        console.log(item);
-      },
-      handleIconClick(ev) {
-        console.log(ev);
-      }
-    },
-    mounted() {
-      this.links = this.loadAll();
-    }
-  }
+    };
+    const loadAll = () => {
+      return [
+        { "value": "vue", "link": "https://github.com/vuejs/vue" },
+        { "value": "element", "link": "https://github.com/ElemeFE/element" },
+        { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
+        { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
+        { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
+        { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
+        { "value": "babel", "link": "https://github.com/babel/babel" }
+        ];
+    };
+    const handleSelect = (item) => {
+      console.log(item);
+    };
+
+    const handleIconClick = (ev) => {
+      console.log(ev);
+    };
+
+    onMounted(() => {
+      links.value = loadAll();
+    });
+
+    return {
+      links,
+      state: ref(''),
+      querySearch,
+      createFilter,
+      loadAll,
+      handleSelect,
+      handleIconClick,
+    };
+  },
+});
 </script>
 ```
 :::
@@ -473,56 +509,65 @@ Vous pouvez aller chercher des infos de suggestions sur un serveur distant.
   placeholder="Entrez quelque chose"
   @select="handleSelect"
 ></el-autocomplete>
-<script>
-  export default {
-    data() {
-      return {
-        links: [],
-        state: '',
-        timeout:  null
-      };
-    },
-    methods: {
-      loadAll() {
-        return [
-          { "value": "vue", "link": "https://github.com/vuejs/vue" },
-          { "value": "element", "link": "https://github.com/ElemeFE/element" },
-          { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-          { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-          { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-          { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-          { "value": "babel", "link": "https://github.com/babel/babel" }
-         ];
-      },
-      querySearchAsync(queryString, cb) {
-        var links = this.links;
-        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
 
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-          cb(results);
-        }, 3000 * Math.random());
-      },
-      createFilter(queryString) {
-        return (link) => {
-          return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      handleSelect(item) {
-        console.log(item);
-      }
-    },
-    mounted() {
-      this.links = this.loadAll();
-    }
-  };
+<script>
+import { defineComponent, ref, onMounted } from 'vue';
+export default defineComponent({
+  setup() {
+    const links = ref([]);
+    const loadAll = () => {
+      return [
+        { "value": "vue", "link": "https://github.com/vuejs/vue" },
+        { "value": "element", "link": "https://github.com/ElemeFE/element" },
+        { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
+        { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
+        { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
+        { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
+        { "value": "babel", "link": "https://github.com/babel/babel" }
+        ];
+    };
+    let timeout;
+    const querySearchAsync = (queryString, cb) => {
+      var results = queryString
+        ? links.value.filter(createFilter(queryString))
+        : links.value;
+
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        cb(results);
+      }, 3000 * Math.random());
+    };
+    const createFilter = (queryString) => {
+      return (restaurant) => {
+        return (
+          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
+          0
+        );
+      };
+    };
+    const handleSelect = (item) => {
+      console.log(item);
+    };
+    onMounted(() => {
+      links.value = loadAll();
+    });
+    return {
+      links,
+      state: ref(''),
+      querySearchAsync,
+      createFilter,
+      loadAll,
+      handleSelect,
+    };
+  },
+});
 </script>
 ```
 :::
 
 ### Taille limite
 
-:::demo `maxlength` et `minlength` sont des attributs natifs, indiquant la taille limite de l'input. Le nombre de caractères est mesuré par la taille de la chaine Javascript. Si vous utilisez `maxlength`, vous pourrez montrer le nombre de caractères en mettant `show-word-limit` à `true`.
+:::demo `maxlength` et `minlength` des attributs, indiquant la taille limite de l'input. Le nombre de caractères est mesuré par la taille de la chaine Javascript. Si vous utilisez `maxlength`, vous pourrez montrer le nombre de caractères en mettant `show-word-limit` à `true`.
 
 ```html
 <el-input
@@ -544,14 +589,15 @@ Vous pouvez aller chercher des infos de suggestions sur un serveur distant.
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      text: '',
-      textarea: ''
+      text: ref(''),
+      textarea: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -561,8 +607,8 @@ export default {
 | Attribut      | Description          | Type      | Valeurs acceptées       | Défaut  |
 | ----| ----| ----| ---- | ----- |
 | type| Type de l'input. | string | text, textarea et autres [types d'input natifs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types) | text |
-| value / v-model | Variable liée. | string / number | — | — |
-| maxlength| Identique à `maxlength` dans l'input natif. | number| — | — |
+| model-value / v-model | Variable liée. | string / number | — | — |
+| maxlength| La longueur maximale. | string / number | — | — |
 | minlength| Identique à `minlength` dans l'input natif. | number | — | — |
 | show-word-limit | Affiche le nombre de caractères restant， ne marche que lorsque `type` est 'text' ou 'textarea'. | boolean    |  —  | false |
 | placeholder| Placeholder de l' Input. | string | — | — |
@@ -574,8 +620,7 @@ export default {
 | suffix-icon   | Classe de l'iĉone de suffixe.  | string          | — | — |
 | rows | Nombre de ligne pour une zone de texte, ne marche que si `type` est 'textarea'. | number | — | 2 |
 | autosize | Si la zone de texte à une hauteur adaptative, ne marche que si `type` est 'textarea'. Peut accepter un objet, e.g. { minRows: 2, maxRows: 6 }  | boolean / object | — | false |
-| autocomplete | Identique à `autocomplete` dans l'input natif. | string | on / off | off |
-| auto-complete | @DEPRECATED dans la prochaine version majeure. | string | on/off | off |
+| autocomplete | Identique à `autocomplete` dans l'input natif. | string | — | off |
 | name | Identique à `name` dans l'input natif. | string | — | — |
 | readonly | Identique à `readonly` dans l'input natif. | boolean | — | false |
 | max | Identique à `max` dans l'input natif. | — | — | — |
@@ -585,8 +630,9 @@ export default {
 | autofocus | Identique à `autofocus` dans l'input natif. | boolean | — | false |
 | form | Identique à `form` dans l'input natif. | string | — | — |
 | label | Texte du label. | string | — | — |
-| tabindex | tabindex de l'input. | string | - | - |
+| tabindex | tabindex de l'input. | string / number | - | - |
 | validate-event | Si la validation doit avoir lieu. | boolean | - | true |
+| input-style | the style of the input element or textarea element | object | - | {} |
 
 ### Slots de l'Input
 
@@ -625,7 +671,7 @@ export default {
 | disabled | Si l'autocomplétion est déactivée. | boolean | — | false|
 | value-key | Nom de la clé de l'objet suggestion pour l'affichage. | string | — | value |
 | icon | Nom de l'icône. | string | — | — |
-| value | Variable liée. | string | — | — |
+| model-value / v-model | Variable liée. | string | — | — |
 | debounce | Délai d'attente après écriture, en millisecondes. | number | — | 300 |
 | placement | Emplacement du menu popup. | string | top / top-start / top-end / bottom / bottom-start / bottom-end | bottom-start |
 | fetch-suggestions | La méthode pour rechercher les suggestions. Lorsqu'elles sont prêtes, appelle `callback(data:[])` pour les renvoyer à l'autocomplétion. | Function(queryString, callback) | — | — |
@@ -637,7 +683,7 @@ export default {
 | prefix-icon | Classe de l'icône de préfixe. | string | — | — |
 | suffix-icon | Classe de l'iĉone de suffixe. | string | — | — |
 | hide-loading | Si l'icône de chargement doit être cachée dans le cas d'une recherche distante. | boolean | — | false |
-| popper-append-to-body | Si le menu doit être ajouter au body. Si le positionnement du menu est incorrect, essayez de mettre cette propriété à `false`. | boolean | - | true |
+| popper-append-to-body | Si le menu doit être ajouter au body. Si le positionnement du menu est incorrect, essayez de mettre cette propriété à `false`. | boolean | - | false |
 | highlight-first-item | Si la première suggestion de la liste issue de la recherche distante doit être en surbrillance par défaut. | boolean | — | false |
 
 ### Slots de l'autocomplétion

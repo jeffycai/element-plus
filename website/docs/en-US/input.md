@@ -19,13 +19,14 @@ Do not support `v-model` modifiers.
 <el-input placeholder="Please input" v-model="input"></el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input: ''
+      input: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -42,13 +43,14 @@ export default {
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input: ''
+      input: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -65,13 +67,14 @@ export default {
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input: ''
+      input: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -84,13 +87,14 @@ export default {
 <el-input placeholder="Please input password" v-model="input" show-password></el-input>
 
 <script>
-  export default {
-    data() {
-      return {
-        input: ''
-      }
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
+    return {
+      input: ref('')
     }
   }
+})
 </script>
 ```
 :::
@@ -119,12 +123,16 @@ Add an icon to indicate input type.
   <el-input
     placeholder="Pick a date"
     v-model="input3">
-    <i slot="suffix" class="el-input__icon el-icon-date"></i>
+    <template #suffix>
+      <i class="el-input__icon el-icon-date"></i>
+    </template>
   </el-input>
   <el-input
     placeholder="Type something"
     v-model="input4">
-    <i slot="prefix" class="el-input__icon el-icon-search"></i>
+    <template #prefix>
+      <i class="el-input__icon el-icon-search"></i>
+    </template>
   </el-input>
 </div>
 
@@ -136,16 +144,17 @@ Add an icon to indicate input type.
 </style>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input1: '',
-      input2: '',
-      input3: '',
-      input4: ''
+      input1: ref(''),
+      input2: ref(''),
+      input3: ref(''),
+      input4: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -165,13 +174,14 @@ Resizable for entering multiple lines of text information. Add attribute `type="
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      textarea: ''
+      textarea: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -198,14 +208,15 @@ Setting the `autosize` prop for a textarea type of Input makes the height to aut
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      textarea1: '',
-      textarea2: ''
+      textarea1: ref(''),
+      textarea2: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -219,22 +230,26 @@ Prepend or append an element, generally a label or a button.
 ```html
 <div>
   <el-input placeholder="Please input" v-model="input1">
-    <template slot="prepend">Http://</template>
+    <template #prepend>Http://</template>
   </el-input>
 </div>
 <div style="margin-top: 15px;">
   <el-input placeholder="Please input" v-model="input2">
-    <template slot="append">.com</template>
+    <template #append>.com</template>
   </el-input>
 </div>
 <div style="margin-top: 15px;">
   <el-input placeholder="Please input" v-model="input3" class="input-with-select">
-    <el-select v-model="select" slot="prepend" placeholder="Select">
-      <el-option label="Restaurant" value="1"></el-option>
-      <el-option label="Order No." value="2"></el-option>
-      <el-option label="Tel" value="3"></el-option>
-    </el-select>
-    <el-button slot="append" icon="el-icon-search"></el-button>
+    <template #prepend>
+      <el-select v-model="select" placeholder="Select">
+        <el-option label="Restaurant" value="1"></el-option>
+        <el-option label="Order No." value="2"></el-option>
+        <el-option label="Tel" value="3"></el-option>
+      </el-select>
+    </template>
+    <template #append>
+      <el-button icon="el-icon-search"></el-button>
+    </template>
   </el-input>
 </div>
 
@@ -247,16 +262,17 @@ Prepend or append an element, generally a label or a button.
   }
 </style>
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input1: '',
-      input2: '',
-      input3: '',
-      select: ''
+      input1: ref(''),
+      input2: ref(''),
+      input3: ref(''),
+      select: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -288,16 +304,17 @@ export default {
 </div>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input1: '',
-      input2: '',
-      input3: '',
-      input4: ''
+      input1: ref(''),
+      input2: ref(''),
+      input3: ref(''),
+      input4: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -332,45 +349,53 @@ You can get some recommended tips based on the current input.
   </el-col>
 </el-row>
 <script>
-  export default {
-    data() {
-      return {
-        links: [],
-        state1: '',
-        state2: ''
-      };
-    },
-    methods: {
-      querySearch(queryString, cb) {
-        var links = this.links;
-        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+import { defineComponent, ref, onMounted } from 'vue'
+export default defineComponent({
+  setup() {
+    const restaurants = ref([]);
+    const querySearch = (queryString, cb) => {
+      var results = queryString
+        ? restaurants.value.filter(createFilter(queryString))
+        : restaurants.value;
         // call callback function to return suggestions
         cb(results);
-      },
-      createFilter(queryString) {
-        return (link) => {
-          return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      loadAll() {
-        return [
-          { "value": "vue", "link": "https://github.com/vuejs/vue" },
-          { "value": "element", "link": "https://github.com/ElemeFE/element" },
-          { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-          { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-          { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-          { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-          { "value": "babel", "link": "https://github.com/babel/babel" }
-         ];
-      },
-      handleSelect(item) {
-        console.log(item);
-      }
-    },
-    mounted() {
-      this.links = this.loadAll();
-    }
-  }
+    };
+    const createFilter = (queryString) => {
+      return (restaurant) => {
+        return (
+          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
+          0
+        );
+      };
+    };
+    const loadAll = () => {
+      return [
+        { "value": "vue", "link": "https://github.com/vuejs/vue" },
+        { "value": "element", "link": "https://github.com/ElemeFE/element" },
+        { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
+        { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
+        { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
+        { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
+        { "value": "babel", "link": "https://github.com/babel/babel" }
+        ];
+    };
+    const handleSelect = (item) => {
+      console.log(item);
+    };
+    onMounted(() => {
+      restaurants.value = loadAll();
+    });
+    return {
+      restaurants,
+      state1: ref(''),
+      state2: ref(''),
+      querySearch,
+      createFilter,
+      loadAll,
+      handleSelect,
+    };
+  },
+});
 </script>
 ```
 :::
@@ -386,78 +411,90 @@ Customize how suggestions are displayed.
   v-model="state"
   :fetch-suggestions="querySearch"
   placeholder="Please input"
-  @select="handleSelect">
-  <i
-    class="el-icon-edit el-input__icon"
-    slot="suffix"
-    @click="handleIconClick">
-  </i>
-  <template slot-scope="{ item }">
+  @select="handleSelect"
+>
+  <template #suffix>
+    <i class="el-icon-edit el-input__icon" @click="handleIconClick"></i>
+  </template>
+  <template #default="{ item }">
     <div class="value">{{ item.value }}</div>
     <span class="link">{{ item.link }}</span>
   </template>
 </el-autocomplete>
 
 <style>
-  .my-autocomplete {
-    li {
-      line-height: normal;
-      padding: 7px;
-
-      .value {
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-      .link {
-        font-size: 12px;
-        color: #b4b4b4;
-      }
-    }
+  .my-autocomplete li {
+    line-height: normal;
+    padding: 7px;
+  }
+  .my-autocomplete li .name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .my-autocomplete li .addr {
+    font-size: 12px;
+    color: #b4b4b4;
+  }
+  .my-autocomplete li .highlighted .addr {
+    color: #ddd;
   }
 </style>
 
 <script>
-  export default {
-    data() {
-      return {
-        links: [],
-        state: ''
+import { defineComponent, ref, onMounted } from 'vue'
+export default defineComponent({
+  setup() {
+    const links = ref([]);
+
+    const querySearch = (queryString, cb) => {
+      var results = queryString
+        ? links.value.filter(createFilter(queryString))
+        : links.value;
+      // call callback function to return suggestion objects
+      cb(results);
+    };
+    const createFilter = (queryString) => {
+      return (restaurant) => {
+        return (
+          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
+          0
+        );
       };
-    },
-    methods: {
-      querySearch(queryString, cb) {
-        var links = this.links;
-        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
-        // call callback function to return suggestion objects
-        cb(results);
-      },
-      createFilter(queryString) {
-        return (link) => {
-          return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      loadAll() {
-        return [
-          { "value": "vue", "link": "https://github.com/vuejs/vue" },
-          { "value": "element", "link": "https://github.com/ElemeFE/element" },
-          { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-          { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-          { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-          { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-          { "value": "babel", "link": "https://github.com/babel/babel" }
-         ];
-      },
-      handleSelect(item) {
-        console.log(item);
-      },
-      handleIconClick(ev) {
-        console.log(ev);
-      }
-    },
-    mounted() {
-      this.links = this.loadAll();
-    }
-  }
+    };
+    const loadAll = () => {
+      return [
+        { "value": "vue", "link": "https://github.com/vuejs/vue" },
+        { "value": "element", "link": "https://github.com/ElemeFE/element" },
+        { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
+        { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
+        { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
+        { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
+        { "value": "babel", "link": "https://github.com/babel/babel" }
+        ];
+    };
+    const handleSelect = (item) => {
+      console.log(item);
+    };
+
+    const handleIconClick = (ev) => {
+      console.log(ev);
+    };
+
+    onMounted(() => {
+      links.value = loadAll();
+    });
+
+    return {
+      links,
+      state: ref(''),
+      querySearch,
+      createFilter,
+      loadAll,
+      handleSelect,
+      handleIconClick,
+    };
+  },
+});
 </script>
 ```
 :::
@@ -475,55 +512,63 @@ Search data from server-side.
   @select="handleSelect"
 ></el-autocomplete>
 <script>
-  export default {
-    data() {
-      return {
-        links: [],
-        state: '',
-        timeout:  null
-      };
-    },
-    methods: {
-      loadAll() {
-        return [
-          { "value": "vue", "link": "https://github.com/vuejs/vue" },
-          { "value": "element", "link": "https://github.com/ElemeFE/element" },
-          { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-          { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-          { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-          { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-          { "value": "babel", "link": "https://github.com/babel/babel" }
-         ];
-      },
-      querySearchAsync(queryString, cb) {
-        var links = this.links;
-        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+import { defineComponent, ref, onMounted } from 'vue'
+export default defineComponent({
+  setup() {
+    const links = ref([]);
+    const loadAll = () => {
+      return [
+        { "value": "vue", "link": "https://github.com/vuejs/vue" },
+        { "value": "element", "link": "https://github.com/ElemeFE/element" },
+        { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
+        { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
+        { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
+        { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
+        { "value": "babel", "link": "https://github.com/babel/babel" }
+        ];
+    };
+    let timeout;
+    const querySearchAsync = (queryString, cb) => {
+      var results = queryString
+        ? links.value.filter(createFilter(queryString))
+        : links.value;
 
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-          cb(results);
-        }, 3000 * Math.random());
-      },
-      createFilter(queryString) {
-        return (link) => {
-          return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      handleSelect(item) {
-        console.log(item);
-      }
-    },
-    mounted() {
-      this.links = this.loadAll();
-    }
-  };
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        cb(results);
+      }, 3000 * Math.random());
+    };
+    const createFilter = (queryString) => {
+      return (restaurant) => {
+        return (
+          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
+          0
+        );
+      };
+    };
+    const handleSelect = (item) => {
+      console.log(item);
+    };
+    onMounted(() => {
+      links.value = loadAll();
+    });
+    return {
+      links,
+      state: ref(''),
+      querySearchAsync,
+      createFilter,
+      loadAll,
+      handleSelect
+    };
+  },
+});
 </script>
 ```
 :::
 
 ### Limit length
 
-:::demo `maxlength` and `minlength` are attributes of native input, they declare a limit on the number of characters a user can input. The "number of characters" is measured using JavaScript string length.Setting the `maxlength` prop for a text or textarea type of Input can limit the length of input value, allows you to show word count by setting `show-word-limit` to `true` at the same time.
+:::demo `maxlength` and `minlength` attributes of input, they declare a limit on the number of characters a user can input. The "number of characters" is measured using JavaScript string length.Setting the `maxlength` prop for a text or textarea type of Input can limit the length of input value, allows you to show word count by setting `show-word-limit` to `true` at the same time.
 
 ```html
 <el-input
@@ -545,14 +590,15 @@ Search data from server-side.
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      text: '',
-      textarea: ''
+      text: ref(''),
+      textarea: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -562,8 +608,8 @@ export default {
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
 | ----| ----| ----| ---- | ----- |
 |type| type of input | string | text, textarea and other [native input types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types) | text |
-|value / v-model| binding value | string / number| — | — |
-|maxlength| same as `maxlength` in native input | number| — | — |
+|modelValue / v-model| binding value | string / number| — | — |
+|maxlength| the max length | string / number| — | — |
 |minlength| same as `minlength` in native input | number | — | — |
 |show-word-limit | whether show word count，only works when `type` is 'text' or 'textarea' | boolean    |  —  | false |
 |placeholder| placeholder of Input| string | — | — |
@@ -575,19 +621,19 @@ export default {
 | suffix-icon   | suffix icon class  | string          | — | — |
 |rows | number of rows of textarea, only works when `type` is 'textarea' | number | — | 2 |
 |autosize | whether textarea has an adaptive height, only works when `type` is 'textarea'. Can accept an object, e.g. { minRows: 2, maxRows: 6 }  | boolean / object | — | false |
-|autocomplete | same as `autocomplete` in native input | string | on/off | off |
-|auto-complete | @DEPRECATED in next major version | string | on/off | off |
+|autocomplete | same as `autocomplete` in native input | string | — | off |
 |name | same as `name` in native input | string | — | — |
 | readonly | same as `readonly` in native input | boolean | — | false |
 |max | same as `max` in native input | — | — | — |
 |min | same as `min` in native input | — | — | — |
 |step| same as `step` in native input | — | — | — |
-|resize| control the resizability | string | none, both, horizontal, vertical | — |
+|resize| control the resizability | string | none / both / horizontal / vertical | — |
 |autofocus | same as `autofocus` in native input | boolean | — | false |
 |form | same as `form` in native input | string | — | — |
 | label | label text | string | — | — |
-| tabindex | input tabindex | string | - | - |
+| tabindex | input tabindex | string / number | - | - |
 | validate-event | whether to trigger form validation | boolean | - | true |
+| input-style | the style of the input element or textarea element | object | - | {} |
 
 ### Input slots
 
@@ -618,17 +664,17 @@ export default {
 
 ### Autocomplete Attributes
 
-Attribute | Description | Type | Options | Default
+Attribute | Description | Type | Accepted Values | Default
 |----| ----| ----| ---- | -----|
-|placeholder| the placeholder of Autocomplete| string | — | — |
+| placeholder| the placeholder of Autocomplete| string | — | — |
 | clearable | whether to show clear button | boolean | — | false |
-|disabled | whether Autocomplete is disabled  | boolean | — | false|
+| disabled | whether Autocomplete is disabled  | boolean | — | false|
 | value-key | key name of the input suggestion object for display | string | — | value |
-|icon | icon name | string | — | — |
-|value | binding value | string | — | — |
+| icon | icon name | string | — | — |
+| model-value / v-model | binding value | string | — | — |
 | debounce | debounce delay when typing, in milliseconds | number | — | 300 |
 | placement | placement of the popup menu | string | top / top-start / top-end / bottom / bottom-start / bottom-end | bottom-start |
-|fetch-suggestions | a method to fetch input suggestions. When suggestions are ready, invoke `callback(data:[])` to return them to Autocomplete | Function(queryString, callback) | — | — |
+| fetch-suggestions | a method to fetch input suggestions. When suggestions are ready, invoke `callback(data:[])` to return them to Autocomplete | Function(queryString, callback) | — | — |
 | popper-class | custom class name for autocomplete's dropdown | string | — | — |
 | trigger-on-focus | whether show suggestions when input focus | boolean | — | true |
 | name | same as `name` in native input | string | — | — |
@@ -637,7 +683,7 @@ Attribute | Description | Type | Options | Default
 | prefix-icon | prefix icon class | string | — | — |
 | suffix-icon | suffix icon class | string | — | — |
 | hide-loading | whether to hide the loading icon in remote search | boolean | — | false |
-| popper-append-to-body | whether to append the dropdown to body. If the positioning of the dropdown is wrong, you can try to set this prop to false | boolean | - | true |
+| popper-append-to-body | whether to append the dropdown to body. If the positioning of the dropdown is wrong, you can try to set this prop to false | boolean | - | false |
 | highlight-first-item | whether to highlight first item in remote search suggestions by default | boolean | — | false |
 
 ### Autocomplete Slots

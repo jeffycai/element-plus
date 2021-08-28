@@ -4,7 +4,7 @@ Affiche une notification globale dans un coin de la page.
 
 ### Usage
 
-:::demo Element enregistre la méthode `$notify` qui reçoit un objet en paramètre. Dans le cas le plus simple, vous pouvez simplement configurer les champs `title` et` message`. Par défaut, la notification se ferme automatiquement après 4500ms, mais vous pouvez régler une autre durée avec `duration`. Si la durée est mise à `0`, la notification ne se fermera pas. `duration` prends donc un `Number` en millisecondes.
+:::demo Element Plus enregistre la méthode `$notify` qui reçoit un objet en paramètre. Dans le cas le plus simple, vous pouvez simplement configurer les champs `title` et` message`. Par défaut, la notification se ferme automatiquement après 4500ms, mais vous pouvez régler une autre durée avec `duration`. Si la durée est mise à `0`, la notification ne se fermera pas. `duration` prends donc un `Number` en millisecondes.
 
 ```html
 <template>
@@ -21,11 +21,11 @@ Affiche une notification globale dans un coin de la page.
 </template>
 
 <script>
+  import { h } from 'vue';
+
   export default {
     methods: {
       open1() {
-        const h = this.$createElement;
-
         this.$notify({
           title: 'Titre',
           message: h('i', { style: 'color: teal' }, 'Ceci est un rappel')
@@ -42,6 +42,39 @@ Affiche une notification globale dans un coin de la page.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, h } from 'vue';
+  import { ElNotification } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open1 = () => {
+        ElNotification({
+          title: 'Titre',
+          message: h('i', { style: 'color: teal' }, 'Ceci est un rappel'),
+        });
+      };
+
+      const open2 = () => {
+        ElNotification({
+          title: 'Prompt',
+          message: 'Ceci est un message qui ne se ferme pas',
+          duration: 0,
+        });
+      };
+
+      return {
+        open1,
+        open2,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -49,7 +82,7 @@ Affiche une notification globale dans un coin de la page.
 
 Nous fournissons quatre types: succès, avertissement, information et erreur.
 
-:::demo Element fournit quatre types de notifications: `success`, `warning`, `info` et `error`. Il sont choisis grâce au champs `type`, et n'importe quelle autre valeur sera ignorée. Il existe des méthodes  enregistrées pour chaque type, comme dans `open3` et `open4`, qui ne nécessitent donc pas le champs `type`.
+:::demo Element Plus fournit quatre types de notifications: `success`, `warning`, `info` et `error`. Il sont choisis grâce au champs `type`, et n'importe quelle autre valeur sera ignorée. Il existe des méthodes  enregistrées pour chaque type, comme dans `open3` et `open4`, qui ne nécessitent donc pas le champs `type`.
 ```html
 <template>
   <el-button
@@ -109,6 +142,55 @@ Nous fournissons quatre types: succès, avertissement, information et erreur.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElNotification } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open1 = () => {
+        ElNotification({
+          title: 'Success',
+          message: 'Ceci est un message de succès',
+          type: 'success',
+        });
+      };
+
+      const open2 = () => {
+        ElNotification({
+          title: 'Warning',
+          message: 'Ceci est un avertissement',
+          type: 'warning',
+        });
+      };
+
+      const open3 = () => {
+        ElNotification({
+          title: 'Info',
+          message: 'Ceci est une information',
+        });
+      };
+
+      const open4 = () => {
+        ElNotification({
+          title: 'Error',
+          message: 'Ceci est une erreur',
+        });
+      };
+      return {
+        open1,
+        open2,
+        open3,
+        open4,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -177,6 +259,56 @@ La notification peut apparaître dans le coin de votre choix.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElNotification } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open1 = () => {
+        ElNotification({
+          title: 'Custom Position',
+          message: 'Je suis dans le coin supérieur droit',
+        });
+      };
+
+      const open2 = () => {
+        ElNotification({
+          title: 'Custom Position',
+          message: 'Je suis dans le coin inférieur droit',
+          position: 'bottom-right',
+        });
+      };
+
+      const open3 = () => {
+        ElNotification({
+          title: 'Custom Position',
+          message: 'Je suis dans le coin inférieur gauche',
+          position: 'bottom-left',
+        });
+      };
+
+      const open4 = () => {
+        ElNotification({
+          title: 'Custom Position',
+          message: 'Je suis dans le coin supérieur gauche',
+          position: 'top-left',
+        });
+      };
+      return {
+        open1,
+        open2,
+        open3,
+        open4,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -207,6 +339,31 @@ Vous pouvez décaler l'emplacement de la notification par rapport au bord de la 
     }
   }
 </script>
+<!--
+<setup>
+
+import { defineComponent } from 'vue';
+  import { ElNotification } from 'element-plus';
+
+export default defineComponent({
+  setup() {
+    
+    const open = () => {
+      ElNotification.success({
+        title: 'Success',
+        message: 'Ceci est un message de succès',
+        offset: 100,
+      });
+    };
+
+    return {
+      open,
+    };
+  },
+});
+
+</setup>
+-->
 ```
 :::
 
@@ -238,6 +395,31 @@ L'attribut `message` supporte le HTML.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElNotification } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open = () => {
+        ElNotification({
+          title: 'HTML String',
+          dangerouslyUseHTMLString: true,
+          message: '<strong>Ceci est du <i>HTML</i></strong>',
+        });
+      };
+
+      return {
+        open,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -273,22 +455,45 @@ Il est possible de cacher le bouton de fermeture.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElNotification } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open = () => {
+        ElNotification.success({
+          title: 'Info',
+          message: 'Ceci est un message sans bouton de fermeture',
+          showClose: false,
+        });
+      };
+
+      return {
+        open,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
 ### Méthode globale
 
-Element ajoute la méthode `$notify` à Vue.prototype. Vous pouvez donc appeler `Notification` dans l'instance de Vue comme nous avons fait dans cette page.
+Element Plus ajoute la méthode `$notify` à `app.config.globalProperties`. Vous pouvez donc appeler `Notification` dans l'instance de Vue comme nous avons fait dans cette page.
 
 ### Import à la demande
 
-Importez `Notification`:
-
 ```javascript
-import { Notification } from 'element-ui';
+import { ElNotification } from 'element-plus';
 ```
 
-Dans ce cas vous devrez appeler `Notification(options)`. Il existe aussi des méthodes pour chaque type, e.g. `Notification.success(options)`. Vous pouvez appeler `Notification.closeAll()` pour fermer manuellement toutes les instances.
+Dans ce cas vous devrez appeler `ElNotification(options)`. Il existe aussi des méthodes pour chaque type, e.g. `ElNotification.success(options)`. Vous pouvez appeler `ElNotification.closeAll()` pour fermer manuellement toutes les instances.
 
 ### Options
 

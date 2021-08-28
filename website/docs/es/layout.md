@@ -2,6 +2,12 @@
 
 Rápido y facilmente crea un layout básico con 24 columnas.
 
+:::tip
+The component uses flex layout by default, no need to set `type="flex"` manually.
+
+Please note that the parent container should avoid using `inline` related styles, which will cause the component to not fill up its width.
+:::
+
 ### Layout básico
 
 Crea un layout básico usando columnas.
@@ -215,31 +221,31 @@ Puedes especificar offsets para las columnas.
 
 ### Alineación
 
-Usa flex layout para un alineamiento flexible de columnas.
+Default use the flex layout to make flexible alignment of columns.
 
-:::demo Puede habilitar flex layout asignando el atributo `type` a 'flex', y definir el layout de elementos hijos asignando el atributo `justify` con los valores start, center, end, space-between o space-around.
+:::demo You can define the layout of child elements by setting `justify` attribute with start, center, end, space-between or space-around.
 ```html
-<el-row type="flex" class="row-bg">
+<el-row class="row-bg">
   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
   <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
 </el-row>
-<el-row type="flex" class="row-bg" justify="center">
+<el-row class="row-bg" justify="center">
   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
   <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
 </el-row>
-<el-row type="flex" class="row-bg" justify="end">
+<el-row class="row-bg" justify="end">
   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
   <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
 </el-row>
-<el-row type="flex" class="row-bg" justify="space-between">
+<el-row class="row-bg" justify="space-between">
   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
   <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
 </el-row>
-<el-row type="flex" class="row-bg" justify="space-around">
+<el-row class="row-bg" justify="space-around">
   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
   <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
@@ -312,36 +318,35 @@ Tomando el ejemplo de Bootstrap responsive design, existen 5 breakpoints: xs, sm
 
 ### Clases útiles para ocultar elementos
 
-Adicionalmente, Element provee una serie de clases para ocultar elementos dadas ciertas condiciones. Estas clases pueden se agregadas a cualquier elemento del DOM o un elemento propio. Necesita importar el siguiente archivo CSS para usar estas clases:
+Adicionalmente, Element Plus provee una serie de clases para ocultar elementos dadas ciertas condiciones. Estas clases pueden se agregadas a cualquier elemento del DOM o un elemento propio. Necesita importar el siguiente archivo CSS para usar estas clases:
 
 ```js
-import 'element-ui/lib/theme-chalk/display.css';
+import 'element-plus/lib/theme-chalk/display.css';
 ```
 
 Las clases son:
 - `hidden-xs-only` - oculto en viewports extra pequeños solamente
 - `hidden-sm-only` - oculto en viewports pequeños solamente
 - `hidden-sm-and-down` - oculto en viewports pequeños y menores
-- `hidden-sm-and-up` - oculto en viewports pequeños y superiores 
+- `hidden-sm-and-up` - oculto en viewports pequeños y superiores
 - `hidden-md-only` - oculto en viewports medios solamente
 - `hidden-md-and-down` - oculto en viewports medios y menores
 - `hidden-md-and-up` - oculto en viewports medios y mayores
-- `hidden-lg-only` - ocultos en viewports grandes solamente 
+- `hidden-lg-only` - ocultos en viewports grandes solamente
 - `hidden-lg-and-down` - ocultos en viewports grandes y menores
 - `hidden-lg-and-up` - ocultos en viewports grandes y superiores
 - `hidden-xl-only` - oculto en viewports extra grandes solamente
 
-### Atributos Row 
+### Atributos Row
 
 | Atributos | Descripción                              | Tipo   | Valores aceptados                        | Valor por defecto |
 | --------- | ---------------------------------------- | ------ | ---------------------------------------- | ----------------- |
 | gutter    | espaciado de la grilla                   | number | —                                        | 0                 |
-| type      | modo del layout , puedes usar flex, funciona en navegadores modernos | string | —                                        | —                 |
 | justify   | alineación horizontal del layout flex    | string | start/end/center/space-around/space-between | start             |
 | align     | alineación vertical del layout flex      | string | top/middle/bottom                        | top               |
 | tag       | tag de elemento propio                   | string | *                                        | div               |
 
-### Atributos Col 
+### Atributos Col
 
 | Atributos | Descripción                              | Tipo                                     | Valores aceptados | Valor por defecto |
 | --------- | ---------------------------------------- | ---------------------------------------- | ----------------- | ----------------- |

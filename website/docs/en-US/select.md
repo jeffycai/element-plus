@@ -197,7 +197,7 @@ Multiple select uses tags to display selected options.
       :value="item.value">
     </el-option>
   </el-select>
-  
+
   <el-select
     v-model="value2"
     multiple
@@ -257,7 +257,7 @@ You can customize HTML templates for options.
       :label="item.label"
       :value="item.value">
       <span style="float: left">{{ item.label }}</span>
-      <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+      <span style="float: right; color: var(--el-text-color-secondary); font-size: 13px">{{ item.value }}</span>
     </el-option>
   </el-select>
 </template>
@@ -527,17 +527,16 @@ If the binding value of Select is an object, make sure to assign `value-key` as 
 ### Select Attributes
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| value / v-model | binding value | boolean / string / number | — | — |
+| model-value / v-model | binding value | string / number / boolean / object | — | — |
 | multiple | whether multiple-select is activated | boolean | — | false |
 | disabled | whether Select is disabled | boolean | — | false |
 | value-key | unique identity key name for value, required when value is an object | string | — | value |
-| size | size of Input | string | large/small/mini | — |
+| size | size of Input | string | large/medium/small/mini  | large |
 | clearable | whether select can be cleared | boolean | — | false |
 | collapse-tags | whether to collapse tags to a text when multiple selecting | boolean | — | false |
 | multiple-limit | maximum number of options user can select when `multiple` is `true`. No limit when set to 0 | number | — | 0 |
 | name | the name attribute of select input | string | — | — |
 | autocomplete | the autocomplete attribute of select input | string | — | off |
-| auto-complete | @DEPRECATED in next major version | string | — | off |
 | placeholder | placeholder | string | — | Select |
 | filterable | whether Select is filterable | boolean | — | false |
 | allow-create | whether creating new items is allowed. To use this, `filterable` must be true | boolean | — | false |
@@ -581,7 +580,7 @@ If the binding value of Select is an object, make sure to assign `value-key` as 
 ### Option Attributes
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| value | value of option | string/number/object | — | — |
+| value | value of option | string / number / boolean / object | — | — |
 | label | label of option, same as `value` if omitted | string/number | — | — |
 | disabled | whether option is disabled | boolean | — | false |
 

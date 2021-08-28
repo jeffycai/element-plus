@@ -19,11 +19,31 @@ Input de  valores numéricos con un rango personalizable.
     },
     methods: {
       handleChange(value) {
-        console.log(value)
+        console.log(value);
       }
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const num = ref(1);
+      const handleChange = (value) => {
+        console.log(value);
+      };
+      return {
+        num,
+        handleChange,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -44,6 +64,22 @@ Input de  valores numéricos con un rango personalizable.
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const num = ref(1);
+      return {
+        num,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -66,6 +102,22 @@ Le permite definir el nivel de incremento de los saltos.
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const num = ref(5);
+      return {
+        num,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -86,6 +138,22 @@ Le permite definir el nivel de incremento de los saltos.
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const num = ref(2);
+      return {
+        num,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -106,6 +174,22 @@ Le permite definir el nivel de incremento de los saltos.
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const num = ref(1);
+      return {
+        num,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 
 :::
@@ -140,6 +224,28 @@ Utilice el atributo `size` para establecer tamaños adicionales con `medium`, `s
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const num1 = ref(1);
+      const num2 = ref(2);
+      const num3 = ref(3);
+      const num4 = ref(4);
+      return {
+        num1,
+        num2,
+        num3,
+        num4,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -165,6 +271,26 @@ Utilice el atributo `size` para establecer tamaños adicionales con `medium`, `s
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const num = ref(1);
+      const handleChange = (value) => {
+        console.log(value);
+      };
+      return {
+        num,
+        handleChange,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -172,13 +298,13 @@ Utilice el atributo `size` para establecer tamaños adicionales con `medium`, `s
 
 | Atributo          | Descripción                              | Tipo    | Valores aceptados | Por defecto |
 | ----------------- | ---------------------------------------- | ------- | ----------------- | ----------- |
-| value / v-model    | valor vinculado                          | number  | —                 | 0           |
+| model-value / v-model | valor vinculado                          | number / undefined  | —                 | 0           |
 | min               | el valor mínimo permitido                | number  | —                 | `-Infinity`  |
 | max               | el valor maximo permitido                | number  | —                 | `Infinity`  |
 | step              | incremento (salto)                       | number  | —                 | 1           |
 | step-strictly  | si el valor del input puede ser solo un multiplo de step | boolean  | —                 | false       |
 | precision         | precisión del valor del input | number  | —                 | —           |
-| size              | tamaño del componente                    | string  | large/small       | —           |
+| size              | tamaño del componente                    | string  | large/medium/small/mini | large      |
 | disabled          | si el componente esta deshabilitado      | boolean | —                 | false       |
 | controls          | si se activan los botones de control     | boolean | —                 | true        |
 | controls-position | posición de los botones de control       | string  | right             | -           |

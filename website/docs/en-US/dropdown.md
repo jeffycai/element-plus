@@ -18,7 +18,7 @@ Hover on the dropdown menu to unfold it for more actions.
       <el-dropdown-item>Action 3</el-dropdown-item>
       <el-dropdown-item disabled>Action 4</el-dropdown-item>
       <el-dropdown-item divided>Action 5</el-dropdown-item>
-    </el-dropdown-menu> 
+    </el-dropdown-menu>
   </template>
 </el-dropdown>
 
@@ -90,6 +90,24 @@ Use the button to trigger the dropdown list.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const handleClick = () => {
+        alert('button click');
+      };
+      return {
+        handleClick,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -101,7 +119,7 @@ Click the triggering element or hover on it.
 
 ```html
 <el-row class="block-col-2">
-  <el-col :span="12">
+  <el-col :span="8">
     <span class="demonstration">hover to trigger</span>
     <el-dropdown>
       <span class="el-dropdown-link">
@@ -118,9 +136,26 @@ Click the triggering element or hover on it.
       </template>
     </el-dropdown>
   </el-col>
-  <el-col :span="12">
+  <el-col :span="8">
     <span class="demonstration">click to trigger</span>
     <el-dropdown trigger="click">
+      <span class="el-dropdown-link">
+        Dropdown List<i class="el-icon-arrow-down el-icon--right"></i>
+      </span>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item icon="el-icon-plus">Action 1</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-circle-plus">Action 2</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-circle-plus-outline">Action 3</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-check">Action 4</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-circle-check">Action 5</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+  </el-col>
+  <el-col :span="8">
+    <span class="demonstration">right click to trigger</span>
+    <el-dropdown trigger="contextmenu">
       <span class="el-dropdown-link">
         Dropdown List<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
@@ -147,7 +182,7 @@ Click the triggering element or hover on it.
   }
   .demonstration {
     display: block;
-    color: #8492a6;
+    color: var(--el-text-color-secondary);
     font-size: 14px;
     margin-bottom: 20px;
   }
@@ -228,6 +263,26 @@ Clicking each dropdown item fires an event whose parameter is assigned by each i
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+
+      const handleCommand = (command) => {
+        ElMessage(`click on item ${command}`);
+      };
+      return {
+        handleCommand,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -289,15 +344,16 @@ Besides default size, Dropdown component provides three additional sizes for you
 ```
 :::
 
-
 ### Dropdown Attributes
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
 |-------------  |---------------- |---------------- |---------------------- |-------- |
 | type          | menu button type, refer to `Button` Component, only works when `split-button` is true  | string  |  —   |    —     |
 | size          | menu size, also works on the split button  | string  | medium / small / mini  |    —     |
+| max-height    | the max height of menu  | string / number  |     —    |    —     |
 | split-button | whether a button group is displayed | boolean         |     —       | false   |
-| placement    | placement of pop menu | string | top/top-start/top-end/bottom/bottom-start/bottom-end  | bottom-end |
-| trigger       | how to trigger     | string  |    hover/click  |  hover |
+| disabled     | Whether to disable | boolean | — | false |
+| placement    | placement of pop menu | string | top/top-start/top-end/bottom/bottom-start/bottom-end  | bottom |
+| trigger       | how to trigger     | string  |    hover/click/contextmenu  |  hover |
 | hide-on-click | whether to hide menu after clicking menu-item     | boolean          | — | true |
 | show-timeout | Delay time before show a dropdown (only works when trigger is `hover`) | number | — | 250 |
 | hide-timeout | Delay time before hide a dropdown (only works when trigger is `hover`) | number | — | 150 |
@@ -317,7 +373,13 @@ Besides default size, Dropdown component provides three additional sizes for you
 | command | triggers when a dropdown item is clicked | the command dispatched from the dropdown item |
 | visible-change | triggers when the dropdown appears/disappears | true when it appears, and false otherwise |
 
-### Dropdown Menu Item Attributes
+### Dropdown-Menu Slots
+
+| Name | Description |
+|------|--------|
+| — | content of Dropdown Menu |
+
+### Dropdown-Item Attributes
 | Attribute     | Description          | Type      | Accepted Values       | Default  |
 |-------------  |---------------- |---------------- |---------------------- |-------- |
 | command       | a command to be dispatched to Dropdown's `command` callback | string/number/object  |          —             |    —     |

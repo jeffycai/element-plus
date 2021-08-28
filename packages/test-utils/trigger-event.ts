@@ -1,12 +1,9 @@
 /**
  * Trigger event
  * mouseenter, mouseleave, mouseover, keyup, change, click
- * @param  {Element} elm
- * @param  {String} name
- * @param  {*} opts
  */
-const triggerEvent = (elm, name, ...opts) => {
-  let eventName
+const triggerEvent = (elm: Element, name: string, ...opts: any[]) => {
+  let eventName: string
 
   if (/^mouse|click/.test(name)) {
     eventName = 'MouseEvents'
@@ -18,10 +15,15 @@ const triggerEvent = (elm, name, ...opts) => {
   const evt = document.createEvent(eventName)
 
   evt.initEvent(name, ...opts)
-  elm.dispatchEvent
-    ? elm.dispatchEvent(evt)
-    : elm.fireEvent('on' + name, evt)
+
+  if (name === 'keydown' && opts[0]) {
+    // trigger event with keycode
+    // triggerEvent(ele, 'keydown', 'ArrowDown')
+    Object.defineProperty(evt, 'code', { value: opts[0] })
+  }
+  elm.dispatchEvent(evt)
 
   return elm
 }
+
 export default triggerEvent

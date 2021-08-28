@@ -1,6 +1,8 @@
 import ResizeObserver from 'resize-observer-polyfill'
 import isServer from './isServer'
 
+import type { CustomizedHTMLElement } from './types'
+
 export type ResizableElement = CustomizedHTMLElement<{
   __resizeListeners__: Array<(...args: unknown[]) => unknown>
   __ro__: ResizeObserver
@@ -24,7 +26,7 @@ export const addResizeListener = function(
   element: ResizableElement,
   fn: (...args: unknown[]) => unknown,
 ): void {
-  if (isServer) return
+  if (isServer || !element) return
   if (!element.__resizeListeners__) {
     element.__resizeListeners__ = []
     element.__ro__ = new ResizeObserver(resizeHandler)

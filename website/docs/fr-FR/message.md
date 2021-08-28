@@ -6,7 +6,7 @@ Utilisé pour avoir un retour après une action particulière. La différence av
 
 S'affiche en haut de la page et disparaît après trois secondes.
 
-:::demo L'utilisation de Message est très similaire à Notification, la plupart des options ne sont donc pas expliquées ici. Référez-vous à la table en fin de page et celle de Notification pour en savoir plus. Element affecte la méthode `$message` pour appeler Message. Il peut prendre en paramètre un string ou un VNode, qui sera affiché en tant que body principal.
+:::demo L'utilisation de Message est très similaire à Notification, la plupart des options ne sont donc pas expliquées ici. Référez-vous à la table en fin de page et celle de Notification pour en savoir plus. Element Plus affecte la méthode `$message` pour appeler Message. Il peut prendre en paramètre un string ou un VNode, qui sera affiché en tant que body principal.
 
 ```html
 <template>
@@ -15,6 +15,8 @@ S'affiche en haut de la page et disparaît après trois secondes.
 </template>
 
 <script>
+  import { h } from 'vue';
+
   export default {
     methods: {
       open() {
@@ -22,7 +24,6 @@ S'affiche en haut de la page et disparaît après trois secondes.
       },
 
       openVn() {
-        const h = this.$createElement;
         this.$message({
           message: h('p', null, [
             h('span', null, 'Message peut être '),
@@ -33,6 +34,37 @@ S'affiche en haut de la page et disparaît après trois secondes.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, h } from 'vue';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open = () => {
+        ElMessage('Ceci est un message.');
+      };
+
+      const openVn = () => {
+        ElMessage({
+          message: h('p', null, [
+            h('span', null, 'Message peut être '),
+            h('i', { style: 'color: teal' }, 'VNode'),
+          ]),
+        });
+      };
+
+      return {
+        open,
+        openVn,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -75,6 +107,46 @@ Utilisé pour montrer un retour d'activités Success, Warning, Message ou Error.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open1 = () => {
+        ElMessage('Ceci est un message.');
+      };
+
+      const open2 = () => {
+        ElMessage({
+          message: 'Félicitations, ceci est un message de succès.',
+          type: 'success',
+        });
+      };
+      const open3 = () => {
+        ElMessage({
+          message: 'Attention, ceci est un avertissement.',
+          type: 'warning',
+        });
+      };
+      const open4 = () => {
+        ElMessage.error('Ouups, ceci est une erreur.');
+      };
+
+      return {
+        open1,
+        open2,
+        open3,
+        open4,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -127,6 +199,55 @@ Un bouton de fermeture peut être ajouté.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open1 = () => {
+        ElMessage({
+          showClose: true,
+          message: 'Ceci est un message.',
+        });
+      };
+
+      const open2 = () => {
+        ElMessage({
+          showClose: true,
+          message: 'Félicitations, ceci est un message de succès.',
+          type: 'success',
+        });
+      };
+      const open3 = () => {
+        ElMessage({
+          showClose: true,
+          message: 'Attention, ceci est un avertissement.',
+          type: 'warning',
+        });
+      };
+      const open4 = () => {
+        ElMessage({
+          showClose: true,
+          message: 'Ouups, ceci est une erreur.',
+          type: 'error',
+        });
+      };
+
+      return {
+        open1,
+        open2,
+        open3,
+        open4,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -153,6 +274,30 @@ Utilisez l'attribut `center` pour centrer le texte.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const openCenter = () => {
+        ElMessage({
+          message: 'Texte centré',
+          center: true,
+        });
+      };
+
+      return {
+        openCenter,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -179,6 +324,30 @@ Utilisez l'attribut `center` pour centrer le texte.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const openHTML = () => {
+        ElMessage({
+          dangerouslyUseHTMLString: true,
+          message: '<strong>Ceci est du <i>HTML</i></strong>',
+        });
+      };
+
+      return {
+        openHTML,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -188,17 +357,15 @@ Bien que la propriété `message` supporte le HTML, générer du contenu HTML dy
 
 ### Méthode globale
 
-Element ajoute une méthode `$message` à Vue.prototype. Vous pouvez donc appeler `Message` dans l'instance de Vue comme dans cette page.
+Element Plus ajoute une méthode `$message` à `app.config.globalProperties`. Vous pouvez donc appeler `Message` dans l'instance de Vue comme dans cette page.
 
 ### Import à la demande
 
-Importez `Message`:
-
 ```javascript
-import { Message } from 'element-ui';
+import { ElMessage } from 'element-plus';
 ```
 
-Dans ce cas il faudra appeler `Message(options)`. Les méthodes des différents types sont aussi ajoutées, e.g. `Message.success(options)`. Vous pouvez appeler `Message.closeAll()` pour fermer manuellement toutes les instances.
+Dans ce cas il faudra appeler `ElMessage(options)`. Les méthodes des différents types sont aussi ajoutées, e.g. `ElMessage.success(options)`. Vous pouvez appeler `ElMessage.closeAll()` pour fermer manuellement toutes les instances.
 
 ### Options
 

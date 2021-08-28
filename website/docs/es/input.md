@@ -18,13 +18,14 @@ No admite modificadores `v-model`.
 <el-input placeholder="Please input" v-model="input"></el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input: ''
+      input: ref('')
     }
   }
-}
+})
 </script>
 ```
 
@@ -42,13 +43,14 @@ export default {
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input: ''
+      input: ref('')
     }
   }
-}
+})
 </script>
 ```
 
@@ -66,13 +68,14 @@ export default {
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input: ''
+      input: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -85,13 +88,14 @@ export default {
 <el-input placeholder="Please input password" v-model="input" show-password></el-input>
 
 <script>
-  export default {
-    data() {
-      return {
-        input: ''
-      }
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
+    return {
+      input: ref('')
     }
   }
+})
 </script>
 ```
 :::
@@ -121,12 +125,16 @@ Añada un icono para indicar el tipo de Input.
   <el-input
     placeholder="Pick a date"
     v-model="input3">
-    <i slot="suffix" class="el-input__icon el-icon-date"></i>
+    <template #suffix>
+      <i class="el-input__icon el-icon-date"></i>
+    </template>
   </el-input>
   <el-input
     placeholder="Type something"
     v-model="input4">
-    <i slot="prefix" class="el-input__icon el-icon-search"></i>
+    <template #prefix>
+      <i class="el-input__icon el-icon-search"></i>
+    </template>
   </el-input>
 </div>
 
@@ -138,16 +146,17 @@ Añada un icono para indicar el tipo de Input.
 </style>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input1: '',
-      input2: '',
-      input3: '',
-      input4: ''
+      input1: ref(''),
+      input2: ref(''),
+      input3: ref(''),
+      input4: ref('')
     }
   }
-}
+})
 </script>
 ```
 
@@ -168,13 +177,14 @@ Redimensiona para introducir varias líneas de información de texto. Agregue el
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      textarea: ''
+      textarea: ref('')
     }
   }
-}
+})
 </script>
 ```
 
@@ -202,14 +212,15 @@ El ajuste del prop `autosize` en el tipo de Input textarea hace que la altura se
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      textarea1: '',
-      textarea2: ''
+      textarea1: ref(''),
+      textarea2: ref('')
     }
   }
-}
+})
 </script>
 ```
 
@@ -224,22 +235,26 @@ Añade un elemento antes o después del input, generalmente una etiqueta o un bo
 ```html
 <div>
   <el-input placeholder="Please input" v-model="input1">
-    <template slot="prepend">Http://</template>
+    <template #prepend>Http://</template>
   </el-input>
 </div>
 <div style="margin-top: 15px;">
   <el-input placeholder="Please input" v-model="input2">
-    <template slot="append">.com</template>
+    <template #append>.com</template>
   </el-input>
 </div>
 <div style="margin-top: 15px;">
   <el-input placeholder="Please input" v-model="input3" class="input-with-select">
-    <el-select v-model="select" slot="prepend" placeholder="Select">
-      <el-option label="Restaurant" value="1"></el-option>
-      <el-option label="Order No." value="2"></el-option>
-      <el-option label="Tel" value="3"></el-option>
-    </el-select>
-    <el-button slot="append" icon="el-icon-search"></el-button>
+    <template #prepend>
+      <el-select v-model="select" placeholder="Select">
+        <el-option label="Restaurant" value="1"></el-option>
+        <el-option label="Order No." value="2"></el-option>
+        <el-option label="Tel" value="3"></el-option>
+      </el-select>
+    </template>
+    <template #append>
+      <el-button icon="el-icon-search"></el-button>
+    </template>
   </el-input>
 </div>
 
@@ -252,16 +267,17 @@ Añade un elemento antes o después del input, generalmente una etiqueta o un bo
   }
 </style>
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input1: '',
-      input2: '',
-      input3: '',
-      select: ''
+      input1: ref(''),
+      input2: ref(''),
+      input3: ref(''),
+      select: ref('')
     }
   }
-}
+})
 </script>
 ```
 
@@ -295,16 +311,17 @@ export default {
 </div>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      input1: '',
-      input2: '',
-      input3: '',
-      input4: ''
+      input1: ref(''),
+      input2: ref(''),
+      input3: ref(''),
+      input4: ref('')
     }
   }
-}
+})
 </script>
 ```
 
@@ -341,45 +358,53 @@ Puede obtener algunas sugerencias basadas en la entrada actual.
   </el-col>
 </el-row>
 <script>
-  export default {
-    data() {
-      return {
-        links: [],
-        state1: '',
-        state2: ''
-      };
-    },
-    methods: {
-      querySearch(queryString, cb) {
-        var links = this.links;
-        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+import { defineComponent, ref, onMounted } from 'vue';
+export default defineComponent({
+  setup() {
+    const restaurants = ref([]);
+    const querySearch = (queryString, cb) => {
+      var results = queryString
+        ? restaurants.value.filter(createFilter(queryString))
+        : restaurants.value;
         // call callback function to return suggestions
         cb(results);
-      },
-      createFilter(queryString) {
-        return (link) => {
-          return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      loadAll() {
-        return [
-          { "value": "vue", "link": "https://github.com/vuejs/vue" },
-          { "value": "element", "link": "https://github.com/ElemeFE/element" },
-          { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-          { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-          { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-          { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-          { "value": "babel", "link": "https://github.com/babel/babel" }
-         ];
-      },
-      handleSelect(item) {
-        console.log(item);
-      }
-    },
-    mounted() {
-      this.links = this.loadAll();
-    }
-  }
+    };
+    const createFilter = (queryString) => {
+      return (restaurant) => {
+        return (
+          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
+          0
+        );
+      };
+    };
+    const loadAll = () => {
+      return [
+        { "value": "vue", "link": "https://github.com/vuejs/vue" },
+        { "value": "element", "link": "https://github.com/ElemeFE/element" },
+        { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
+        { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
+        { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
+        { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
+        { "value": "babel", "link": "https://github.com/babel/babel" }
+        ];
+    };
+    const handleSelect = (item) => {
+      console.log(item);
+    };
+    onMounted(() => {
+      restaurants.value = loadAll();
+    });
+    return {
+      restaurants,
+      state1: ref(''),
+      state2: ref(''),
+      querySearch,
+      createFilter,
+      loadAll,
+      handleSelect,
+    };
+  },
+});
 </script>
 ```
 
@@ -397,78 +422,89 @@ Personalice cómo se muestran las sugerencias.
   v-model="state"
   :fetch-suggestions="querySearch"
   placeholder="Please input"
-  @select="handleSelect">
-  <i
-    class="el-icon-edit el-input__icon"
-    slot="suffix"
-    @click="handleIconClick">
-  </i>
-  <template slot-scope="{ item }">
+  @select="handleSelect"
+>
+  <template #suffix>
+    <i class="el-icon-edit el-input__icon" @click="handleIconClick"></i>
+  </template>
+  <template #default="{ item }">
     <div class="value">{{ item.value }}</div>
     <span class="link">{{ item.link }}</span>
   </template>
 </el-autocomplete>
 
 <style>
-  .my-autocomplete {
-    li {
-      line-height: normal;
-      padding: 7px;
-
-      .value {
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-      .link {
-        font-size: 12px;
-        color: #b4b4b4;
-      }
-    }
-  }
+.my-autocomplete li {
+  line-height: normal;
+  padding: 7px;
+}
+.my-autocomplete li .name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.my-autocomplete li .addr {
+  font-size: 12px;
+  color: #b4b4b4;
+}
+.my-autocomplete li .highlighted .addr {
+  color: #ddd;
+}
 </style>
 
 <script>
-  export default {
-    data() {
-      return {
-        links: [],
-        state: ''
+import { defineComponent, ref, onMounted } from 'vue';
+export default defineComponent({
+  setup() {
+    const links = ref([]);
+    const querySearch = (queryString, cb) => {
+      var results = queryString
+        ? links.value.filter(createFilter(queryString))
+        : links.value;
+      // call callback function to return suggestion objects
+      cb(results);
+    };
+    const createFilter = (queryString) => {
+      return (restaurant) => {
+        return (
+          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
+          0
+        );
       };
-    },
-    methods: {
-      querySearch(queryString, cb) {
-        var links = this.links;
-        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
-        // call callback function to return suggestion objects
-        cb(results);
-      },
-      createFilter(queryString) {
-        return (link) => {
-          return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      loadAll() {
-        return [
-          { "value": "vue", "link": "https://github.com/vuejs/vue" },
-          { "value": "element", "link": "https://github.com/ElemeFE/element" },
-          { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-          { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-          { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-          { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-          { "value": "babel", "link": "https://github.com/babel/babel" }
-         ];
-      },
-      handleSelect(item) {
-        console.log(item);
-      },
-      handleIconClick(ev) {
-        console.log(ev);
-      }
-    },
-    mounted() {
-      this.links = this.loadAll();
-    }
-  }
+    };
+    const loadAll = () => {
+      return [
+        { "value": "vue", "link": "https://github.com/vuejs/vue" },
+        { "value": "element", "link": "https://github.com/ElemeFE/element" },
+        { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
+        { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
+        { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
+        { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
+        { "value": "babel", "link": "https://github.com/babel/babel" }
+        ];
+    };
+    const handleSelect = (item) => {
+      console.log(item);
+    };
+
+    const handleIconClick = (ev) => {
+      console.log(ev);
+    };
+
+    onMounted(() => {
+      links.value = loadAll();
+    });
+
+    return {
+      links,
+      state: ref(''),
+      querySearch,
+      createFilter,
+      loadAll,
+      handleSelect,
+      handleIconClick,
+    };
+  },
+});
 </script>
 ```
 
@@ -487,49 +523,58 @@ Búsqueda de datos desde el servidor.
   placeholder="Please input"
   @select="handleSelect"
 ></el-autocomplete>
-<script>
-  export default {
-    data() {
-      return {
-        links: [],
-        state: '',
-        timeout:  null
-      };
-    },
-    methods: {
-      loadAll() {
-        return [
-          { "value": "vue", "link": "https://github.com/vuejs/vue" },
-          { "value": "element", "link": "https://github.com/ElemeFE/element" },
-          { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-          { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-          { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-          { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-          { "value": "babel", "link": "https://github.com/babel/babel" }
-         ];
-      },
-      querySearchAsync(queryString, cb) {
-        var links = this.links;
-        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
 
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-          cb(results);
-        }, 3000 * Math.random());
-      },
-      createFilter(queryString) {
-        return (link) => {
-          return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      handleSelect(item) {
-        console.log(item);
-      }
-    },
-    mounted() {
-      this.links = this.loadAll();
-    }
-  };
+<script>
+import { defineComponent, ref, onMounted } from 'vue';
+export default defineComponent({
+  setup() {
+    const links = ref([]);
+    const loadAll = () => {
+      return [
+        { "value": "vue", "link": "https://github.com/vuejs/vue" },
+        { "value": "element", "link": "https://github.com/ElemeFE/element" },
+        { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
+        { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
+        { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
+        { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
+        { "value": "babel", "link": "https://github.com/babel/babel" }
+        ];
+    };
+    let timeout;
+    const querySearchAsync = (queryString, cb) => {
+      var results = queryString
+        ? links.value.filter(createFilter(queryString))
+        : links.value;
+
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        cb(results);
+      }, 3000 * Math.random());
+    };
+    const createFilter = (queryString) => {
+      return (restaurant) => {
+        return (
+          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
+          0
+        );
+      };
+    };
+    const handleSelect = (item) => {
+      console.log(item);
+    };
+    onMounted(() => {
+      links.value = loadAll();
+    });
+    return {
+      links,
+      state: ref(''),
+      querySearchAsync,
+      createFilter,
+      loadAll,
+      handleSelect,
+    };
+  },
+});
 </script>
 ```
 
@@ -537,7 +582,7 @@ Búsqueda de datos desde el servidor.
 
 ### Limitar el tamaño
 
-:::demo `maxlength` y `minlength` son atributos de la entrada nativa, declaran un límite en el número de caracteres que un usuario puede introducir. La configuración de la pro `maxlength` para un tipo de entrada de texto o de área de texto puede limitar la longitud del valor de entrada y le permite mostrar el recuento de palabras al establecer `show-word-limit` a `true` al mismo tiempo.
+:::demo `maxlength` y `minlength` atributos de la entrada, declaran un límite en el número de caracteres que un usuario puede introducir. La configuración de la pro `maxlength` para un tipo de entrada de texto o de área de texto puede limitar la longitud del valor de entrada y le permite mostrar el recuento de palabras al establecer `show-word-limit` a `true` al mismo tiempo.
 
 ```html
 <el-input
@@ -559,14 +604,15 @@ Búsqueda de datos desde el servidor.
 </el-input>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+export default defineComponent ({
+  setup() {
     return {
-      text: '',
-      textarea: ''
+      text: ref(''),
+      textarea: ref('')
     }
   }
-}
+})
 </script>
 ```
 :::
@@ -576,8 +622,8 @@ export default {
 | Atributo      | Descripción                                                                                                                                      | Tipo             | Valores aceptados                                                                                                                       | Por defecto |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | type          | tipo de input                                                                                                                                    | string           | text, textarea y otros [tipos de entrada nativos](https://developer.mozilla.org/es/docs/Web/HTML/Elemento/input#Form_%3Cinput%3E_types) | text        |
-| value / v-model | valor enlazado                          | boolean / string / number | —                       | —           |
-| maxlength     | igual que `maxlength` en el input nativo                                                                                                         | number           | —                                                                                                                                       | —           |
+| model-value / v-model | valor enlazado                          | boolean / string / number | —                       | —           |
+| maxlength     | La longitud máxima                                                                                                          | number           | —                                                                                                                                       | —           |
 | minlength     | igual que `minlength` en el input nativo                                                                                                         | number           | —                                                                                                                                       | —           |
 | show-word-limit | Si se muestra el contador de palabras, solamente funciona con los tipos `text` o `textarea` | boolean    |  —  | false |
 | placeholder   | placeholder del Input                                                                                                                            | string           | —                                                                                                                                       | —           |
@@ -589,8 +635,7 @@ export default {
 | suffix-icon   | clase del icono de sufijo                                                                                                                        | string           | —                                                                                                                                       | —           |
 | rows          | número de filas, sólo funciona cuando `type` es `textarea`.                                                                                    | number           | —                                                                                                                                       | 2           |
 | autosize      | si textarea tiene una altura adaptativa, sólo funciona cuando el`type` es `textarea`. Puede aceptar un objeto, p. ej. { minRows: 2, maxRows: 6 } | boolean / object | —                                                                                                                                       | false       |
-| autocomplete  | igual que `autocomplete` en el input nativo                                                                                                      | string           | on/off                                                                                                                                  | off         |
-| auto-complete | @DEPRECATED en el próximo cambio mayor de versión                                                                                  | string           | on/off                                                                                                                                  | off         |
+| autocomplete  | igual que `autocomplete` en el input nativo                                                                                                      | string           | —                                                                                                                                  | off         |
 | name          | igual que `name` en el input nativo                                                                                                              | string           | —                                                                                                                                       | —           |
 | readonly      | igual que `readonly` en el input nativo                                                                                                          | boolean          | —                                                                                                                                       | false       |
 | max           | igual que `max` en el input nativo                                                                                                               | —                | —                                                                                                                                       | —           |
@@ -600,7 +645,8 @@ export default {
 | autofocus     | igual que `autofocus` en el input nativo                                                                                                         | boolean          | —                                                                                                                                       | false       |
 | form          | igual que `form` en el input nativo                                                                                                              | string           | —                                                                                                                                       | —           |
 | label         | texto de la etiqueta                                                                                                                             | string           | —                                                                                                                                       | —           |
-| tabindex      | orden de tabulación para el Input                                                                                                               | string           | -                                                                                                                                       | -           |
+| tabindex      | orden de tabulación para el Input                                                                                                                | string           | -                                                                                                                                       | -           |
+| input-style   | the style of the input element or textarea element                                                                                               | object           | -                                                                                                                                       | {}          |
 
 ### Input slots
 
@@ -638,7 +684,7 @@ export default {
 | disabled              | si el Autocompete esta deshabilitado                                                                                                               | boolean                         | —                                                              | false        |
 | value-key             | nombre del campo del objeto de sugerencia del input para la visualización                                                                          | string                          | —                                                              | value        |
 | icon                  | nombre del icono                                                                                                                                   | string                          | —                                                              | —            |
-| value                 | valor enlazado                                                                                                                                     | string                          | —                                                              | —            |
+| model-value / v-model           | valor enlazado                                                                                                                                     | string                          | —                                                              | —            |
 | debounce              | retardo al escribir, en milisegundos                                                                                                               | number                          | —                                                              | 300          |
 | placement             | ubicación del menú emergente                                                                                                                       | string                          | top / top-start / top-end / bottom / bottom-start / bottom-end | bottom-start |
 | fetch-suggestions     | un método para obtener las sugerencias del input. Cuando las sugerencias estén listas, invocar `callback(data:[])` para devolverlas a Autocomplete | Function(queryString, callback) | —                                                              | —            |
@@ -650,7 +696,7 @@ export default {
 | prefix-icon           | prefix icon class                                                                                                                                  | string                          | —                                                              | —            |
 | suffix-icon           | suffix icon class                                                                                                                                  | string                          | —                                                              | —            |
 | hide-loading          | si se debe ocultar el icono de loading en la búsqueda remota                                                                                       | boolean                         | —                                                              | false        |
-| popper-append-to-body | si añadir el desplegable al cuerpo. Si la posición del menú desplegable es incorrecta, puede intentar establecer este prop a false                 | boolean                         | -                                                              | true         |
+| popper-append-to-body | si añadir el desplegable al cuerpo. Si la posición del menú desplegable es incorrecta, puede intentar establecer este prop a false                 | boolean                         | -                                                              | false         |
 | validate-event        | si se debe lanzar la validación de formulario                                                                                                                 | boolean                         | -                                                   | true         |
 | highlight-first-item | si se debe resaltar el primer elemento en las sugerencias de búsqueda remota de forma predeterminada                 | boolean                         | -                                                              | false         |
 

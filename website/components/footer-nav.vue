@@ -54,8 +54,8 @@ export default {
   methods: {
     setNav() {
       let nav = navConfig[this.lang]
-      this.nav = [nav[0]].concat(nav[3].children)
-      nav[4].groups.map(group => group.list).forEach(list => {
+      this.nav = [nav[0]].concat(nav[1].children)
+      nav[2].groups.map(group => group.list).forEach(list => {
         this.nav = this.nav.concat(list)
       })
     },
@@ -81,7 +81,7 @@ export default {
 <style lang="scss" scoped>
   .footer-nav {
     padding: 40px 0;
-    color: #333;
+    color: var(--el-text-color-primary);
     font-size: 14px;
 
     &::after {
@@ -92,7 +92,7 @@ export default {
 
     & i {
       transition: .3s;
-      color: #999;
+      color: var(--el-text-color-secondary);
       vertical-align: baseline;
     }
   }

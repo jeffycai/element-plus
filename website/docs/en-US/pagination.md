@@ -75,7 +75,7 @@ Add more modules based on your scenario.
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page.sync="currentPage1"
+      v-model:currentPage="currentPage1"
       :page-size="100"
       layout="total, prev, pager, next"
       :total="1000">
@@ -86,7 +86,7 @@ Add more modules based on your scenario.
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page.sync="currentPage2"
+      v-model:currentPage="currentPage2"
       :page-sizes="[100, 200, 300, 400]"
       :page-size="100"
       layout="sizes, prev, pager, next"
@@ -98,7 +98,7 @@ Add more modules based on your scenario.
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page.sync="currentPage3"
+      v-model:currentPage="currentPage3"
       :page-size="100"
       layout="prev, pager, next, jumper"
       :total="1000">
@@ -109,7 +109,7 @@ Add more modules based on your scenario.
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page.sync="currentPage4"
+      v-model:currentPage="currentPage4"
       :page-sizes="[100, 200, 300, 400]"
       :page-size="100"
       layout="total, sizes, prev, pager, next, jumper"
@@ -137,6 +137,33 @@ Add more modules based on your scenario.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const handleSizeChange = (val) => {
+        console.log(`${val} items per page`);
+      };
+      const handleCurrentChange = (val) => {
+        console.log(`current page: ${val}`);
+      };
+
+      return {
+        currentPage1: ref(5),
+        currentPage2: ref(5),
+        currentPage3: ref(5),
+        currentPage4: ref(4),
+        handleSizeChange,
+        handleCurrentChange,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -165,6 +192,21 @@ When there is only one page, hide the pagination by setting the `hide-on-single-
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      return {
+        value: ref(false),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -173,18 +215,27 @@ When there is only one page, hide the pagination by setting the `hide-on-single-
 |--------------------|----------------------------------------------------------|-------------------|-------------|--------|
 | small              |   whether to use small pagination    | boolean |      —       | false |
 | background | whether the buttons have a background color | boolean | — | false |
-| page-size              | item count of each page, supports the .sync modifier  | number |      —       | 10 |
+| page-size              | item count of each page, supports the v-model bidirectional binding  | number |      —       | 10 |
+| default-page-size | default initial value of page size | number | - | - |
 | total | total item count | number | — | — |
 | page-count | total page count. Set either `total` or `page-count` and pages will be displayed; if you need `page-sizes`, `total` is required | number | — | — |
 | pager-count | number of pagers. Pagination collapses when the total page count exceeds this value | number | odd number between 5 and 21 | 7 |
-| current-page | current page number, supports the .sync modifier | number | — | 1 |
-| layout | layout of Pagination, elements separated with a comma | string | `sizes`, `prev`, `pager`, `next`, `jumper`, `->`, `total`, `slot` | 'prev, pager, next, jumper, ->, total'  |
+| current-page | current page number, supports the v-model bidirectional binding | number | — | 1 |
+| default-current-page | default initial value of current-page | number | - | - |
+| layout | layout of Pagination, elements separated with a comma | string | `sizes` / `prev` / `pager` / `next` / `jumper` / `->` / `total` / `slot` | 'prev, pager, next, jumper, ->, total'  |
 | page-sizes | options of item count per page | number[] | — |  [10, 20, 30, 40, 50, 100] |
 | popper-class | custom class name for the page size Select's dropdown | string | — | — |
 | prev-text | text for the prev button | string | — | — |
 | next-text | text for the next button | string | — | — |
 | disabled | whether Pagination is disabled | boolean | — | false |
 | hide-on-single-page | whether to hide when there's only one page | boolean | — | - |
+
+:::warning
+We'll detect some deprecated usages, if your pagination don't appeared or worked as expected, please check rules below:
+- You have to define one of `total` and `page-count`, otherwise we can't determine count of total pages.When both defined, `page-count` taken as priority.
+- If `current-page` is defined, you have to listen `current-page` change, by also define `@update:current-page`, otherwise pagination didn't work.
+- If `page-size` is defined while page size selector displayed(`sizes` included in `layout`), you have to listen `page-size` change as well, by define `@update:page-size`, otherwise change of page size didn't work.
+:::
 
 ### Events
 | Event Name | Description | Parameters |
@@ -194,7 +245,11 @@ When there is only one page, hide the pagination by setting the `hide-on-single-
 | prev-click | triggers when the prev button is clicked and current page changes | the new current page |
 | next-click | triggers when the next button is clicked and current page changes | the new current page |
 
-### Slot
+:::warning
+Events above are not recommended(but are still supported for compatible reason), better chioce is to use the two-way data binding by `v-model`.
+:::
+
+### Slots
 | Name | Description |
 | --- | --- |
 | — | custom content. To use this, you need to declare `slot` in `layout` |

@@ -1,286 +1,117 @@
-## 快速上手
+# 快速上手
 
-本节将介绍如何在项目中使用 Element。
+本节将介绍如何在项目中使用 ElementPlus。
 
-### 使用 vue-cli@3
+## 使用组件
 
-我们为新版的 vue-cli 准备了相应的 [Element 插件](https://github.com/ElementUI/vue-cli-plugin-element)，你可以用它们快速地搭建一个基于 Element 的项目。
+### 完整引入所有组件
+
+> main.ts
+
+```typescript
+import { createApp } from 'vue'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import App from './App.vue'
+
+const app = createApp(App)
+
+app.use(ElementPlus)
+app.mount('#app')
+```
+
+### 按需引入组件
+
+`ElementPlus`的 JS 代码默认支持基于 ES modules 的 [摇树 tree shaking](https://webpack.js.org/guides/tree-shaking/)。
+
+> App.vue
+
+```html
+<template>
+  <el-button>
+    我是 ElButton
+  </el-button>
+</template>
+<script>
+  import { defineComponent } from 'vue'
+  import { ElButton } from 'element-plus'
+
+  export default defineComponent({
+    name: 'app'
+    components: {
+      ElButton,
+    },
+  })
+</script>
+```
+
+### 样式的引入
+
+我们**强烈建议直接引入全部的样式文件**，虽然这看起来会增大整个应用的体积，但这样做可以避免引入额外的打包工具插件（减少负担），你还可以通过 [CDN](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
+的方式来加载样式文件，从而使得你的应用加载更快。
+
+通过 JS 的方式引入
+
+```typescript
+import 'element-plus/dist/index.css'
+```
+
+通过 HTML 的头文件引入
+
+```html
+<!-- index.html -->
+<head>
+  <link rel="stylesheet" href="//unpkg.com/element-plus/dist/index.css" />
+</head>
+```
+
+如果你想让样式也按需引入，你可以使用对应工具提供的插件来引用。请看[常见问题](/#/zh-CN/component/quickstart#chang-jian-wen-ti)
+
+## 快捷搭建项目模板
+
+### 使用 vue-cli@4.5
+
+我们为新版的 vue-cli 准备了相应的
+[Element Plus 插件](https://github.com/element-plus/vue-cli-plugin-element-plus)你可以用它们快速地搭建一个基于
+Element Plus 的项目。
 
 ### 使用 Starter Kit
 
-我们提供了通用的[项目模板](https://github.com/ElementUI/element-starter)，你可以直接使用。对于 Laravel 用户，我们也准备了相应的[模板](https://github.com/ElementUI/element-in-laravel-starter)，同样可以直接下载使用。
+我们提供了通用的[项目模板](https://github.com/element-plus/element-plus-starter)，你可以直接使用，另外我们还提供了
+Vite [模板](https://github.com/element-plus/element-plus-vite-starter)。对于
+Laravel 用户，我们也准备了相应的[模板](https://github.com/element-plus/element-plus-in-laravel-starter)，同样可以直接下载使用。
 
-如果不希望使用我们提供的模板，请继续阅读。
+## 全局配置
 
-### 引入 Element
+在引入 Element Plus 时，可以传入一个全局配置对象。该对象目前支持 `size` 与 `zIndex` 字段。`size`
+用于改变组件的默认尺寸，`zIndex` 设置弹框的初始 z-index（默认值：2000）。按需引入 Element Plus 的方式，具体操作如下：
 
-你可以引入整个 Element，或是根据需要仅引入部分组件。我们先介绍如何引入完整的 Element。
-
-#### 完整引入
-
-在 main.js 中写入以下内容：
-
-```javascript
-import Vue from 'vue';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-import App from './App.vue';
-
-Vue.use(ElementUI);
-
-new Vue({
-  el: '#app',
-  render: h => h(App)
-});
-```
-
-以上代码便完成了 Element 的引入。需要注意的是，样式文件需要单独引入。
-
-#### 按需引入
-
-借助 [babel-plugin-component](https://github.com/QingWei-Li/babel-plugin-component)，我们可以只引入需要的组件，以达到减小项目体积的目的。
-
-首先，安装 babel-plugin-component：
-
-```bash
-npm install babel-plugin-component -D
-```
-
-然后，将 .babelrc 修改为：
-
-```json
-{
-  "presets": [["es2015", { "modules": false }]],
-  "plugins": [
-    [
-      "component",
-      {
-        "libraryName": "element-ui",
-        "styleLibraryName": "theme-chalk"
-      }
-    ]
-  ]
-}
-```
-
-接下来，如果你只希望引入部分组件，比如 Button 和 Select，那么需要在 main.js 中写入以下内容：
-
-```javascript
-import Vue from 'vue';
-import { Button, Select } from 'element-ui';
-import App from './App.vue';
-
-Vue.component(Button.name, Button);
-Vue.component(Select.name, Select);
-/* 或写为
- * Vue.use(Button)
- * Vue.use(Select)
- */
-
-new Vue({
-  el: '#app',
-  render: h => h(App)
-});
-```
-
-完整组件列表和引入方式（完整组件列表以 [components.json](https://github.com/ElemeFE/element/blob/master/components.json) 为准）
-
-```javascript
-import Vue from 'vue';
-import {
-  Pagination,
-  Dialog,
-  Autocomplete,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  Menu,
-  Submenu,
-  MenuItem,
-  MenuItemGroup,
-  Input,
-  InputNumber,
-  Radio,
-  RadioGroup,
-  RadioButton,
-  Checkbox,
-  CheckboxButton,
-  CheckboxGroup,
-  Switch,
-  Select,
-  Option,
-  OptionGroup,
-  Button,
-  ButtonGroup,
-  Table,
-  TableColumn,
-  DatePicker,
-  TimeSelect,
-  TimePicker,
-  Popover,
-  Tooltip,
-  Breadcrumb,
-  BreadcrumbItem,
-  Form,
-  FormItem,
-  Tabs,
-  TabPane,
-  Tag,
-  Tree,
-  Alert,
-  Slider,
-  Icon,
-  Row,
-  Col,
-  Upload,
-  Progress,
-  Spinner,
-  Badge,
-  Card,
-  Rate,
-  Steps,
-  Step,
-  Carousel,
-  CarouselItem,
-  Collapse,
-  CollapseItem,
-  Cascader,
-  ColorPicker,
-  Transfer,
-  Container,
-  Header,
-  Aside,
-  Main,
-  Footer,
-  Timeline,
-  TimelineItem,
-  Link,
-  Divider,
-  Image,
-  Calendar,
-  Backtop,
-  PageHeader,
-  CascaderPanel,
-  Loading,
-  MessageBox,
-  Message,
-  Notification
-} from 'element-ui';
-
-Vue.use(Pagination);
-Vue.use(Dialog);
-Vue.use(Autocomplete);
-Vue.use(Dropdown);
-Vue.use(DropdownMenu);
-Vue.use(DropdownItem);
-Vue.use(Menu);
-Vue.use(Submenu);
-Vue.use(MenuItem);
-Vue.use(MenuItemGroup);
-Vue.use(Input);
-Vue.use(InputNumber);
-Vue.use(Radio);
-Vue.use(RadioGroup);
-Vue.use(RadioButton);
-Vue.use(Checkbox);
-Vue.use(CheckboxButton);
-Vue.use(CheckboxGroup);
-Vue.use(Switch);
-Vue.use(Select);
-Vue.use(Option);
-Vue.use(OptionGroup);
-Vue.use(Button);
-Vue.use(ButtonGroup);
-Vue.use(Table);
-Vue.use(TableColumn);
-Vue.use(DatePicker);
-Vue.use(TimeSelect);
-Vue.use(TimePicker);
-Vue.use(Popover);
-Vue.use(Tooltip);
-Vue.use(Breadcrumb);
-Vue.use(BreadcrumbItem);
-Vue.use(Form);
-Vue.use(FormItem);
-Vue.use(Tabs);
-Vue.use(TabPane);
-Vue.use(Tag);
-Vue.use(Tree);
-Vue.use(Alert);
-Vue.use(Slider);
-Vue.use(Icon);
-Vue.use(Row);
-Vue.use(Col);
-Vue.use(Upload);
-Vue.use(Progress);
-Vue.use(Spinner);
-Vue.use(Badge);
-Vue.use(Card);
-Vue.use(Rate);
-Vue.use(Steps);
-Vue.use(Step);
-Vue.use(Carousel);
-Vue.use(CarouselItem);
-Vue.use(Collapse);
-Vue.use(CollapseItem);
-Vue.use(Cascader);
-Vue.use(ColorPicker);
-Vue.use(Transfer);
-Vue.use(Container);
-Vue.use(Header);
-Vue.use(Aside);
-Vue.use(Main);
-Vue.use(Footer);
-Vue.use(Timeline);
-Vue.use(TimelineItem);
-Vue.use(Link);
-Vue.use(Divider);
-Vue.use(Image);
-Vue.use(Calendar);
-Vue.use(Backtop);
-Vue.use(PageHeader);
-Vue.use(CascaderPanel);
-
-Vue.use(Loading.directive);
-
-Vue.prototype.$loading = Loading.service;
-Vue.prototype.$msgbox = MessageBox;
-Vue.prototype.$alert = MessageBox.alert;
-Vue.prototype.$confirm = MessageBox.confirm;
-Vue.prototype.$prompt = MessageBox.prompt;
-Vue.prototype.$notify = Notification;
-Vue.prototype.$message = Message;
-```
-
-### 全局配置
-
-在引入 Element 时，可以传入一个全局配置对象。该对象目前支持 `size` 与 `zIndex` 字段。`size` 用于改变组件的默认尺寸，`zIndex` 设置弹框的初始 z-index（默认值：2000）。按照引入 Element 的方式，具体操作如下：
-
-完整引入 Element：
+完整引入 ElementPlus：
 
 ```js
-import Vue from 'vue';
-import Element from 'element-ui';
-Vue.use(Element, { size: 'small', zIndex: 3000 });
+import { createApp } from 'vue'
+import ElementPlus from 'element-plus'
+import App from './App.vue'
+
+const app = createApp(App)
+app.use(ElementPlus, { size: 'small', zIndex: 3000 })
 ```
 
-按需引入 Element：
+按需引入 ElementPlus：
 
 ```js
-import Vue from 'vue';
-import { Button } from 'element-ui';
+import { createApp } from 'vue'
+import { ElButton } from 'element-plus'
+import App from './App.vue'
 
-Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
-Vue.use(Button);
+const app = createApp(App)
+app.config.globalProperties.$ELEMENT = option
+app.use(ElButton)
 ```
 
 按照以上设置，项目中所有拥有 `size` 属性的组件的默认尺寸均为 'small'，弹框的初始 z-index 为 3000。
 
-### 开始使用
-
-至此，一个基于 Vue 和 Element 的开发环境已经搭建完毕，现在就可以编写代码了。各个组件的使用方法请参阅它们各自的文档。
-
-### 使用 Nuxt.js
+## 使用 Nuxt.js
 
 我们还可以使用 [Nuxt.js](https://nuxtjs.org)：
 
@@ -288,3 +119,82 @@ Vue.use(Button);
   <iframe src="https://glitch.com/embed/#!/embed/nuxt-with-element?path=nuxt.config.js&previewSize=0&attributionHidden=true" alt="nuxt-with-element on glitch" style="height: 100%; width: 100%; border: 0;"></iframe>
 </div>
 
+## 开始使用
+
+至此，一个基于 Vue 和 Element Plus 的开发环境已经搭建完毕，现在就可以编写代码了。各个组件的使用方法请参阅它们各自的文档。
+
+## 常见问题
+
+### 我想同时按需引入组件和样式，我应该怎么做？
+
+#### 使用 vite 按需加载样式
+
+如果你使用 [vite](https://vitejs.dev) 作为构建打包工具，那么你需要先安装 `vite-plugin-element-plus` 来实现按需加载样式
+
+```shell
+yarn add vite-plugin-element-plus -D
+# 或
+npm install vite-plugin-element-plus -D
+```
+
+然后将如下代码添加至 `vite.config.js` 文件中:
+
+```typescript
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import VitePluginElementPlus from 'vite-plugin-element-plus'
+
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => {
+  plugins: [
+    vue(),
+    VitePluginElementPlus({
+      // 如果你需要使用 [component name].scss 源文件，你需要把下面的注释取消掉。
+      // 对于所有的 API 你可以参考 https://github.com/element-plus/vite-plugin-element-plus
+      // 的文档注释
+      // useSource: true
+      format: mode === 'development' ? 'esm' : 'cjs',
+    }),
+  ],
+})
+```
+
+#### 使用 webpack 按需加载样式
+
+如果你使用 webpack 作为构建打包工具，那么你需要先安装 `babel-plugin-import` 来实现按需加载样式
+
+```shell
+yarn add babel-plugin-import -D
+# 或
+npm install babel-plugin-import -D
+```
+
+然后你需要将以下代码加入你的 `babel.config.js` 文件中。
+
+> babel.config.js
+
+```javascript
+module.exports = {
+  plugins: [
+    [
+      'import',
+      {
+        libraryName: 'element-plus',
+        // 引入组件
+        customName: name => {
+          name = name.slice(3)
+          return `element-plus/lib/components/${name}`
+        },
+        // 引入样式
+        customStyleName: name => {
+          name = name.slice(3)
+          // 如果你需要引入 [name].scss 文件，你需要用下面这行
+          // return `element-plus/lib/components/${name}/style`
+          // 引入 [name].css
+          return `element-plus/lib/components/${name}/style/css`
+        },
+      },
+    ],
+  ],
+}
+```

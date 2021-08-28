@@ -10,19 +10,52 @@
 
 ```html
 <template>
-  <el-radio v-model="radio" label="1">备选项</el-radio>
-  <el-radio v-model="radio" label="2">备选项</el-radio>
+  <div>
+    <el-radio v-model="radio1" label="1">备选项1</el-radio>
+    <el-radio v-model="radio1" label="2">备选项2</el-radio>
+  </div>
+  <div>
+    <el-radio v-model="radio2" label="1" size="medium">备选项1</el-radio>
+    <el-radio v-model="radio2" label="2" size="medium">备选项2</el-radio>
+  </div>
+  <div>
+    <el-radio v-model="radio3" label="1" size="small">备选项1</el-radio>
+    <el-radio v-model="radio3" label="2" size="small">备选项2</el-radio>
+  </div>
+  <div>
+    <el-radio v-model="radio4" label="1" size="mini">备选项1</el-radio>
+    <el-radio v-model="radio4" label="2" size="mini">备选项2</el-radio>
+  </div>
 </template>
 
 <script>
   export default {
     data () {
       return {
-        radio: '1'
+        radio1: '1',
+        radio2: '1',
+        radio3: '1',
+        radio4: '1',
       };
     }
   }
 </script>
+<!--
+<setup>
+  import { defineComponent, ref } from 'vue'
+
+  export default defineComponent({
+    setup() {
+      return {
+        radio1: ref('1'),
+        radio2: ref('1'),
+        radio3: ref('1'),
+        radio4: ref('1'),
+      }
+    }
+  })
+</setup>
+-->
 ```
 :::
 
@@ -46,6 +79,19 @@
     }
   }
 </script>
+<!--
+<setup>
+  import { defineComponent, ref } from 'vue'
+
+  export default defineComponent({
+    setup() {
+      return {
+        radio: ref('选中且禁用'),
+      }
+    }
+  })
+</setup>
+-->
 ```
 :::
 
@@ -73,6 +119,19 @@
     }
   }
 </script>
+<!--
+<setup>
+  import { defineComponent, ref } from 'vue'
+
+  export default defineComponent({
+    setup() {
+      return {
+        radio: ref(3),
+      }
+    }
+  })
+</setup>
+-->
 ```
 :::
 
@@ -80,7 +139,7 @@
 
 按钮样式的单选组合。
 
-:::demo 只需要把`el-radio`元素换成`el-radio-button`元素即可，此外，Element 还提供了`size`属性。
+:::demo 只需要把`el-radio`元素换成`el-radio-button`元素即可，此外，Element Plus 还提供了`size`属性。
 ```html
 <template>
   <div>
@@ -129,6 +188,22 @@
     }
   }
 </script>
+<!--
+<setup>
+  import { defineComponent, ref } from 'vue'
+
+  export default defineComponent({
+    setup() {
+      return {
+        radio1: ref('上海'),
+        radio2: ref('上海'),
+        radio3: ref('上海'),
+        radio4: ref('上海'),
+      }
+    }
+  })
+</setup>
+-->
 ```
 :::
 
@@ -171,17 +246,33 @@
     }
   }
 </script>
+<!--
+<setup>
+  import { defineComponent, ref } from 'vue'
+
+  export default defineComponent({
+    setup() {
+      return {
+        radio1: ref('1'),
+        radio2: ref('1'),
+        radio3: ref('1'),
+        radio4: ref('1'),
+      }
+    }
+  })
+</setup>
+-->
 ```
 :::
 
 ### Radio Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
-| value / v-model | 绑定值 | string / number / boolean | — | — |
+| model-value / v-model | 绑定值 | string / number / boolean | — | — |
 | label     | Radio 的 value   | string / number / boolean    |       —        |      —   |
 | disabled  | 是否禁用    | boolean   | — | false   |
 | border  | 是否显示边框  | boolean   | — | false   |
-| size  | Radio 的尺寸，仅在 border 为真时有效  | string  | medium / small / mini | — |
+| size  | Radio 的尺寸  | string  | medium / small / mini | — |
 | name | 原生 name 属性 | string    |      —         |     —    |
 
 ### Radio Events
@@ -192,8 +283,8 @@
 ### Radio-group Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
-| value / v-model | 绑定值 | string / number / boolean | — | — |
-| size     | 单选框组尺寸，仅对按钮形式的 Radio 或带有边框的 Radio 有效   | string  | medium / small / mini |    —     |
+| model-value / v-model | 绑定值 | string / number / boolean | — | — |
+| size     | 单选框组尺寸   | string  | medium / small / mini |    —     |
 | disabled  | 是否禁用    | boolean   | — | false   |
 | text-color  | 按钮形式的 Radio 激活时的文本颜色    | string   | — | #ffffff   |
 | fill  | 按钮形式的 Radio 激活时的填充色和边框色    | string   | — | #409EFF   |

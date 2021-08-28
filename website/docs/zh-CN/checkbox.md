@@ -9,18 +9,69 @@
 
 ```html
 <template>
-  <!-- `checked` 为 true 或 false -->
-  <el-checkbox v-model="checked">备选项</el-checkbox>
+  <div>
+    <el-checkbox v-model="checked1" label="备选项1"></el-checkbox>
+    <el-checkbox v-model="checked2" label="备选项2"></el-checkbox>
+  </div>
+  <div>
+    <el-checkbox v-model="checked3" label="备选项1" size="medium"></el-checkbox>
+    <el-checkbox v-model="checked4" label="备选项2" size="medium"></el-checkbox>
+  </div>
+  <div>
+    <el-checkbox v-model="checked5" label="备选项1" size="small"></el-checkbox>
+    <el-checkbox v-model="checked6" label="备选项2" size="small"></el-checkbox>
+  </div>
+  <div>
+    <el-checkbox v-model="checked7" label="备选项1" size="mini"></el-checkbox>
+    <el-checkbox v-model="checked8" label="备选项2" size="mini"></el-checkbox>
+  </div>
 </template>
 <script>
   export default {
     data() {
       return {
-        checked: true
+        checked1: true,
+        checked2: false,
+        checked3: false,
+        checked4: false,
+        checked5: false,
+        checked6: false,
+        checked7: false,
+        checked8: false,
       };
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const checked1 = ref(true);
+      const checked2 = ref(false);
+      const checked3 = ref(false);
+      const checked4 = ref(false);
+      const checked5 = ref(false);
+      const checked6 = ref(false);
+      const checked7 = ref(false);
+      const checked8 = ref(false);
+      return {
+        checked1,
+        checked2,
+        checked3,
+        checked4,
+        checked5,
+        checked6,
+        checked7,
+        checked8,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -45,6 +96,23 @@
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const checked1 = ref(false);
+      const checked2 = ref(true);
+      return {
+        checked1,
+        checked2,
+      };
+    },
+  });
+</setup>
+-->
 ```
 :::
 
@@ -74,6 +142,22 @@
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const checkList = ref(['选中且禁用', '复选框 A']);
+      return {
+        checkList,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -86,7 +170,6 @@
 ```html
 <template>
   <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-  <div style="margin: 15px 0;"></div>
   <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
     <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>
   </el-checkbox-group>
@@ -115,6 +198,40 @@
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, reactive, toRefs } from 'vue';
+
+  const cityOptions = ['上海', '北京', '广州', '深圳'];
+
+  export default defineComponent({
+    setup() {
+      const state = reactive({
+        checkAll: false,
+        checkedCities: ['上海', '北京'],
+        cities: cityOptions,
+        isIndeterminate: true,
+      });
+      const handleCheckAllChange = (val) => {
+        state.checkedCities = val ? cityOptions : [];
+        state.isIndeterminate = false;
+      };
+      const handleCheckedCitiesChange = (value) => {
+        const checkedCount = value.length;
+        state.checkAll = checkedCount === state.cities.length;
+        state.isIndeterminate = checkedCount > 0 && checkedCount < state.cities.length;
+      };
+      return {
+        ...toRefs(state),
+        handleCheckAllChange,
+        handleCheckedCitiesChange,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -126,7 +243,7 @@
 
 ```html
 <template>
-  <el-checkbox-group 
+  <el-checkbox-group
     v-model="checkedCities"
     :min="1"
     :max="2">
@@ -144,6 +261,29 @@
     }
   };
 </script>
+
+<!--
+<setup>
+
+  import { defineComponent, reactive, toRefs } from 'vue';
+
+  const cityOptions = ['上海', '北京', '广州', '深圳'];
+
+  export default defineComponent({
+    setup() {
+      const state = reactive({
+        checkedCities: ['上海', '北京'],
+        cities: cityOptions,
+      });
+
+      return {
+        ...toRefs(state),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 
 :::
@@ -152,7 +292,7 @@
 
 按钮样式的多选组合。
 
-:::demo 只需要把`el-checkbox`元素替换为`el-checkbox-button`元素即可。此外，Element 还提供了`size`属性。
+:::demo 只需要把`el-checkbox`元素替换为`el-checkbox-button`元素即可。此外，Element Plus 还提供了`size`属性。
 ```html
 <template>
   <div>
@@ -190,6 +330,32 @@
     }
   }
 </script>
+
+<!--
+<setup>
+
+  import { defineComponent, reactive, toRefs } from 'vue';
+
+  const cityOptions = ['上海', '北京', '广州', '深圳'];
+
+  export default defineComponent({
+    setup() {
+      const state = reactive({
+        checkboxGroup1: ['上海'],
+        checkboxGroup2: ['上海'],
+        checkboxGroup3: ['上海'],
+        checkboxGroup4: ['上海'],
+        cities: cityOptions,
+      });
+
+      return {
+        ...toRefs(state),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -234,19 +400,43 @@
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, reactive, toRefs } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const state = reactive({
+        checked1: true,
+        checked2: false,
+        checked3: false,
+        checked4: true,
+        checkboxGroup1: [],
+        checkboxGroup2: [],
+      });
+
+      return {
+        ...toRefs(state),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
 ### Checkbox Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
-| value / v-model | 绑定值 | string / number / boolean | — | — |
-| label     | 选中状态的值（只有在`checkbox-group`或者绑定对象类型为`array`时有效）| string / number / boolean  |       —        |     —    |
+| model-value / v-model | 绑定值 | string / number / boolean | — | — |
+| label     | 选中状态的值（只有在`checkbox-group`或者绑定对象类型为`array`时有效）| string / number / boolean / object  |       —        |     —    |
 | true-label | 选中时的值   | string / number | — |     —    |
 | false-label | 没有选中时的值   | string / number    |      —         |     —    |
 | disabled  | 是否禁用    | boolean   |  — | false   |
 | border  | 是否显示边框  | boolean   | — | false   |
-| size  | Checkbox 的尺寸，仅在 border 为真时有效  | string  | medium / small / mini | — |
+| size  | Checkbox 的尺寸  | string  | medium / small / mini | — |
 | name | 原生 name 属性 | string    |      —         |     —    |
 | checked  | 当前是否勾选    | boolean   |  — | false   |
 | indeterminate  | 设置 indeterminate 状态，只负责样式控制    | boolean   |  — | false   |
@@ -259,8 +449,8 @@
 ### Checkbox-group Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
-| value / v-model | 绑定值 | array | — | — |
-| size     | 多选框组尺寸，仅对按钮形式的 Checkbox 或带有边框的 Checkbox 有效   | string  | medium / small / mini  |    —     |
+| model-value / v-model | 绑定值 | array | — | — |
+| size     | 多选框组尺寸   | string  | medium / small / mini  |    —     |
 | disabled  | 是否禁用    | boolean   | — | false   |
 | min     | 可被勾选的 checkbox 的最小数量   | number    |       —        |     —    |
 | max     | 可被勾选的 checkbox 的最大数量   | number    |       —        |     —    |
@@ -275,7 +465,7 @@
 ### Checkbox-button Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
-| label     | 选中状态的值（只有在`checkbox-group`或者绑定对象类型为`array`时有效）| string / number / boolean  |       —        |     —    |
+| label     | 选中状态的值（只有在`checkbox-group`或者绑定对象类型为`array`时有效）| string / number / boolean / object  |       —        |     —    |
 | true-label | 选中时的值   | string / number | — |     —    |
 | false-label | 没有选中时的值   | string / number    |      —         |     —    |
 | disabled  | 是否禁用    | boolean   |  — | false   |

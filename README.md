@@ -2,18 +2,61 @@
   <img width="300px" src="https://user-images.githubusercontent.com/10731096/95823103-9ce15780-0d5f-11eb-8010-1bd1b5910d4f.png">
 </p>
 
+<p align="center">
+  <a href="https://www.npmjs.org/package/element-plus">
+    <img src="https://img.shields.io/npm/v/element-plus.svg">
+  </a>
+  <a href="https://npmcharts.com/compare/element-plus?minimal=true">
+    <img src="http://img.shields.io/npm/dm/element-plus.svg">
+  </a>
+  <br>
+</p>
+
 <p align="center">Element Plus - A Vue.js 3.0 UI library</p>
 
 * 💪 Vue 3.0 Composition API
 * 🔥 Written in TypeScript
 
+## Status: Beta
+
 This project is still under heavy development. Feel free to join us and make your first pull request.
 
 [![Edit element-plus](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/element-plus-ncxnt?fontsize=14&hidenavigation=1&theme=dark)
 
+<br/>
+<p align="center">
+  <b>Special thanks to the generous sponsorship by:</b>
+</p>
+<br/>
+<table align="center" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td align="center" valign="middle">
+        <a href="https://bit.dev/?from=element-ui" target="_blank">
+          <img width="150px" src="https://user-images.githubusercontent.com/10095631/41342907-e44e7196-6f2f-11e8-92f2-47702dc8f059.png">
+        </a>
+      </td>
+      <td align="center" valign="middle">
+        <a href="https://www.renren.io/?from=element-ui" target="_blank">
+          <img width="150px" src="https://user-images.githubusercontent.com/82012629/126620778-0d8ab509-018a-45d7-b8de-a5bac2ad519a.png">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ---
 
-Join our [Discord](https://discord.link/ElementPlus) to start communicating with everybody <a href="https://discord.link/ElementPlus" target="_blank" rel="noreferrer noopener" align="center"> ![Discord](https://discord.com/api/guilds/746641026239954954/widget.png?style=shield)</a>
+## Documentation
+You can find for more details, API, and other docs on [https://element-plus.org](https://element-plus.org/)
+
+国内[加速镜像站点](https://element-plus.gitee.io/)
+
+Join our [Discord](https://discord.link/ElementPlus) to start communicating with everybody.
+
+## Breaking change list
+
+You can find the breaking change list here: [Breaking Change List](https://github.com/element-plus/element-plus/issues/162).
 
 ## Bootstrap project
 With command
@@ -60,4 +103,20 @@ Example
 [TYPE](SCOPE):DESCRIPTION#[ISSUE]
 # example feat(button):add type 'button' for form usage #1234
 ```
+
+## Licence
+
+ElementPlus is open source software licensed as
+[MIT](https://github.com/element-plus/element-plus/blob/master/LICENSE).
+
+
+## Contributors
+
+This project wouldn't exist without our amazing contributors
+
+<a href="https://github.com/element-plus/element-plus/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=element-plus/element-plus" />
+</a>
+
+
 

@@ -2,11 +2,16 @@
 
 A veces, `Dialog` no siempre satisface nuestros requisitos, digamos que tiene un formulario masivo, o necesita espacio para mostrar algo como `terminos & condiciones`, `Drawer` tiene una API casi idéntica a `Dialog`, pero introduce una experiencia de usuario diferente.
 
+:::tip
+#### Translation needed
+
+Since v-model is natively supported for all components, `visible.sync` has been deprecated, use `v-model="visibilityBinding"` to control the visibility of the current drawer.
+:::
 ### Uso básico
 
 Llamada de un drawer temporal, desde varias direcciones
 
-:::demo Debe establecer `visible` para `Drawer` como lo hace `Dialog` para controlar la visibilidad. `visible` es del tipo `boolean`. `Drawer` tiene partes: `title` & `body`, el `title` es un slot con nombre, también puede establecer el título a través de un atributo llamado `title`, por defecto a una cadena vacía, la parte `body` es el área principal de `Drawer`, que contiene contenido definido por el usuario. Al abrir, `Drawer` se expande desde la **esquina derecha a la izquierda** cuyo tamaño es **30%** de la ventana del navegador por defecto. Puede cambiar ese comportamiento predeterminado estableciendo los atributos `direction` y `size`. Este caso de demostración también muestra cómo utilizar la API `before-close`, consulte la sección Atributos para obtener más detalles.
+:::demo Debe establecer `model-value` para `Drawer` como lo hace `Dialog` para controlar la visibilidad. `visible` es del tipo `boolean`. `Drawer` tiene partes: `title` & `body`, el `title` es un slot con nombre, también puede establecer el título a través de un atributo llamado `title`, por defecto a una cadena vacía, la parte `body` es el área principal de `Drawer`, que contiene contenido definido por el usuario. Al abrir, `Drawer` se expande desde la **esquina derecha a la izquierda** cuyo tamaño es **30%** de la ventana del navegador por defecto. Puede cambiar ese comportamiento predeterminado estableciendo los atributos `direction` y `size`. Este caso de demostración también muestra cómo utilizar la API `before-close`, consulte la sección Atributos para obtener más detalles.
 
 ```html
 <el-radio-group v-model="direction">
@@ -22,7 +27,7 @@ Llamada de un drawer temporal, desde varias direcciones
 
 <el-drawer
   title="I am the title"
-  :visible.sync="drawer"
+  v-model="drawer"
   :direction="direction"
   :before-close="handleClose">
   <span>Hi, there!</span>
@@ -47,6 +52,35 @@ Llamada de un drawer temporal, desde varias direcciones
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+  import { ElMessageBox } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+
+      const drawer = ref(false);
+      const direction = ref('rtl');
+      const handleClose = (done) => {
+        ElMessageBox
+          .confirm('Are you sure you want to close this?')
+          .then((_) => {
+            done();
+          })
+          .catch((_) => {});
+      };
+      return {
+        drawer,
+        direction,
+        handleClose,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -63,7 +97,7 @@ When you no longer need a title, you can remove title from drawer.
 
 <el-drawer
   title="I am the title"
-  :visible.sync="drawer"
+  v-model="drawer"
   :with-header="false">
   <span>Hi there!</span>
 </el-drawer>
@@ -77,6 +111,21 @@ When you no longer need a title, you can remove title from drawer.
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      return {
+        drawer: ref(false),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -91,7 +140,7 @@ Al igual que `Dialog`, `Drawer` puede hacer muchas interacciones diversas.
 <el-button type="text" @click="dialog = true">Open Drawer with nested form</el-button>
 <el-drawer
   title="I have a nested table inside!"
-  :visible.sync="table"
+  v-model="table"
   direction="rtl"
   size="50%">
    <el-table :data="gridData">
@@ -104,7 +153,7 @@ Al igual que `Dialog`, `Drawer` puede hacer muchas interacciones diversas.
 <el-drawer
   title="I have a nested form inside!"
   :before-close="handleClose"
-  :visible.sync="dialog"
+  v-model="dialog"
   direction="ltr"
   custom-class="demo-drawer"
   ref="drawer"
@@ -192,6 +241,90 @@ export default {
   }
 }
 </script>
+<!--
+<setup>
+
+import {defineComponent, reactive, toRefs } from 'vue';
+import { ElMessageBox } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+
+      const state = reactive({
+        table: false,
+        dialog: false,
+        loading: false,
+        gridData: [
+          {
+            date: '2016-05-02',
+            name: 'Peter Parker',
+            address: 'Queens, New York City',
+          },
+          {
+            date: '2016-05-04',
+            name: 'Peter Parker',
+            address: 'Queens, New York City',
+          },
+          {
+            date: '2016-05-01',
+            name: 'Peter Parker',
+            address: 'Queens, New York City',
+          },
+          {
+            date: '2016-05-03',
+            name: 'Peter Parker',
+            address: 'Queens, New York City',
+          },
+        ],
+        form: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: '',
+        },
+        formLabelWidth: '80px',
+        timer: null,
+      });
+
+      const handleClose = (done) => {
+        if (state.loading) {
+          return;
+        }
+        ElMessageBox
+          .confirm('Do you want to submit?')
+          .then((_) => {
+            state.loading = true;
+            state.timer = setTimeout(() => {
+              done();
+              // 动画关闭需要一定的时间
+              setTimeout(() => {
+                state.loading = false;
+              }, 400);
+            }, 2000);
+          })
+          .catch((_) => {});
+      };
+
+      const cancelForm = () => {
+        state.loading = false;
+        state.dialog = false;
+        clearTimeout(state.timer);
+      };
+
+      return {
+        ...toRefs(state),
+        handleClose,
+        cancelForm,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -208,7 +341,7 @@ También puede tener varias capas de `Drawer` al igual que con `Dialog`.
 
 <el-drawer
   title="I'm outer Drawer"
-  :visible.sync="drawer"
+  v-model="drawer"
   size="50%">
   <div>
    <el-button @click="innerDrawer = true">Click me!</el-button>
@@ -216,7 +349,7 @@ También puede tener varias capas de `Drawer` al igual que con `Dialog`.
      title="I'm inner Drawer"
      :append-to-body="true"
      :before-close="handleClose"
-     :visible.sync="innerDrawer">
+     v-model="innerDrawer">
      <p>_(:зゝ∠)_</p>
    </el-drawer>
   </div>
@@ -241,6 +374,35 @@ También puede tener varias capas de `Drawer` al igual que con `Dialog`.
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+  import { ElMessageBox } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+
+      const drawer = ref(false);
+      const innerDrawer = ref(false);
+      const handleClose = (done) => {
+        ElMessageBox
+          .confirm('You still have unsaved data, proceed?')
+          .then((_) => {
+            done();
+          })
+          .catch((_) => {});
+      };
+      return {
+        drawer,
+        innerDrawer,
+        handleClose,
+      };
+    },
+  });
+
+</setup>
+-->
 
 ```
 :::
@@ -257,30 +419,30 @@ El Drawer proporciona una API llamada "destroyOnClose", que es una variable de b
 
 :::
 
-:::tip
-
-Si la variable `visible` se gestiona en el almacén de Vuex, el `.sync` no puede funcionar correctamente. En este caso, elimine el modificador `.sync`, escuche los eventos `open` y `close` de Drawer, y envíe mutaciones Vuex para actualizar el valor de esa variable en los manejadores de eventos.
-
-:::
 
 ### Atributos de Drawer
 
 | Parámetros | Descripción | Tipo   | Valores aceptados           | Por defecto |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
+| model-value / v-model | Si se muestra el Drawer | boolean | — | false |
 | append-to-body | Los controles deberían insertar Drawer en el elemento DocumentBody, los Drawer anidados deben asignar este parámetro a **true** | boolean   | — | false |
+| lock-scroll     | whether scroll of body is disabled while Drawer is displayed | boolean   | — | true |
 | before-close | Si está configurado, el procedimiento de cierre se detendrá. | function(done), done es un tipo de función que acepta un booleano como parámetro, una llamada hecha con true o sin parámetro abortará el procedimiento de cierre. | — | — |
+| close-on-click-modal | whether the Drawer can be closed by clicking the mask | boolean    | — | true |
 | close-on-press-escape | Indica si el Drawer puede cerrarse pulsando ESC | boolean | — | true |
+| open-delay        | Time(milliseconds) before open | number    | — | 0 |
+| close-delay       | Time(milliseconds) before close | number    | — | 0 |
 | custom-class | Nombre extra de clase para  Drawer | string | — | — |
 | destroy-on-close | Indica si los children deben ser destruidos después de cerrar el Drawer. | boolean | - | false |
 | modal | Mostrará una capa de sombra | boolean | — | true |
-| modal-append-to-body | Indica si se debe insertar una capa de sombreado en el elemento DocumentBody | boolean   | — | true |
 | direction | Dirección de apertura del Drawer | Direction | rtl / ltr / ttb / btt | rtl |
 | show-close | Se mostrará el botón de cerrar en la parte superior derecha del Drawer | boolean | — | true |
 | size | Tamaño del Drawer. Si el Drawer está en modo horizontal, afecta a la propiedad width, de lo contrario afecta a la propiedad height, cuando el tamaño es tipo `number`, describe el tamaño por unidad de píxeles; cuando el tamaño es tipo `string`, se debe usar con notación `x%`, de lo contrario se interpretará como unidad de píxeles. | number / string | - | '30%' |
 | title | El título del Drawer, también se puede establecer por slot con nombre, las descripciones detalladas se pueden encontrar en el formulario de slot. | string | — | — |
-| visible | Si se muestra el Drawer, también soporta la notación `.sync` | boolean | — | false |
-| wrapperClosable | Indica si el usuario puede cerrar el Drawer haciendo clic en la capa de sombreado. | boolean | - | true |
 | withHeader | Flag that controls the header section's existance, default to true, when withHeader set to false, both `title attribute` and `title slot` won't work | boolean | - | true |
+| modal-class | Nombre extra de clase para capa de sombra | string | - | - |
+| z-index | set z-index | number | - | - |
+
 
 ### Drawer Slot's
 
@@ -293,7 +455,7 @@ Si la variable `visible` se gestiona en el almacén de Vuex, el `.sync` no puede
 
 | Nombre | Descripción |
 | ---- | ---  |
-| closeDrawer | Para cerrar el Drawer, este método llamará `before-close`. |
+| handleClose | Para cerrar el Drawer, este método llamará `before-close`. |
 
 ### Eventos Drawer
 

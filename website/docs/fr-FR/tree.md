@@ -483,7 +483,6 @@ Le contenu des noeuds peut être personnalisé, afin de pouvoir ajouter des icô
       }];
       return {
         data: JSON.parse(JSON.stringify(data)),
-        data: JSON.parse(JSON.stringify(data))
       }
     },
 
@@ -794,7 +793,7 @@ Vous pouvez déplacer les noeuds par drag'n drop en ajoutant l'attribut `draggab
 | props                 | Options de configuration, voir table suivante. | object                      | —               | —       |
 | render-after-expand   | Si les noeuds enfants doivent être générés seulement après la première ouverture du parent. | boolean | — | true |
 | load                  | Méthode pour charger les noeuds enfants, uniquement en mode `lazy`.  | function(node, resolve)     | —               | —       |
-| render-content        | Fonction de rendu pour les noeuds.            | Function(h, { node, data, store }        | —               | —       |
+| render-content        | Fonction de rendu pour les noeuds.            | Function(h, { node, data, store })        | —               | —       |
 | highlight-current     | Si le noeud courant est mis en valeur.      | boolean                     | —               | false   |
 | default-expand-all    | Si tous les noeuds sont ouverts par défaut.   | boolean                     | —               | false   |
 | expand-on-click-node  | Si l'ouverture se fait aussi en cliquant sur le noeud. Si `false`, l'ouverture ne se fera qu'en cliquant sur l'icône. | boolean | — | true |
@@ -840,8 +839,8 @@ Vous pouvez déplacer les noeuds par drag'n drop en ajoutant l'attribut `draggab
 | getHalfCheckedKeys | Si le noeud peut être sélectionné (`show-checkbox` est `true`), retourne les clés de la moitié des noeuds sélectionnés. | - |
 | getCurrentKey   | retourne la clé du noeud actuellement en valeur (`null` si aucun noeud n'est en valeur). | — |
 | getCurrentNode  | retourne les données du noeud actuellement en valeur (`null` si aucun noeud n'est en valeur). | — |
-| setCurrentKey   | Met un noeud en valeur par sa clé, ne marche que si `node_key` est assigné. | (key) la clé du noeud. Si `null`, annule la sélection actuelle. |
-| setCurrentNode  | Met un noeud en valeur, ne marche que si `node_key` est assigné. | (node) le noeud. |
+| setCurrentKey   | Met un noeud en valeur par sa clé, ne marche que si `node_key` est assigné. | (key, shouldAutoExpandParent=true) 1. la clé du noeud. Si `null`, annule la sélection actuelle. 2. whether to automatically expand parent node |
+| setCurrentNode  | Met un noeud en valeur, ne marche que si `node_key` est assigné. | (node, shouldAutoExpandParent=true) 1. le noeud. 2. whether to automatically expand parent node |
 | getNode         | Retourne le noeud grâce à sa clé ou ses données. | (data) la clé ou les données du noeud. |
 | remove          | Supprime un noeud, ne marche que si node-key est assigné. | (data) le noeud ou ses données à supprimer. |
 | append          | Ajoute un noeud à un autre noeud. | (data, parentNode) 1. les données du noeud à ajouter 2. les données du parent, clé ou données. |

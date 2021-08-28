@@ -125,7 +125,9 @@ Es posible usar slots con nombre para personalizar el contenido de la etiqueta d
 ```html
 <el-tabs type="border-card">
   <el-tab-pane>
-    <span slot="label"><i class="el-icon-date"></i> Route</span>
+    <template #label>
+      <span><i class="el-icon-date"></i> Route</span>
+    </template>
     Route
   </el-tab-pane>
   <el-tab-pane label="Config">Config</el-tab-pane>
@@ -192,7 +194,7 @@ Solo las pestañas de tipo tarjeta soportan adición y cierre.
               }
             });
           }
-          
+
           this.editableTabsValue = activeName;
           this.editableTabs = tabs.filter(tab => tab.name !== targetName);
         }
@@ -265,7 +267,7 @@ Solo las pestañas de tipo tarjeta soportan adición y cierre.
             }
           });
         }
-        
+
         this.editableTabsValue = activeName;
         this.editableTabs = tabs.filter(tab => tab.name !== targetName);
       }
@@ -278,7 +280,7 @@ Solo las pestañas de tipo tarjeta soportan adición y cierre.
 ### Atributos de Pestañas
 | Atributo       | Descripción                          | Tipo    | Valores aceptados     | Por defecto                 |
 | -------------- | ------------------------------------ | ------- | --------------------- | --------------------------- |
-| value / v-model | valor enlazado, nombre de la pestaña seleccionada    | string  | —                     | nombre de la primer pestaña |
+| model-value / v-model | valor enlazado, nombre de la pestaña seleccionada    | string  | —                     | nombre de la primer pestaña |
 | type           | tipo de Pestaña                      | string  | card/border-card      | —                           |
 | closable       | si la Pestaña es cerrable            | boolean | —                     | false                       |
 | addable        | si la Pestaña es añadible            | boolean | —                     | false                       |
@@ -303,3 +305,10 @@ Solo las pestañas de tipo tarjeta soportan adición y cierre.
 | name     | identificador correspondiente al value de la Tabulación, representando el alias del tab-pane | string  | —                 | número ordinal del tab-pane en la secuencia, p.ej el primer tab-pane de pestañas es '1' |
 | closable | si el Tab es cerrable                                        | boolean | —                 | false                                                        |
 | lazy     | si Tab es renderizado con `lazy-load`                        | boolean | —                 | false                                                        |
+
+### Tab-pane Slots
+
+| Name | Description |
+|------|--------|
+| - | Tab-pane's content |
+| label | Tab-pane's label |

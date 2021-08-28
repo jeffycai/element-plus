@@ -199,7 +199,7 @@ Vous pouvez sélectionner des intervalles de valeurs au lieu d'une valeur unique
             style: {
               color: '#1989FA'
             },
-            label: this.$createElement('strong', '50%')
+            label: '50%'
           }
         }
       }
@@ -213,7 +213,7 @@ Vous pouvez sélectionner des intervalles de valeurs au lieu d'une valeur unique
 
 | Attribut      | Description          | Type      | Valeurs acceptées       | Défaut  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| value / v-model | La valeur liée. | number | — | 0 |
+| model-value / v-model | La valeur liée. | number | — | 0 |
 | min | Valeur minimale. | number | — | 0 |
 | max | Valeur maximale. | number | — | 100 |
 | disabled | Si le Slider est désactivé. | boolean | — | false |
@@ -238,3 +238,4 @@ Vous pouvez sélectionner des intervalles de valeurs au lieu d'une valeur unique
 |---------- |-------- |---------- |
 | change | Se déclenche quand la valeur change (si le changement est fait à la souris, se déclenche quand la souris redevient immobile). | La nouvelle valeur. |
 | input | triggers when the data changes (It'll be emitted in real time during sliding) | value after changing |
+

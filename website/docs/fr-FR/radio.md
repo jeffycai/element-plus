@@ -9,19 +9,52 @@ Radio ne devrait pas avoir trop d'options. Dans ce cas utilisez plutôt Select.
 :::demo Créer un composant Radio est facile, vous avez juste besoin de lier les `v-model` des options. Chacun équivaut à la valeur de `label` du radio correspondant. Le type de `label` est `String`, `Number` ou `Boolean`.
 ```html
 <template>
-  <el-radio v-model="radio" label="1">Option A</el-radio>
-  <el-radio v-model="radio" label="2">Option B</el-radio>
+  <div>
+    <el-radio v-model="radio1" label="1">Option 1</el-radio>
+    <el-radio v-model="radio1" label="2">Option 2</el-radio>
+  </div>
+  <div>
+    <el-radio v-model="radio2" label="1" size="medium">Option 1</el-radio>
+    <el-radio v-model="radio2" label="2" size="medium">Option 2</el-radio>
+  </div>
+  <div>
+    <el-radio v-model="radio3" label="1" size="small">Option 1</el-radio>
+    <el-radio v-model="radio3" label="2" size="small">Option 2</el-radio>
+  </div>
+  <div>
+    <el-radio v-model="radio4" label="1" size="mini">Option 1</el-radio>
+    <el-radio v-model="radio4" label="2" size="mini">Option 2</el-radio>
+  </div>
 </template>
 
 <script>
   export default {
     data () {
       return {
-        radio: '1'
+        radio1: '1',
+        radio2: '1',
+        radio3: '1',
+        radio4: '1',
       };
     }
   }
 </script>
+<!--
+<setup>
+  import { defineComponent, ref } from 'vue'
+
+  export default defineComponent({
+    setup() {
+      return {
+        radio1: ref('1'),
+        radio2: ref('1'),
+        radio3: ref('1'),
+        radio4: ref('1'),
+      }
+    }
+  })
+</setup>
+-->
 ```
 :::
 
@@ -45,6 +78,19 @@ L'attribut `disabled` désactive le radio.
     }
   }
 </script>
+<!--
+<setup>
+  import { defineComponent, ref } from 'vue'
+
+  export default defineComponent({
+    setup() {
+      return {
+        radio: ref('selected and disabled'),
+      }
+    }
+  })
+</setup>
+-->
 ```
 :::
 
@@ -70,6 +116,19 @@ Utile pour choisir entre plusieurs groupes d'options mutuellement exclusives.
     }
   }
 </script>
+<!--
+<setup>
+  import { defineComponent, ref } from 'vue'
+
+  export default defineComponent({
+    setup() {
+      return {
+        radio: ref(3),
+      }
+    }
+  })
+</setup>
+-->
 ```
 :::
 
@@ -126,6 +185,22 @@ Des radios affichés comme des boutons standards.
     }
   }
 </script>
+<!--
+<setup>
+  import { defineComponent, ref } from 'vue'
+
+  export default defineComponent({
+    setup() {
+      return {
+        radio1: ref('New York'),
+        radio2: ref('New York'),
+        radio3: ref('New York'),
+        radio4: ref('New York'),
+      }
+    }
+  })
+</setup>
+-->
 ```
 :::
 
@@ -168,6 +243,22 @@ Des radios affichés comme des boutons standards.
     }
   }
 </script>
+<!--
+<setup>
+  import { defineComponent, ref } from 'vue'
+
+  export default defineComponent({
+    setup() {
+      return {
+        radio1: ref('1'),
+        radio2: ref('1'),
+        radio3: ref('1'),
+        radio4: ref('1'),
+      }
+    }
+  })
+</setup>
+-->
 ```
 :::
 
@@ -175,11 +266,11 @@ Des radios affichés comme des boutons standards.
 
 | Attribut      | Description          | Type      | Valeurs acceptées       | Défaut |
 | ---- | ---- | ---- | ---- | ---- |
-| value / v-model | La valeur liée. | string / number / boolean | — | — |
+| model-value / v-model | La valeur liée. | string / number / boolean | — | — |
 | label | La valeur du radio. | string / number / boolean | — | — |
 | disabled | Si le radio est désactivé. | boolean | — | false |
 | border  | Si une bordure doit être affichée autour du radio. | boolean   | — | false |
-| size  | Taille du radio, ne marche que si `border` est `true`. | string  | medium / small / mini | — |
+| size  | Taille du radio | string  | medium / small / mini | — |
 | name | Attribut 'name' natif. | string | — | — |
 
 ### Évènements de Radio
@@ -192,7 +283,7 @@ Des radios affichés comme des boutons standards.
 
 | Attribut      | Description          | Type      | Valeurs acceptées       | Défaut
 | ---- | ---- | ---- | ---- | ---- |
-| value / v-model | La valeur liée. | string / number / boolean | — | — |
+| model-value / v-model | La valeur liée. | string / number / boolean | — | — |
 | size | Taille des radios. | string | medium / small / mini | —
 | disabled  | Si les radios sont désactivés. | boolean   | — | false
 | text-color | Couleur du texte quand le bouton est actif. | string | — | #ffffff   |

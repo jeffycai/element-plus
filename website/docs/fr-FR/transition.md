@@ -1,6 +1,6 @@
 ## Transitions
 
-Vous pouvez utiliser les transitions d'Element directement. Mais avant ça, merci de lire la [documentation](https://vuejs.org/v2/api/#transition).
+Vous pouvez utiliser les transitions d'Element Plus directement. Mais avant ça, merci de lire la [documentation](https://vuejs.org/v2/api/#transition).
 
 ### Fade
 
@@ -146,10 +146,10 @@ Pour l'effet collapse, utilisez le composant `el-collapse-transition`.
 
 ```js
 // fade/zoom
-import 'element-ui/lib/theme-chalk/base.css';
+import 'element-plus/lib/theme-chalk/base.css';
 // collapse
-import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
+import { ElCollapseTransition } from 'element-plus';
 import Vue from 'vue'
 
-Vue.component(CollapseTransition.name, CollapseTransition)
+Vue.component(ElCollapseTransition.name, ElCollapseTransition)
 ```

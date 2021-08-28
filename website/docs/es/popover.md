@@ -4,46 +4,58 @@
 
 Similar a un Tooltip, Popover está construido con `Vue-popper`. Así que para atributos duplicados, por favor refiérase a la documentación de Tooltip.
 
-:::demo El atributo `trigger` es usado para definir como el popover se dispara: `hover`, `click`, `focus` o `manual`. En cuanto al elemento desencadenante, puedes escribirlo de dos maneras diferentes: usando el `slot="reference"`[named slot](https://vuejs.org/v2/guide/components.html#Named-Slots), o usando la directiva `v-popover` y poniendo  el `ref` de Popover.
+:::demo El atributo `trigger` es usado para definir como el popover se dispara: `hover`, `click`, `focus` o `manual`. En cuanto al elemento desencadenante, puedes escribirlo de dos maneras diferentes: usando el `#reference`[named slot](https://vuejs.org/v2/guide/components.html#Named-Slots), o usando la directiva `v-popover` y poniendo  el `ref` de Popover.
 
 ```html
 <template>
   <el-popover
     placement="top-start"
     title="Title"
-    width="200"
+    :width="200"
     trigger="hover"
-    content="this is content, this is content, this is content">
-    <el-button slot="reference">Hover to activate</el-button>
+    content="this is content, this is content, this is content"
+  >
+    <template #reference>
+      <el-button>Hover to activate</el-button>
+    </template>
   </el-popover>
 
   <el-popover
     placement="bottom"
     title="Title"
-    width="200"
+    :width="200"
     trigger="click"
-    content="this is content, this is content, this is content">
-    <el-button slot="reference">Click to activate</el-button>
+    content="this is content, this is content, this is content"
+  >
+    <template #reference>
+      <el-button>Click to activate</el-button>
+    </template>
   </el-popover>
 
   <el-popover
     ref="popover"
     placement="right"
     title="Title"
-    width="200"
+    :width="200"
     trigger="focus"
-    content="this is content, this is content, this is content">
+    content="this is content, this is content, this is content"
+  >
+    <template #reference>
+      <el-button>Focus to activate</el-button>
+    </template>
   </el-popover>
-  <el-button v-popover:popover>Focus to activate</el-button>
 
   <el-popover
     placement="bottom"
     title="Title"
-    width="200"
+    :width="200"
     trigger="manual"
     content="this is content, this is content, this is content"
-    v-model="visible">
-    <el-button slot="reference" @click="visible = !visible">Manual to activate</el-button>
+    v-model:visible="visible"
+  >
+    <template #reference>
+      <el-button @click="visible = !visible">Manual to activate</el-button>
+    </template>
   </el-popover>
 </template>
 
@@ -56,6 +68,21 @@ Similar a un Tooltip, Popover está construido con `Vue-popper`. Así que para a
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      return {
+        visible: ref(false),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -67,14 +94,17 @@ Otros componentes pueden anidarse dentro de popover. A continuación un ejemplo 
 ```html
 <el-popover
   placement="right"
-  width="400"
-  trigger="click">
+  :width="400"
+  trigger="click"
+>
+  <template #reference>
+    <el-button>Click to activate</el-button>
+  </template>
   <el-table :data="gridData">
     <el-table-column width="150" property="date" label="date"></el-table-column>
     <el-table-column width="100" property="name" label="name"></el-table-column>
     <el-table-column width="300" property="address" label="address"></el-table-column>
   </el-table>
-  <el-button slot="reference">Click to activate</el-button>
 </el-popover>
 
 <script>
@@ -102,6 +132,45 @@ Otros componentes pueden anidarse dentro de popover. A continuación un ejemplo 
     }
   };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, reactive, toRefs } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const state = reactive({
+        gridData: [
+          {
+            date: '2016-05-02',
+            name: 'Jack',
+            address: 'New York City',
+          },
+          {
+            date: '2016-05-04',
+            name: 'Jack',
+            address: 'New York City',
+          },
+          {
+            date: '2016-05-01',
+            name: 'Jack',
+            address: 'New York City',
+          },
+          {
+            date: '2016-05-03',
+            name: 'Jack',
+            address: 'New York City',
+          },
+        ],
+      });
+      return {
+        ...toRefs(state),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -113,25 +182,43 @@ Por supuesto, puedes anidar otras operaciones. Es más ligero que utilizar un `d
 ```html
 <el-popover
   placement="top"
-  width="160"
-  v-model="visible">
+  :width="160"
+  v-model:visible="visible"
+>
   <p>Are you sure to delete this?</p>
   <div style="text-align: right; margin: 0">
     <el-button size="mini" type="text" @click="visible = false">cancel</el-button>
     <el-button type="primary" size="mini" @click="visible = false">confirm</el-button>
   </div>
-  <el-button slot="reference">Delete</el-button>
+  <template #reference>
+    <el-button @click="visible = true">Delete</el-button>
+  </template>
 </el-popover>
 
 <script>
   export default {
     data() {
       return {
-        visible: false,
+        visible: false
       };
     }
-  }
+  };
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      return {
+        visible: ref(false),
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -144,15 +231,16 @@ Por supuesto, puedes anidar otras operaciones. Es más ligero que utilizar un `d
 | width          | ancho del popover                        | string, number | —                                        | Min width 150px                          |
 | placement      | posición del popover en la pantalla      | string         | top/top-start/top-end/bottom/bottom-start/bottom-end/left/left-start/left-end/right/right-start/right-end | bottom                                   |
 | disabled       | si el popover está deshabilitado         | boolean        | —                                        | false                                    |
-| value / v-model | si el popover está visible               | Boolean        | —                                        | false                                    |
+| visible / v-model:visible | si el popover está visible               | Boolean        | —                                        | false                                    |
 | offset         | popover offset                           | number         | —                                        | 0                                        |
 | transition     | animación de transición del popover | string         | —                                        | el-fade-in-linear                        |
-| visible-arrow  | si una flecha del tooltip es mostrada o no. Para más información, por favor refiérase a [Vue-popper](https://github.com/element-component/vue-popper) | boolean        | —                                        | true                                     |
+| show-arrow  | si una flecha del tooltip es mostrada o no. Para más información, por favor refiérase a [Vue-popper](https://github.com/element-component/vue-popper) | boolean        | —                                        | true                                     |
 | popper-options | parámetros para [popper.js](https://popper.js.org/documentation.html) | object         | por favor, refiérase a [popper.js](https://popper.js.org/documentation.html) | `{ boundariesElement: 'body', gpuAcceleration: false }` |
 | popper-class   | clase propia para popover                | string         | —                                        | —                                        |
-| open-delay     | retraso de la aparición cuando `trigger` es hover, en milisegundos | number         | —                                        | —                                        |
-| close-delay    | Retraso antes de desaparecer cuando el `trigger` es hover, en milisegundos. | number | — | 200 |
-| tabindex       | [tabindex](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex) de Popover |   number           |      —      |  0    |
+| show-after     | retraso de la apariencia, en milisegundos | number  | —                                        | 0                                        |
+| hide-after     | retraso en el cierre, en milisegundos | number  | —                                        | 0                                        |
+| auto-close     | tiempo a esperar en milisegundos para esconder el Tooltip | number  | —                                        | 0                                        |
+| tabindex       | [tabindex](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex) de Popover |   number           |      —      |  —    |
 
 ### Slot
 | Nombre    | Descripción                          |

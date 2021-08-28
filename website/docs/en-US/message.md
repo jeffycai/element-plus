@@ -6,7 +6,7 @@ Used to show feedback after an activity. The difference with Notification is tha
 
 Displays at the top, and disappears after 3 seconds.
 
-:::demo The setup of Message is very similar to notification, so parts of the options won't be explained in detail here. You can check the options table below combined with notification doc to understand it. Element has registered a `$message` method for invoking. Message can take a string or a VNode as parameter, and it will be shown as the main body.
+:::demo The setup of Message is very similar to notification, so parts of the options won't be explained in detail here. You can check the options table below combined with notification doc to understand it. Element Plus has registered a `$message` method for invoking. Message can take a string or a VNode as parameter, and it will be shown as the main body.
 
 ```html
 <template>
@@ -15,6 +15,8 @@ Displays at the top, and disappears after 3 seconds.
 </template>
 
 <script>
+  import { h } from 'vue';
+
   export default {
     methods: {
       open() {
@@ -22,7 +24,6 @@ Displays at the top, and disappears after 3 seconds.
       },
 
       openVn() {
-        const h = this.$createElement;
         this.$message({
           message: h('p', null, [
             h('span', null, 'Message can be '),
@@ -33,6 +34,37 @@ Displays at the top, and disappears after 3 seconds.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, h } from 'vue';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open = () => {
+        ElMessage('this is a message.');
+      };
+
+      const openVn = () => {
+        ElMessage({
+          message: h('p', null, [
+            h('span', null, 'Message can be '),
+            h('i', { style: 'color: teal' }, 'VNode'),
+          ]),
+        });
+      };
+
+      return {
+        open,
+        openVn,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -75,6 +107,44 @@ Used to show the feedback of Success, Warning, Message and Error activities.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open1 = () => {
+        ElMessage('this is a message.');
+      };
+      const open2 = () => {
+        ElMessage({
+          message: 'Congrats, this is a success message.',
+          type: 'success',
+        });
+      };
+      const open3 = () => {
+        ElMessage({
+          message: 'Warning, this is a warning message.',
+          type: 'warning',
+        });
+      };
+      const open4 = () => {
+        ElMessage.error('Oops, this is a error message.');
+      };
+      return {
+        open1,
+        open2,
+        open3,
+        open4,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -127,6 +197,53 @@ A close button can be added.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const open1 = () => {
+        ElMessage({
+          showClose: true,
+          message: 'This is a message.',
+        });
+      };
+      const open2 = () => {
+        ElMessage({
+          showClose: true,
+          message: 'Congrats, this is a success message.',
+          type: 'success',
+        });
+      };
+      const open3 = () => {
+        ElMessage({
+          showClose: true,
+          message: 'Warning, this is a warning message.',
+          type: 'warning',
+        });
+      };
+      const open4 = () => {
+        ElMessage({
+          showClose: true,
+          message: 'Oops, this is a error message.',
+          type: 'error',
+        });
+      };
+      return {
+        open1,
+        open2,
+        open3,
+        open4,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -152,6 +269,29 @@ Use the `center` attribute to center the text.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const openCenter = () => {
+        ElMessage({
+          showClose: true,
+          message: 'Centered text',
+        });
+      };
+      return {
+        openCenter,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -177,6 +317,29 @@ Use the `center` attribute to center the text.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent } from 'vue';
+  import { ElMessage } from 'element-plus';
+
+  export default defineComponent({
+    setup() {
+      
+      const openCenter = () => {
+        ElMessage({
+          dangerouslyUseHTMLString: true,
+          message: '<strong>This is <i>HTML</i> string</strong>',
+        });
+      };
+      return {
+        openCenter,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -186,17 +349,15 @@ Although `message` property supports HTML strings, dynamically rendering arbitra
 
 ### Global method
 
-Element has added a global method `$message` for Vue.prototype. So in a vue instance you can call `Message` like what we did in this page.
+Element Plus has added a global method `$message` for `app.config.globalProperties`. So in a vue instance you can call `Message` like what we did in this page.
 
 ### Local import
 
-Import `Message`:
-
 ```javascript
-import { Message } from 'element-ui';
+import { ElMessage } from 'element-plus';
 ```
 
-In this case you should call `Message(options)`. We have also registered methods for different types, e.g. `Message.success(options)`. You can call `Message.closeAll()` to manually close all the instances.
+In this case you should call `ElMessage(options)`. We have also registered methods for different types, e.g. `ElMessage.success(options)`. You can call `ElMessage.closeAll()` to manually close all the instances.
 
 ### Options
 | Attribute      | Description          | Type      | Accepted Values       | Default  |

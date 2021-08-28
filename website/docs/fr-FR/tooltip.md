@@ -119,7 +119,9 @@ Vous pouvez afficher plus de lignes et formater leur contenu.
 :::demo Utiliser un slot nommé `content` au lieu de l'attribut.
 ```html
 <el-tooltip placement="top">
-  <div slot="content">Multiples lignes<br/>Seconde ligne</div>
+  <template #content>
+    Multiples lignes<br/>Seconde ligne
+  </template>
   <el-button>Top center</el-button>
 </el-tooltip>
 ```
@@ -180,6 +182,7 @@ Les éléments de formulaire désactivés ne sont pas supportés par Tooltip, pl
 
 | Attribut      | Description          | Type      | Valeurs acceptées       | Défaut  |
 |----------------|---------|-----------|-------------|--------|
+| append-to-body     | S'il faut ajouter le Dialog au body. Un Dialog imbriqué doit avoir cet attribut à `true`. | boolean   | — | true |
 | effect | Thème du Tooltip.  | string   | dark/light  | dark  |
 | content | Contenu à afficher, écrasé par `slot#content`. | String   | — | — |
 | placement | Position du Tooltip. | string |  top/top-start/top-end/bottom/bottom-start/bottom-end/left/left-start/left-end/right/right-start/right-end |  bottom |
@@ -189,9 +192,10 @@ Les éléments de formulaire désactivés ne sont pas supportés par Tooltip, pl
 | transition | Animation de transition. | string | — | el-fade-in-linear |
 | visible-arrow | Si une flèche doit être affichée. Pour plus d'information, voir [Vue-popper](https://github.com/element-component/vue-popper). | boolean | — | true |
 | popper-options | Paramètres [popper.js](https://popper.js.org/documentation.html). | Object | Se référer à  [popper.js](https://popper.js.org/documentation.html). | `{ boundariesElement: 'body', gpuAcceleration: false }` |
-| open-delay | Délai avant l'apparition en millisecondes. | number | — | 0 |
+| show-after | Délai avant l'apparition en millisecondes. | number | — | 0 |
+| hide-after | Le temps de disparaître en millisecondes | number | — | 0 |
+| auto-close | Délai avant disparition. | number | — | 0 |
 | manual | Si le contrôle du Tooltip doit être manuel. `mouseenter` et `mouseleave` n'auront pas d'effet si `true`. | boolean | — | false |
 | popper-class | Classe du popper de Tooltip. | string | — | — |
 | enterable | Si la souris peut entrer dans la Tooltip. | Boolean | — | true |
-| hide-after | Délai avant disparition. | number | — | 0 |
 | tabindex   | [tabindex](https://developer.mozilla.org/fr/docs/Web/HTML/Attributs_universels/tabindex) de Tooltip. | number | — | 0 |

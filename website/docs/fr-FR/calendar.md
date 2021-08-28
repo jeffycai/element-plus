@@ -18,6 +18,23 @@ Affiche un calendrier.
     }
   }
 </script>
+<!--
+<setup>
+
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const value = ref(new Date());
+
+      return {
+        value,
+      };
+    },
+  });
+
+</setup>
+-->
 ```
 :::
 
@@ -26,9 +43,7 @@ Affiche un calendrier.
 :::demo Personnalisez le contenu du calendrier en utilisant le `scoped-slot` appelé `dateCell`. Dans ce `scoped-slot` vous aurez accès au paramètres date (date de la cellule courante), data (incluant les attributs type, isSelected et day). Pour plus d'informations, référez-vous à la documentation ci-dessous.
 ```html
 <el-calendar>
-  <template
-    #dateCell="{data}"
-  >
+  <template #dateCell="{data}">
     <p :class="data.isSelected ? 'is-selected' : ''">
       {{ data.day.split('-').slice(1).join('-') }} {{ data.isSelected ? '✔️' : '' }}
     </p>
@@ -51,16 +66,21 @@ Affiche un calendrier.
 ```
 :::
 
+### Localization
+
+The default locale of is English, if you need to use other languages, please check [Internationalization](#/fr-FR/component/i18n)
+
+Note, date time locale (month name, first day of the week ...) are also configed in localization.
+
 ### Attributs
 
 | Attribut          | Description   | Type      | Valeurs acceptées     | Défaut   |
 |------------------ |-------------- |---------- |---------------------- |--------- |
-| value / v-model   | Valeur liée.  | Date | —            | —        |
-| range             | Intervalle de dates, début et fin inclus. Start time must be start day of week, end time must be end day of week, the time span cannot exceed two months. | <Date>Array     | —           | —      |
+| model-value / v-model   | Valeur liée.  | Date | —            | —        |
+| range             | Intervalle de dates, début et fin inclus. Start time must be start day of week, end time must be end day of week, the time span cannot exceed two months. | [Date]Array     | —           | —      |
 
 ### Slot dateCell
 
 | Attribut       | Description   | Type      | Valeurs acceptées       | Défaut  |
 |-----------------|-------------- |---------- |---------------------- |--------- |
-| date            | Date de la cellule courante.  | Date      | —                     | —        |
-| data            | { type, isSelected, day }. `type` indique le mois de la date courante, les valeurs prev-month, current-month et next-month pouvant être utilisées; `isSelected` indique si la date est sélectionnée; `day` est la date formattée en yyyy-MM-dd.    | Object      | —           | —      |
+| data            | { type, isSelected, day, date }. `type` indique le mois de la date courante, les valeurs prev-month, current-month et next-month pouvant être utilisées; `isSelected` indique si la date est sélectionnée; `day` est la date formattée en YYYY-MM-DD; `date` est la date de la cellule courante.    | Object      | —           | —      |

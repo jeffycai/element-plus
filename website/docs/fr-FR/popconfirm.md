@@ -12,7 +12,9 @@ Popconfirm is similar to Popover. So for some duplicated attributes, please refe
 <el-popconfirm
   title="Are you sure to delete this?"
 >
-  <el-button slot="reference">Delete</el-button>
+<template #reference>
+  <el-button>Delete</el-button>
+  </template>
 </el-popconfirm>
 </template>
 ````
@@ -30,11 +32,52 @@ You can customise Popconfirm like:
   iconColor="red"
   title="Are you sure to delete this?"
 >
-  <el-button slot="reference">Delete</el-button>
+<template #reference>
+  <el-button>Delete</el-button>
+  </template>
 </el-popconfirm>
 </template>
 ```
 :::
+
+### Trigger event
+Click the button to trigger the event
+
+:::demo
+
+```html
+<template>
+  <el-popconfirm
+    confirmButtonText="Yes"
+    cancelButtonText="No"
+    icon="el-icon-info"
+    iconColor="red"
+    title="Are you sure to delete this?"
+    @confirm="confirmEvent"
+    @cancel="cancelEvent"
+  >
+    <template #reference>
+      <el-button>Delete</el-button>
+    </template>
+  </el-popconfirm>
+</template>
+
+<script>
+export default {
+  methods: {
+    confirmEvent() {
+      console.log("confirm!");
+    },
+    cancelEvent() {
+      console.log("cancel!");
+    },
+  },
+};
+</script>
+```
+
+:::
+
 
 ### Attributes
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
@@ -56,5 +99,5 @@ You can customise Popconfirm like:
 ### Events
 | Event Name | Description | Parameters |
 |---------|--------|---------|
-| onConfirm | triggers when click confirm button | — |
-| onCancel | triggers when click cancel button | — |
+| confirm | triggers when click confirm button | — |
+| cancel | triggers when click cancel button | — |

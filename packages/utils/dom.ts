@@ -1,6 +1,8 @@
 import isServer from './isServer'
 import { camelize, isObject } from './util'
 
+import type { Nullable } from './types'
+
 /* istanbul ignore next */
 const trim = function(s: string) {
   return (s || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '')
@@ -23,9 +25,10 @@ export const off = function(
   element: HTMLElement | Document | Window,
   event: string,
   handler: EventListenerOrEventListenerObject,
+  useCapture = false,
 ): void {
   if (element && event && handler) {
-    element.removeEventListener(event, handler, false)
+    element.removeEventListener(event, handler, useCapture)
   }
 }
 
@@ -165,7 +168,7 @@ export const isScroll = (
       ? getStyle(el, 'overflow-y')
       : getStyle(el, 'overflow-x')
 
-  return overflow.match(/(scroll|auto)/)
+  return overflow.match(/(scroll|auto|overlay)/)
 }
 
 export const getScrollContainer = (
@@ -233,4 +236,5 @@ export const getOffsetTop = (el: HTMLElement) => {
 export const getOffsetTopDistance = (el: HTMLElement, containerEl: HTMLElement) => {
   return Math.abs(getOffsetTop(el) - getOffsetTop(containerEl))
 }
+
 export const stop = (e: Event) => e.stopPropagation()
