@@ -1,8 +1,23 @@
-import { Fragment, Text, Comment, createBlock, openBlock } from 'vue'
+import {
+  Fragment,
+  Text,
+  Comment,
+  createBlock,
+  openBlock,
+  createCommentVNode,
+  isVNode,
+  camelize,
+} from 'vue'
 
+import { hasOwn } from '@vue/shared'
+import { debugWarn } from './error'
 import type { VNode, VNodeTypes, VNodeChild } from 'vue'
 
+type Children = VNodeTypes[] | VNodeTypes
+
 const TEMPLATE = 'template'
+
+export const SCOPE = 'VNode'
 
 export enum PatchFlags {
   TEXT = 1,
@@ -20,13 +35,15 @@ export enum PatchFlags {
   BAIL = -2,
 }
 
-export const isFragment = (node: VNode) => node.type === Fragment
+export const isFragment = (node: unknown): node is VNode =>
+  isVNode(node) && node.type === Fragment
 
-export const isText = (node: VNode) => node.type === Text
+export const isText = (node: VNodeChild) => (node as VNode).type === Text
 
-export const isComment = (node: VNode) => node.type === Comment
+export const isComment = (node: VNodeChild) => (node as VNode).type === Comment
 
-export const isTemplate = (node: VNode) => node.type === TEMPLATE
+export const isTemplate = (node: VNodeChild) =>
+  (node as VNode).type === TEMPLATE
 
 /**
  * get a valid child node (not fragment nor comment)
@@ -47,12 +64,12 @@ function getChildren(node: VNode, depth: number): undefined | VNode {
  * determine if the element is a valid element type rather than fragments and comment e.g. <template> v-if
  * @param node {VNode} node to be tested
  */
-export const isValidElementNode = (node: VNode) =>
-  !(isFragment(node) || isComment(node))
+export const isValidElementNode = (node: unknown): node is VNode =>
+  isVNode(node) && !isFragment(node) && !isComment(node)
 
 export const getFirstValidNode = (
   nodes: VNodeChild,
-  maxDepth = 3,
+  maxDepth = 3
 ): ReturnType<typeof getChildren> => {
   if (Array.isArray(nodes)) {
     return getChildren(nodes[0] as VNode, maxDepth)
@@ -65,24 +82,49 @@ export function renderIf(
   condition: boolean,
   node: VNodeTypes,
   props: any,
-  children?: VNode[],
+  children?: Children,
   patchFlag?: number,
-  patchProps?: string[],
+  patchProps?: string[]
 ) {
-  return (
-    openBlock(),
-    condition
-      ? createBlock(node, props, children, patchFlag, patchProps)
-      : createBlock(Comment, null, null, PatchFlags.TEXT)
-  )
+  return condition
+    ? renderBlock(node, props, children, patchFlag, patchProps)
+    : createCommentVNode('v-if', true)
 }
 
 export function renderBlock(
   node: VNodeTypes,
   props: any,
-  children?: VNodeTypes[] | VNodeTypes,
+  children?: Children,
   patchFlag?: number,
-  patchProps?: string[],
+  patchProps?: string[]
 ) {
   return openBlock(), createBlock(node, props, children, patchFlag, patchProps)
+}
+
+/**
+ * todo
+ * get normalized props from VNode
+ * @param node
+ */
+export const getNormalizedProps = (node: VNode) => {
+  if (!isVNode(node)) {
+    debugWarn(SCOPE, 'value must be a VNode')
+    return
+  }
+
+  const raw = node.props || {}
+  const type = (node.type as any).props || {}
+  const props = {} as any
+
+  Object.keys(type).forEach((key) => {
+    if (hasOwn(type[key], 'default')) {
+      props[key] = type[key].default
+    }
+  })
+
+  Object.keys(raw).forEach((key) => {
+    props[camelize(key)] = raw[key]
+  })
+
+  return props
 }

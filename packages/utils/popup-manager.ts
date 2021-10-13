@@ -1,20 +1,18 @@
-import { ComponentPublicInstance } from 'vue'
 import isServer from './isServer'
-import { getConfig } from './config'
+import * as configs from './config'
 import { addClass, removeClass, on } from './dom'
 import { EVENT_CODE } from './aria'
 
-interface ComponentMethods {
-  closeOnClickModal: boolean
+import type { Ref } from 'vue'
+interface Instance {
+  closeOnClickModal: Ref<boolean>
+  closeOnPressEscape: Ref<boolean>
   close: () => void
-  closeOnPressEscape: boolean
-  handleClose: () => void
-  handleAction: (action: string) => void
+  handleClose?: () => void
+  handleAction?: (action: string) => void
 }
 
-type Instance = ComponentPublicInstance<unknown, ComponentMethods>;
-
-type StackFrame = { id: string; zIndex: number; modalClass: string; };
+type StackFrame = { id: string; zIndex: number; modalClass: string }
 
 interface IPopupManager {
   getInstance: (id: string) => Instance
@@ -48,7 +46,7 @@ const onModalClick = () => {
 let hasModal = false
 let zIndex: number
 
-const getModal = function(): HTMLElement {
+const getModal = function (): HTMLElement {
   if (isServer) return
   let modalDom = PopupManager.modalDom
   if (modalDom) {
@@ -72,40 +70,40 @@ const PopupManager: IPopupManager = {
   modalDom: undefined,
   zIndex,
 
-  getInstance: function(id) {
+  getInstance(id) {
     return instances[id]
   },
 
-  register: function(id, instance) {
+  register(id, instance) {
     if (id && instance) {
       instances[id] = instance
     }
   },
 
-  deregister: function(id) {
+  deregister(id) {
     if (id) {
       instances[id] = null
       delete instances[id]
     }
   },
 
-  nextZIndex: function() {
-    return PopupManager.zIndex++
+  nextZIndex() {
+    return ++PopupManager.zIndex
   },
 
   modalStack: [],
 
-  doOnModalClick: function() {
+  doOnModalClick() {
     const topItem = PopupManager.modalStack[PopupManager.modalStack.length - 1]
     if (!topItem) return
 
     const instance = PopupManager.getInstance(topItem.id)
-    if (instance && instance.closeOnClickModal) {
+    if (instance && instance.closeOnClickModal.value) {
       instance.close()
     }
   },
 
-  openModal: function(id, zIndex, dom, modalClass, modalFade) {
+  openModal(id, zIndex, dom, modalClass, modalFade) {
     if (isServer) return
     if (!id || zIndex === undefined) return
     this.modalFade = modalFade
@@ -127,7 +125,7 @@ const PopupManager: IPopupManager = {
     }
     if (modalClass) {
       const classArr = modalClass.trim().split(/\s+/)
-      classArr.forEach(item => addClass(modalDom, item))
+      classArr.forEach((item) => addClass(modalDom, item))
     }
     setTimeout(() => {
       removeClass(modalDom, 'v-modal-enter')
@@ -145,10 +143,10 @@ const PopupManager: IPopupManager = {
     modalDom.tabIndex = 0
     modalDom.style.display = ''
 
-    this.modalStack.push({ id: id, zIndex: zIndex, modalClass: modalClass })
+    this.modalStack.push({ id, zIndex, modalClass })
   },
 
-  closeModal: function(id) {
+  closeModal(id) {
     const modalStack = this.modalStack
     const modalDom = getModal()
 
@@ -157,7 +155,7 @@ const PopupManager: IPopupManager = {
       if (topItem.id === id) {
         if (topItem.modalClass) {
           const classArr = topItem.modalClass.trim().split(/\s+/)
-          classArr.forEach(item => removeClass(modalDom, item))
+          classArr.forEach((item) => removeClass(modalDom, item))
         }
 
         modalStack.pop()
@@ -196,7 +194,7 @@ Object.defineProperty(PopupManager, 'zIndex', {
   configurable: true,
   get() {
     if (zIndex === undefined) {
-      zIndex = getConfig('zIndex') as number || 2000
+      zIndex = (configs.getConfig('zIndex') as number) || 2000
     }
     return zIndex
   },
@@ -205,11 +203,10 @@ Object.defineProperty(PopupManager, 'zIndex', {
   },
 })
 
-const getTopPopup = function() {
+const getTopPopup = function () {
   if (isServer) return
   if (PopupManager.modalStack.length > 0) {
-    const topPopup =
-      PopupManager.modalStack[PopupManager.modalStack.length - 1]
+    const topPopup = PopupManager.modalStack[PopupManager.modalStack.length - 1]
     if (!topPopup) return
     const instance = PopupManager.getInstance(topPopup.id)
 
@@ -219,16 +216,16 @@ const getTopPopup = function() {
 
 if (!isServer) {
   // handle `esc` key when the popup is shown
-  on(window, 'keydown', function(event: KeyboardEvent) {
+  on(window, 'keydown', function (event: KeyboardEvent) {
     if (event.code === EVENT_CODE.esc) {
       const topPopup = getTopPopup()
 
-      if (topPopup && topPopup.closeOnPressEscape) {
+      if (topPopup && topPopup.closeOnPressEscape.value) {
         topPopup.handleClose
           ? topPopup.handleClose()
           : topPopup.handleAction
-            ? topPopup.handleAction('cancel')
-            : topPopup.close()
+          ? topPopup.handleAction('cancel')
+          : topPopup.close()
       }
     }
   })

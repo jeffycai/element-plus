@@ -2,7 +2,7 @@ import isServer from './isServer'
 
 let scrollBarWidth: number
 
-export default function(): number {
+export default function (): number {
   if (isServer) return 0
   if (scrollBarWidth !== undefined) return scrollBarWidth
 
@@ -22,7 +22,7 @@ export default function(): number {
   outer.appendChild(inner)
 
   const widthWithScroll = inner.offsetWidth
-  outer.parentNode.removeChild(outer)
+  outer.parentNode?.removeChild(outer)
   scrollBarWidth = widthNoScroll - widthWithScroll
 
   return scrollBarWidth

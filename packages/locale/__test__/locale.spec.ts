@@ -1,7 +1,5 @@
-import { mount } from '@vue/test-utils'
-import { t, use } from '../index'
-import localeMixin from '../mixin'
-import zhCn from '../lang/zh-CN'
+import { t, use, i18n, restoreHandler } from '../index'
+import zhCn from '../lang/zh-cn'
 import en from '../lang/en'
 
 describe('Locale', () => {
@@ -17,14 +15,20 @@ describe('Locale', () => {
     use(zhCn)
     expect(t('el.popconfirm.confirmButtonText')).toBe('确定')
     use(en)
+    expect(t('el.popconfirm.confirmButtonText')).toBe('Yes')
   })
 
-  test('mixin', () => {
-    const component = {
-      template: `<p>{{ t('el.popconfirm.cancelButtonText') }}</p>`,
-      mixins: [localeMixin],
-    } as any
-    const wrapper = mount(component)
-    expect(wrapper.text()).toContain('No')
+  test('external i18n function', () => {
+    const emptyKey = 'el.popconfirm.confirmButtonText'
+    const translator = jest.fn().mockImplementation((k) => {
+      if (k === emptyKey) return ''
+      return k
+    })
+
+    i18n(translator)
+    const key = 'test'
+    expect(t(key)).toBe(key)
+    expect(t(emptyKey)).toBe('Yes')
+    restoreHandler()
   })
 })
